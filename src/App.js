@@ -14,7 +14,7 @@ class App extends Component {
 
   fetchCurrentBasket() {
     fetch("/api/getToken", {
-      method: "POST"
+      method: "GET"
     })
       .then(response => response.json())
       .then(body => {
