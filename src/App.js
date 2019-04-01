@@ -1,25 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orders: {
+        Quotes: {}
+      }
+    };
+    this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
+  }
+
+  fetchCurrentBasket() {
+    fetch("/api/getToken", {
+      method: "POST"
+    })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          orders: body
+        });
+        // console.log(body);
+      });
+  }
+
   render() {
+    console.log(this.state.orders);
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <button onClick={this.fetchCurrentBasket}>click</button>
+        {/* <div>
+          {Object.values(this.state.orders.Quotes).map((product, index) => {
+            // console.log(product)
+            return <Tile key={index} singleProduct={product} />;
+          })}
+        </div> */}
       </div>
     );
   }
