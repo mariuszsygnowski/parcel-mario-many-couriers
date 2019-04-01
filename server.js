@@ -4,7 +4,12 @@
 // const client_id = "52bec26d025a4b8db2248a90da1e455a:testing";
 // const client_secret = "testing123";
 const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
 const app = express();
+const port = process.env.PORT || 5000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // const port = process.env.PORT || 8080;
 
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -75,6 +80,4 @@ app.get("/api/getToken", (req, res) => {
   res.json({ ok: "ok" });
 });
 
-app.listen(function() {
-  console.log(`Listening on port number `);
-});
+app.listen(port, () => console.log(`Listening on port ${port}`));
