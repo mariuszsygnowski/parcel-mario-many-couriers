@@ -29,6 +29,8 @@
         "extends": "react-app"
     },
     "proxy": "http://localhost:3001",
+    "author": "mariusz-sygnowski",
+    "license": "MIT",
     "browserslist": [
         ">0.2%",
         "not dead",
