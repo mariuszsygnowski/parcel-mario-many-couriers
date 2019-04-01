@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "react-scripts start",
+        "start": "react-scripts start && serve -s build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
@@ -27,6 +27,7 @@
     "eslintConfig": {
         "extends": "react-app"
     },
+    "proxy": "http://localhost:3001",
     "author": "mariusz-sygnowski",
     "license": "MIT",
     "browserslist": [
