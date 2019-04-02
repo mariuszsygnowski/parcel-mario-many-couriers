@@ -80,4 +80,8 @@ app.get("/api/getToken", (req, res) => {
   res.json({ ok: "ok" });
 });
 
+app.get("/", function(req, res) {
+  res.render("index");
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
