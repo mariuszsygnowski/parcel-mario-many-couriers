@@ -59,7 +59,7 @@ app.post("/api/getToken", (req, res) => {
           .then(response => response.json())
           .then(body => {
             if (body) {
-              res.json(body);
+              res.json(body.Quotes);
               // console.log(body);
             } else {
               res.json({ error: "no body after respond" });
