@@ -3,23 +3,17 @@ const fetch = require("node-fetch");
 
 // const client_id = "52bec26d025a4b8db2248a90da1e455a:testing";
 // const client_secret = "testing123";
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// const port = process.env.PORT || 8080;
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "build")));
-  //
-  // app.get("/", (req, res) => {
-  //   res.sendfile(path.join((__dirname = "build/index.html")));
-  // });
 }
 
 app.post("/api/getToken", (req, res) => {
