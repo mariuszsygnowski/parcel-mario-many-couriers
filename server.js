@@ -17,9 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "build")));
   //
-  app.get("/", (req, res) => {
-    res.sendfile(path.join((__dirname = "build/index.html")));
-  });
+  // app.get("/", (req, res) => {
+  //   res.sendfile(path.join((__dirname = "build/index.html")));
+  // });
 }
 
 app.post("/api/getToken", (req, res) => {
