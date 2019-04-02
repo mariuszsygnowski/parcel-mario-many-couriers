@@ -5,8 +5,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      orders: {
-        Quotes: []
+      quotes: {
+        p2g: []
       }
     };
     this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
@@ -19,14 +19,16 @@ class App extends Component {
       .then(response => response.json())
       .then(body => {
         this.setState({
-          orders: body
+          quotes: {
+            p2g: body.Quotes
+          }
         });
         // console.log(body);
       });
   }
 
   render() {
-    console.log(this.state.orders);
+    console.log(this.state.quotes);
     return (
       <div>
         <button onClick={this.fetchCurrentBasket}>click</button>
