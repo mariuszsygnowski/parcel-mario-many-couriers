@@ -23,7 +23,7 @@ class App extends Component {
             p2g: body.Quotes
           }
         });
-        // console.log(body);
+        console.log(body);
       });
   }
 

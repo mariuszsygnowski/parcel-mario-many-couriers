@@ -1,14 +1,12 @@
-// const bodyParser = require("body-parser");
-const fetch = require("node-fetch");
-
-// const client_id = "52bec26d025a4b8db2248a90da1e455a:testing";
-// const client_secret = "testing123";
 require("dotenv").config();
+
+const fetch = require("node-fetch");
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
-const port = process.env.PORT || process.env.SERVERPORT;
+const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -62,6 +60,7 @@ app.post("/api/getToken", (req, res) => {
           .then(body => {
             if (body) {
               res.json(body);
+              // console.log(body);
             } else {
               res.json({ error: "no body after respond" });
             }
@@ -78,7 +77,6 @@ app.post("/api/getToken", (req, res) => {
       res.json(error);
       console.log("Server failed to return data: " + error);
     });
-  // res.json({ ok: "ok" });
 });
 
 app.get("/", function(req, res) {
