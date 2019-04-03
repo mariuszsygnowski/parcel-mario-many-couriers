@@ -90,12 +90,10 @@ app.post("/api/getToken", (req, res) => {
 
 app.get("/api/results", function(req, res) {
   db.any(
-    "SELECT * FROM results WHERE unique_search_id='1aa' AND courier_name='UPS' AND courier_delivery_time='one_day' ORDER BY price ASC"
+    "SELECT * FROM results WHERE unique_search_id='1aa' AND courier_delivery_time='one_day' ORDER BY price ASC"
   )
-    .then(function(data) {
-      res.json(data);
-    })
-    .catch(function(error) {
+    .then(response => res.json(response))
+    .catch(error => {
       res.json({ error: error.message });
     });
 });

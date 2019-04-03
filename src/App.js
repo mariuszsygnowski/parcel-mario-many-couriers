@@ -7,21 +7,14 @@ class App extends Component {
     super(props);
     this.state = {
       quotes: {
-        p2g: [
-          {
-            company_name: "parcelmonkey",
-            courier_delivery_time: "one_day",
-            courier_name: "UPS",
-            id: 227,
-            price: "29.14",
-            unique_search_id: "1aa"
-          }
-        ]
+        p2g: []
       },
       searching: ""
     };
     this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
     this.test = this.test.bind(this);
+    this.sortingBy = this.sortingBy.bind(this);
+    this.dynamicSort = this.dynamicSort.bind(this);
   }
 
   fetchCurrentBasket() {
@@ -71,11 +64,40 @@ class App extends Component {
       });
   }
 
+  dynamicSort(property) {
+    var sortOrder = 1;
+    if (property[0] === "-") {
+      sortOrder = -1;
+      property = property.substr(1);
+    }
+    return function(a, b) {
+      var result =
+        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      return result * sortOrder;
+    };
+  }
+
+  sortingBy(e) {
+    const arrayToSort = this.state.quotes.p2g;
+    const sortedArray = arrayToSort.sort(this.dynamicSort(e));
+    this.setState({
+      quotes: {
+        p2g: sortedArray
+      }
+    });
+  }
+
   render() {
-    console.log(this.state.quotes);
+    // console.log(this.state.quotes.p2g);
     return (
       <div>
-        <button onClick={this.test}>click</button>
+        <button onClick={this.test}>search button</button>
+        <button onClick={() => this.sortingBy("price")}>
+          sort by price ascending
+        </button>
+        <button onClick={() => this.sortingBy("-price")}>
+          sort by price descending
+        </button>
 
         <div>
           {this.state.quotes.p2g.map(result => {

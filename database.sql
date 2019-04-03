@@ -6,7 +6,7 @@ CREATE TABLE results (
     company_name VARCHAR(20) NOT NULL,
     courier_name VARCHAR(20) NOT NULL,
     courier_delivery_time VARCHAR(10) NOT NULL,
-    price numeric NOT NULL
+    price NUMERIC NOT NULL
 );
 INSERT INTO results VALUES (DEFAULT, '1aa', 'p2g', 'UPS', 'one_day', 30.24);
 INSERT INTO results VALUES (DEFAULT, '1aa', 'p2g', 'PARCELFORCE', 'one_day', 29.99);
