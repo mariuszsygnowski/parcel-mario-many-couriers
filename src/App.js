@@ -7,7 +7,16 @@ class App extends Component {
     super(props);
     this.state = {
       quotes: {
-        p2g: []
+        p2g: [
+          {
+            company_name: "parcelmonkey",
+            courier_delivery_time: "one_day",
+            courier_name: "UPS",
+            id: 227,
+            price: "29.14",
+            unique_search_id: "1aa"
+          }
+        ]
       },
       searching: ""
     };
