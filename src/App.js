@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import SingleBox from "./components/SingleBox";
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class App extends Component {
       searching: ""
     };
     this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
+    this.test = this.test.bind(this);
   }
 
   fetchCurrentBasket() {
@@ -38,12 +40,39 @@ class App extends Component {
       });
   }
 
+  test() {
+    fetch("/api/results", {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .then(body => {
+        if (body) {
+          this.setState({
+            quotes: {
+              p2g: body
+            },
+            searching: "found"
+          });
+        } else {
+          // res.json({ error: "no body after respond" });
+        }
+      })
+      .catch(error => {
+        console.log("Server failed to return data: " + error);
+      });
+  }
+
   render() {
     console.log(this.state.quotes);
     return (
       <div>
-        <button onClick={this.fetchCurrentBasket}>click</button>
-        <p>{this.state.searching}</p>
+        <button onClick={this.test}>click</button>
+
+        <div>
+          {this.state.quotes.p2g.map(result => {
+            return <SingleBox key={result.id} result={result} />;
+          })}
+        </div>
         {/* <div>
           {Object.values(this.state.orders.Quotes).map((product, index) => {
             // console.log(product)

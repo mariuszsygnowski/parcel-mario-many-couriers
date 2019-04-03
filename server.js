@@ -3,9 +3,18 @@ require("dotenv").config();
 const fetch = require("node-fetch");
 const express = require("express");
 const bodyParser = require("body-parser");
+const pgp = require("pg-promise")();
 const path = require("path");
 const app = express();
 const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
+
+const db = pgp({
+  host: process.env.DB_HOST,
+  port: 5432,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -76,6 +85,18 @@ app.post("/api/getToken", (req, res) => {
     .catch(error => {
       res.json(error);
       console.log("Server failed to return data: " + error);
+    });
+});
+
+app.get("/api/results", function(req, res) {
+  db.any(
+    "SELECT * FROM results WHERE unique_search_id='1aa' AND courier_name='UPS' AND courier_delivery_time='one_day' ORDER BY price ASC"
+  )
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(function(error) {
+      res.json({ error: error.message });
     });
 });
 
