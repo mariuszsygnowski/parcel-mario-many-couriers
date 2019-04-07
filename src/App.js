@@ -297,12 +297,15 @@ class App extends Component {
 
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
-            console.log(item[1]);
-
+            //item is array this.state.quotes.one_day, this.state.quotes.two_days...
+            //example: (3) [{…}, {…}, {…}]
             return (
               <div className="app__days">
                 <p>{item[0]}</p>
                 {item[1].map(result => {
+                  //result is object this.state.quotes.one_day[2], this.state.quotes.two_days[2]...
+                  //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
+
                   return (
                     <div className="app_singleCurier">
                       <p>
@@ -311,6 +314,8 @@ class App extends Component {
                         </b>
                       </p>
                       {result.data.map(res => {
+                        //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
+                        //example: {company_name: "interparcel", id: 17, price: "21.11"}.
                         return (
                           <Fragment>
                             <SingleBox result={res} />
@@ -323,24 +328,7 @@ class App extends Component {
               </div>
             );
           })}
-
-          {/* <div>
-            <p>Two days courier</p>
-            {this.state.quotes.two_days.map(result => {
-              return (
-                <div>
-                  <SingleBox key={result.id} result={result} />
-                </div>
-              );
-            })}
-          </div> */}
         </div>
-        {/* <div>
-          {Object.values(this.state.orders.Quotes).map((product, index) => {
-            // console.log(product)
-            return <Tile key={index} singleProduct={product} />;
-          })}
-        </div> */}
       </div>
     );
   }
