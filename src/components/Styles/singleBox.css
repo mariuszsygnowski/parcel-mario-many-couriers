@@ -1,0 +1,5 @@
+.singleBox {
+    /* background-color: rgb(222, 252, 247); */
+    display: grid;
+    grid-gap: 2rem;
+}

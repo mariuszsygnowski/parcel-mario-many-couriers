@@ -90,7 +90,7 @@ app.post("/api/getToken", (req, res) => {
 
 app.get("/api/results", function(req, res) {
   db.any(
-    "SELECT * FROM results WHERE unique_search_id='1aa' AND courier_delivery_time='one_day' ORDER BY price ASC"
+    "SELECT * FROM results WHERE unique_search_id='1aa' ORDER BY price ASC"
   )
     .then(response => res.json(response))
     .catch(error => {
