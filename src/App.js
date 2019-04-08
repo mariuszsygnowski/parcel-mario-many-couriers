@@ -255,19 +255,19 @@ class App extends Component {
   }
 
   sortingBy(e) {
-    let sortedArrayData = [];
-    this.state.quotes.one_day.forEach((curier, index, i) => {
-      curier.data.sort(this.dynamicSort(e));
-      sortedArrayData.push(this.state.quotes.one_day[index]);
+    let output = {};
+    Object.entries(this.state.quotes).forEach(item => {
+      item[1].forEach(curier => {
+        curier.data.sort(this.dynamicSort(e));
+      });
+      output = Object.assign(output, { [item[0]]: item[1] });
+      output[item[0]].sort(this.dynamicSort(e));
     });
-    // console.log(outputArray);
-    const sortedArrayOneDay = sortedArrayData.sort(this.dynamicSort(e));
 
     this.setState({
-      quotes: {
-        one_day: sortedArrayOneDay
-      }
+      quotes: output
     });
+
     // const sortedArrayOneDay = this.state.quotes.one_day.sort((a, b) =>
     //   a[0].price > b[0].price ? 1 : -1
     // );
@@ -299,11 +299,14 @@ class App extends Component {
           {Object.entries(this.state.quotes).map(item => {
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
             //example: (3) [{…}, {…}, {…}]
+            //item[0] is "one_day" or "two_days"...
+            //item[1] is array with data
+
             return (
               <div className="app__days">
                 <p>{item[0]}</p>
-                {item[1].map(result => {
-                  //result is object this.state.quotes.one_day[2], this.state.quotes.two_days[2]...
+                {item[1].map((result, index) => {
+                  //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
 
                   return (
@@ -313,15 +316,18 @@ class App extends Component {
                           {result.courier}, minimum: £{result.price}
                         </b>
                       </p>
-                      {result.data.map(res => {
-                        //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
-                        //example: {company_name: "interparcel", id: 17, price: "21.11"}.
-                        return (
-                          <Fragment>
-                            <SingleBox result={res} />
-                          </Fragment>
-                        );
-                      })}
+                      <div>
+                        {result.data.map(res => {
+                          //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
+                          //example: {company_name: "interparcel", id: 17, price: "21.11"}.
+                          return (
+                            <div>
+                              <p>{res.company_name}</p>
+                              <p>£{res.price}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   );
                 })}

@@ -33,20 +33,22 @@
 }
 
 .app__singleBox {
-    background-color: rgb(222, 252, 247);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-}
-
-.app_singleCurier {
-    display: grid;
-    /* grid-gap: 2rem; */
-    border: solid red;
-    /* background-color: yellow; */
+    grid-gap: 1rem;
 }
 
 .app__days {
     display: grid;
-    grid-gap: 2rem;
+    grid-gap: 1rem;
+    border: solid green;
+}
+
+.app__days>p {
+    text-align: center;
+}
+
+.app_singleCurier {
+    display: grid;
+    border: solid red;
 }
