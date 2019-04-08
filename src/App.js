@@ -351,17 +351,15 @@ class App extends Component {
 
   sortingBy(e) {
     let output = {};
-    let price = 0;
+    let minPrice = 0;
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
-        curier.data.sort(this.dynamicSort(e));
-        if (e === "-price") {
-          price = curier.data[curier.data.length - 1].price;
-        } else if (e === "price") {
-          price = curier.data[0].price;
-        }
-        curier.price = price;
+
+        //sorting always inside courier by price from low to high
+        curier.data.sort(this.dynamicSort("price"));
+        minPrice = curier.data[0].price;
+        curier.price = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
 
@@ -377,7 +375,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.test}>search button</button>
+        <button onClick={this.test} disabled>
+          search button
+        </button>
         <button onClick={() => this.sortingBy("price")}>
           sort by price ascending
         </button>
