@@ -11,8 +11,7 @@ class App extends Component {
         one_day: [
           {
             id: 1,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "DPD",
             data: [
               {
@@ -39,8 +38,7 @@ class App extends Component {
           },
           {
             id: 2,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "UPS",
             data: [
               {
@@ -67,8 +65,7 @@ class App extends Component {
           },
           {
             id: 3,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "Hermes",
             data: [
               {
@@ -97,8 +94,7 @@ class App extends Component {
         two_days: [
           {
             id: 1,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "DPD",
             data: [
               {
@@ -115,8 +111,7 @@ class App extends Component {
           },
           {
             id: 2,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "UPS",
             data: [
               {
@@ -144,8 +139,7 @@ class App extends Component {
           },
           {
             id: 3,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "Hermes",
             data: [
               {
@@ -184,8 +178,7 @@ class App extends Component {
         over_two_days: [
           {
             id: 1,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "DPD",
             data: [
               {
@@ -202,8 +195,7 @@ class App extends Component {
           },
           {
             id: 2,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "UPS",
             data: [
               {
@@ -225,8 +217,7 @@ class App extends Component {
           },
           {
             id: 3,
-            priceMin: "",
-            priceMax: "",
+            price: "",
             courier: "Hermes",
             data: [
               {
@@ -360,27 +351,17 @@ class App extends Component {
 
   sortingBy(e) {
     let output = {};
-    let priceMin = 0;
-    let priceMax = 0;
+    let price = 0;
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
         curier.data.sort(this.dynamicSort(e));
-        console.log(curier);
-
-        priceMin = curier.data[0].price;
-        priceMax = curier.data[curier.data.length - 1].price;
         if (e === "-price") {
-          curier.priceMin = priceMax;
-          curier.priceMax = priceMin;
-        } else {
-          curier.priceMin = priceMin;
-          curier.priceMax = priceMax;
+          price = curier.data[curier.data.length - 1].price;
+        } else if (e === "price") {
+          price = curier.data[0].price;
         }
-
-        // courierOutput = Object.assign({}, curier, {
-        //   price: price
-        // });
+        curier.price = price;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
 
@@ -422,8 +403,7 @@ class App extends Component {
                     <div className="app_singleCurier">
                       <p>
                         <b>
-                          {result.courier}, from £{result.priceMin} to £
-                          {result.priceMax}
+                          {result.courier}, from: £{result.price}
                         </b>
                       </p>
                       <div>
