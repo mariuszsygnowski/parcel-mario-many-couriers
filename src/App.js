@@ -27,6 +27,11 @@ class App extends Component {
                 company_name: "parcelmonkey",
                 id: 17,
                 price: "20.11"
+              },
+              {
+                company_name: "Pd",
+                id: 17,
+                price: "22.41"
               }
             ]
           },
@@ -118,6 +123,12 @@ class App extends Component {
                 id: 17,
                 price: "17.55"
               },
+
+              {
+                company_name: "PDP",
+                id: 17,
+                price: "18.61"
+              },
               {
                 company_name: "Pd",
                 id: 17,
@@ -159,6 +170,89 @@ class App extends Component {
                 company_name: "parcelmario",
                 id: 17,
                 price: "21.13"
+              }
+            ]
+          }
+        ],
+        over_two_days: [
+          {
+            id: 1,
+            price: "18.11",
+            courier: "DPD",
+            data: [
+              {
+                company_name: "interparcel",
+                id: 17,
+                price: "20.10"
+              },
+              {
+                company_name: "parcelmonkey",
+                id: 17,
+                price: "18.11"
+              }
+            ]
+          },
+          {
+            id: 2,
+            price: "17.55",
+            courier: "UPS",
+            data: [
+              {
+                company_name: "interparcel",
+                id: 17,
+                price: "23.44"
+              },
+              {
+                company_name: "parcelmonkey",
+                id: 17,
+                price: "17.55"
+              },
+              {
+                company_name: "Pd",
+                id: 17,
+                price: "23.00"
+              }
+            ]
+          },
+          {
+            id: 3,
+            price: "11.02",
+            courier: "Hermes",
+            data: [
+              {
+                company_name: "p2g",
+                id: 17,
+                price: "14.41"
+              },
+              {
+                company_name: "interparcel",
+                id: 17,
+                price: "15.11"
+              },
+              {
+                company_name: "PDP",
+                id: 17,
+                price: "12.61"
+              },
+              {
+                company_name: "parcelmonkey",
+                id: 17,
+                price: "11.02"
+              },
+              {
+                company_name: "Pd",
+                id: 17,
+                price: "12.90"
+              },
+              {
+                company_name: "inter",
+                id: 17,
+                price: "13.99"
+              },
+              {
+                company_name: "parcelmario",
+                id: 17,
+                price: "16.13"
               }
             ]
           }
