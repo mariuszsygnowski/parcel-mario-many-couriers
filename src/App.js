@@ -6,11 +6,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      minOrMax: "",
       quotes: {
         one_day: [
           {
             id: 1,
-            price: "20.11",
+            priceMin: "",
+            priceMax: "",
             courier: "DPD",
             data: [
               {
@@ -37,7 +39,8 @@ class App extends Component {
           },
           {
             id: 2,
-            price: "19.00",
+            priceMin: "",
+            priceMax: "",
             courier: "UPS",
             data: [
               {
@@ -64,7 +67,8 @@ class App extends Component {
           },
           {
             id: 3,
-            price: "22.00",
+            priceMin: "",
+            priceMax: "",
             courier: "Hermes",
             data: [
               {
@@ -93,7 +97,8 @@ class App extends Component {
         two_days: [
           {
             id: 1,
-            price: "18.11",
+            priceMin: "",
+            priceMax: "",
             courier: "DPD",
             data: [
               {
@@ -110,7 +115,8 @@ class App extends Component {
           },
           {
             id: 2,
-            price: "17.55",
+            priceMin: "",
+            priceMax: "",
             courier: "UPS",
             data: [
               {
@@ -138,7 +144,8 @@ class App extends Component {
           },
           {
             id: 3,
-            price: "18.02",
+            priceMin: "",
+            priceMax: "",
             courier: "Hermes",
             data: [
               {
@@ -177,7 +184,8 @@ class App extends Component {
         over_two_days: [
           {
             id: 1,
-            price: "18.11",
+            priceMin: "",
+            priceMax: "",
             courier: "DPD",
             data: [
               {
@@ -194,7 +202,8 @@ class App extends Component {
           },
           {
             id: 2,
-            price: "17.55",
+            priceMin: "",
+            priceMax: "",
             courier: "UPS",
             data: [
               {
@@ -216,7 +225,8 @@ class App extends Component {
           },
           {
             id: 3,
-            price: "11.02",
+            priceMin: "",
+            priceMax: "",
             courier: "Hermes",
             data: [
               {
@@ -350,10 +360,27 @@ class App extends Component {
 
   sortingBy(e) {
     let output = {};
+    let priceMin = 0;
+    let priceMax = 0;
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
         curier.data.sort(this.dynamicSort(e));
+        console.log(curier);
+
+        priceMin = curier.data[0].price;
+        priceMax = curier.data[curier.data.length - 1].price;
+        if (e === "-price") {
+          curier.priceMin = priceMax;
+          curier.priceMax = priceMin;
+        } else {
+          curier.priceMin = priceMin;
+          curier.priceMax = priceMax;
+        }
+
+        // courierOutput = Object.assign({}, curier, {
+        //   price: price
+        // });
       });
       output = Object.assign(output, { [item[0]]: item[1] });
 
@@ -395,7 +422,8 @@ class App extends Component {
                     <div className="app_singleCurier">
                       <p>
                         <b>
-                          {result.courier}, minimum: £{result.price}
+                          {result.courier}, from £{result.priceMin} to £
+                          {result.priceMax}
                         </b>
                       </p>
                       <div>
