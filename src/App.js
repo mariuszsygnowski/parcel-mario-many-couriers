@@ -258,30 +258,18 @@ class App extends Component {
     let output = {};
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
+        //sorting inside each courier via searching company
         curier.data.sort(this.dynamicSort(e));
       });
       output = Object.assign(output, { [item[0]]: item[1] });
+
+      //sorting via each courier
       output[item[0]].sort(this.dynamicSort(e));
     });
 
     this.setState({
       quotes: output
     });
-
-    // const sortedArrayOneDay = this.state.quotes.one_day.sort((a, b) =>
-    //   a[0].price > b[0].price ? 1 : -1
-    // );
-    // console.log(sortedArrayOneDay);
-    Object.values(this.state.quotes).forEach((curier, index) => {
-      // console.log(curier);
-      // const sortedArrayOneDay = curier.sort(this.dynamicSort(e));
-      // console.log(sortedArrayOneDay);
-      // this.state.quotes.one_day.sort((a, b) => (a.price > b.price ? 1 : -1));
-      // curier.sort(this.dynamicSort(e));
-    });
-
-    // console.log("output", sortedObject);
-    // console.log("state", this.state.quotes.one_day);
   }
 
   render() {
