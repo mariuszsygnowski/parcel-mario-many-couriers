@@ -6,257 +6,227 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      minOrMax: "",
       quotes: {
         one_day: [
-          {
-            id: 1,
-            price: "",
-            courier: "DPD",
-            data: [
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "21.11"
-              },
-              {
-                company_name: "p2g",
-                id: 17,
-                price: "23.11"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "20.11"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "22.41"
-              }
-            ]
-          },
-          {
-            id: 2,
-            price: "",
-            courier: "UPS",
-            data: [
-              {
-                company_name: "p2g",
-                id: 17,
-                price: "33.11"
-              },
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "25.11"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "19.00"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "24.00"
-              }
-            ]
-          },
-          {
-            id: 3,
-            price: "",
-            courier: "Hermes",
-            data: [
-              {
-                company_name: "p2g",
-                id: 17,
-                price: "22.11"
-              },
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "25.11"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "22.00"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "26.00"
-              }
-            ]
-          }
+          // {
+          //   price: "",
+          //   courier: "dpd",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "21.11"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "20.11"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "22.41"
+          //     }
+          //   ]
+          // },
+          // {
+          //   price: "",
+          //   courier: "ups",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "25.11"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "19.00"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "24.00"
+          //     }
+          //   ]
+          // },
+          // {
+          //   price: "",
+          //   courier: "hermes",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "25.11"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "22.00"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "26.00"
+          //     }
+          //   ]
+          // }
         ],
         two_days: [
-          {
-            id: 1,
-            price: "",
-            courier: "DPD",
-            data: [
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "20.10"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "18.11"
-              }
-            ]
-          },
-          {
-            id: 2,
-            price: "",
-            courier: "UPS",
-            data: [
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "23.44"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "17.55"
-              },
-
-              {
-                company_name: "PDP",
-                id: 17,
-                price: "18.61"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "23.00"
-              }
-            ]
-          },
-          {
-            id: 3,
-            price: "",
-            courier: "Hermes",
-            data: [
-              {
-                company_name: "p2g",
-                id: 17,
-                price: "19.41"
-              },
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "20.11"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "18.02"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "19.90"
-              },
-              {
-                company_name: "inter",
-                id: 17,
-                price: "19.99"
-              },
-              {
-                company_name: "parcelmario",
-                id: 17,
-                price: "21.13"
-              }
-            ]
-          }
+          // {
+          //   id: 1,
+          //   price: "",
+          //   courier: "dpd",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "20.10"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "18.11"
+          //     }
+          //   ]
+          // },
+          // {
+          //   id: 2,
+          //   price: "",
+          //   courier: "ups",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "23.44"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "17.55"
+          //     },
+          //     {
+          //       company_name: "PDP",
+          //       id: 17,
+          //       price: "18.61"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "23.00"
+          //     }
+          //   ]
+          // },
+          // {
+          //   id: 3,
+          //   price: "",
+          //   courier: "hermes",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "20.11"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "18.02"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "19.90"
+          //     },
+          //     {
+          //       company_name: "inter",
+          //       id: 17,
+          //       price: "19.99"
+          //     },
+          //     {
+          //       company_name: "parcelmario",
+          //       id: 17,
+          //       price: "21.13"
+          //     }
+          //   ]
+          // }
         ],
         over_two_days: [
-          {
-            id: 1,
-            price: "",
-            courier: "DPD",
-            data: [
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "20.10"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "18.11"
-              }
-            ]
-          },
-          {
-            id: 2,
-            price: "",
-            courier: "UPS",
-            data: [
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "23.44"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "17.55"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "23.00"
-              }
-            ]
-          },
-          {
-            id: 3,
-            price: "",
-            courier: "Hermes",
-            data: [
-              {
-                company_name: "p2g",
-                id: 17,
-                price: "14.41"
-              },
-              {
-                company_name: "interparcel",
-                id: 17,
-                price: "15.11"
-              },
-              {
-                company_name: "PDP",
-                id: 17,
-                price: "12.61"
-              },
-              {
-                company_name: "parcelmonkey",
-                id: 17,
-                price: "11.02"
-              },
-              {
-                company_name: "Pd",
-                id: 17,
-                price: "12.90"
-              },
-              {
-                company_name: "inter",
-                id: 17,
-                price: "13.99"
-              },
-              {
-                company_name: "parcelmario",
-                id: 17,
-                price: "16.13"
-              }
-            ]
-          }
+          // {
+          //   id: 1,
+          //   price: "",
+          //   courier: "dpd",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "20.10"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "18.11"
+          //     }
+          //   ]
+          // },
+          // {
+          //   id: 2,
+          //   price: "",
+          //   courier: "ups",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "23.44"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "17.55"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "23.00"
+          //     }
+          //   ]
+          // },
+          // {
+          //   id: 3,
+          //   price: "",
+          //   courier: "hermes",
+          //   data: [
+          //     {
+          //       company_name: "interparcel",
+          //       id: 17,
+          //       price: "15.11"
+          //     },
+          //     {
+          //       company_name: "PDP",
+          //       id: 17,
+          //       price: "12.61"
+          //     },
+          //     {
+          //       company_name: "parcelmonkey",
+          //       id: 17,
+          //       price: "11.02"
+          //     },
+          //     {
+          //       company_name: "Pd",
+          //       id: 17,
+          //       price: "12.90"
+          //     },
+          //     {
+          //       company_name: "inter",
+          //       id: 17,
+          //       price: "13.99"
+          //     },
+          //     {
+          //       company_name: "parcelmario",
+          //       id: 17,
+          //       price: "16.13"
+          //     }
+          //   ]
+          // }
         ]
       }
     };
@@ -301,34 +271,97 @@ class App extends Component {
           // console.log(body);
           // let one_day_array = [...this.state.quotes.one_day];
           // let two_days_array = [...this.state.quotes.two_days];
-          body.forEach(result => {
-            if (result.courier_delivery_time === "one_day") {
-              // console.log(result);
-              let obj = {
-                company_name: result.company_name,
-                courier: result.courier_name,
-                id: result.id,
-                price: result.price
-              };
-              console.log(obj);
-              Object.values(result).forEach(item => {
-                // console.log(item);
+          body.forEach(res => {
+            const deliveryTime = ["one_day", "two_days", "over_two_days"];
+            // deliveryTime.forEach(dalivery => {
+
+            // })
+            if (res.courier_delivery_time === "one_day") {
+              // console.log(res);
+              const courierName = res.courier_name.toLowerCase();
+              const dataOneDay = this.state.quotes.one_day.find(function(ele) {
+                return ele.courier === courierName;
               });
-              // one_day_array = [...one_day_array, result];
-            } else if (result.courier_delivery_time === "two_days") {
-              // console.log(result);
-              // two_days_array = [...two_days_array, result];
+
+              if (dataOneDay) {
+                // console.log(dataOneDay);
+                dataOneDay.data.push({
+                  company_name: res.company_name.toLowerCase(),
+                  price: res.price
+                });
+              } else {
+                this.state.quotes.one_day.push({
+                  price: res.price,
+                  courier: res.courier_name.toLowerCase(),
+                  data: [
+                    {
+                      company_name: res.company_name.toLowerCase(),
+                      price: res.price
+                    }
+                  ]
+                });
+              }
+            } else if (res.courier_delivery_time === "two_days") {
+              // console.log(res);
+              let courierName = res.courier_name.toLowerCase();
+              var dataTwoDays = this.state.quotes.two_days.find(function(ele) {
+                return ele.courier === courierName;
+              });
+
+              if (dataTwoDays) {
+                // console.log(dataTwoDays);
+                dataTwoDays.data.push({
+                  company_name: res.company_name,
+                  id: 17,
+                  price: res.price
+                });
+              } else {
+                this.state.quotes.two_days.push({
+                  price: res.price,
+                  courier: res.courier_name.toLowerCase(),
+                  data: [
+                    {
+                      company_name: res.company_name.toLowerCase(),
+                      price: res.price
+                    }
+                  ]
+                });
+              }
+            } else if (res.courier_delivery_time === "over_two_days") {
+              // console.log(res);
+              let courierName = res.courier_name.toLowerCase();
+              var dataOverTwoDays = this.state.quotes.over_two_days.find(
+                function(ele) {
+                  return ele.courier === courierName;
+                }
+              );
+
+              if (dataOverTwoDays) {
+                // console.log(data);
+                dataOverTwoDays.data.push({
+                  company_name: res.company_name.toLowerCase(),
+                  id: 17,
+                  price: res.price
+                });
+              } else {
+                this.state.quotes.over_two_days.push({
+                  price: res.price,
+                  courier: res.courier_name.toLowerCase(),
+                  data: [
+                    {
+                      company_name: res.company_name.toLowerCase(),
+                      price: res.price
+                    }
+                  ]
+                });
+              }
             }
           });
-          // this.setState({
-          //   quotes: {
-          //     one_day: one_day_array,
-          //     two_days: two_days_array
-          //   },
-          //   searching: "found"
-          // });
+
+          this.sortingBy("price");
+          console.log(this.state.quotes);
         } else {
-          // res.json({ error: "no body after respond" });
+          console.log("no body after respond /api/results");
         }
       })
       .catch(error => {
@@ -375,9 +408,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.test} disabled>
-          search button
-        </button>
+        <button onClick={this.test}>search button</button>
         <button onClick={() => this.sortingBy("price")}>
           sort by price ascending
         </button>
