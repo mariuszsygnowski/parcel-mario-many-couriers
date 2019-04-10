@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.post("/api/getToken", (req, res) => {
+  //now everything is hard coded but later will be passed all data
   fetch("https://www.parcel2go.com/auth/connect/token", {
     method: "POST",
     headers: {

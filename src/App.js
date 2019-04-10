@@ -269,8 +269,7 @@ class App extends Component {
       .then(body => {
         if (body) {
           // console.log(body);
-          // let one_day_array = [...this.state.quotes.one_day];
-          // let two_days_array = [...this.state.quotes.two_days];
+
           this.setState({
             quotes: {
               one_day: [],
@@ -364,9 +363,10 @@ class App extends Component {
               }
             }
           });
-
+          //I always sort by "price a-z" inside each courier as
+          //what is a reason to know highest price from each parcel courier
+          //But even I will change my mnid is easy to add that feature
           this.sortingBy("price");
-          console.log(this.state.quotes);
         } else {
           console.log("no body after respond /api/results");
         }
@@ -396,8 +396,6 @@ class App extends Component {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
 
-        //sorting always inside courier by price from low to high
-        curier.data.sort(this.dynamicSort("price"));
         minPrice = curier.data[0].price;
         curier.price = minPrice;
       });
