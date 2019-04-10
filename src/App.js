@@ -410,10 +410,16 @@ class App extends Component {
       <div>
         <button onClick={this.test}>search button</button>
         <button onClick={() => this.sortingBy("price")}>
-          sort by price ascending
+          sort by price low to high
         </button>
         <button onClick={() => this.sortingBy("-price")}>
-          sort by price descending
+          sort by price high to low
+        </button>
+        <button onClick={() => this.sortingBy("courier")}>
+          sort by name a-z
+        </button>
+        <button onClick={() => this.sortingBy("-courier")}>
+          sort by name z-a
         </button>
 
         <div className="app__singleBox">
