@@ -271,6 +271,13 @@ class App extends Component {
           // console.log(body);
           // let one_day_array = [...this.state.quotes.one_day];
           // let two_days_array = [...this.state.quotes.two_days];
+          this.setState({
+            quotes: {
+              one_day: [],
+              two_days: [],
+              over_two_days: []
+            }
+          });
           body.forEach(res => {
             const deliveryTime = ["one_day", "two_days", "over_two_days"];
             // deliveryTime.forEach(dalivery => {
