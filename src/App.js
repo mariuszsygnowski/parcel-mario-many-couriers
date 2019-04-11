@@ -126,8 +126,8 @@ class App extends Component {
                     }
                   })
                     .then(response => response.json())
-                    .then(body => {
-                      if (body) {
+                    .then(bodySearch => {
+                      if (bodySearch) {
                         //get a results from database
                         fetch("/api/results", {
                           method: "POST",
@@ -139,8 +139,8 @@ class App extends Component {
                           }
                         })
                           .then(response => response.json())
-                          .then(body => {
-                            if (body) {
+                          .then(bodyResult => {
+                            if (bodyResult) {
                               //reset to default values results
                               this.setState({
                                 quotes: {
@@ -149,11 +149,13 @@ class App extends Component {
                                   over_two_days: []
                                 }
                               });
-
                               //itarate over results from database
-                              body.forEach(res => {
-                                if (res.courier_delivery_time === "one_day") {
-                                  const courierName = res.courier_name.toLowerCase();
+                              bodyResult.forEach(resBodyResult => {
+                                if (
+                                  resBodyResult.courier_delivery_time ===
+                                  "one_day"
+                                ) {
+                                  const courierName = resBodyResult.courier_name.toLowerCase();
 
                                   //looking if courier name exist in array this.state.quotes.one_day
                                   const dataOneDay = this.state.quotes.one_day.find(
@@ -165,20 +167,22 @@ class App extends Component {
                                   //if exist then I just add new data
                                   if (dataOneDay) {
                                     dataOneDay.data.push({
-                                      company_name: res.company_name.toLowerCase(),
-                                      service_name: res.service_name.toLowerCase(),
-                                      price: res.price
+                                      id: resBodyResult.id,
+                                      company_name: resBodyResult.company_name.toLowerCase(),
+                                      service_name: resBodyResult.service_name.toLowerCase(),
+                                      price: resBodyResult.price
                                     });
                                   } else {
                                     //if not then I crate object plus add first entry into data
                                     this.state.quotes.one_day.push({
-                                      price: res.price,
-                                      courier: res.courier_name.toLowerCase(),
+                                      price: resBodyResult.price,
+                                      courier: resBodyResult.courier_name.toLowerCase(),
                                       data: [
                                         {
-                                          company_name: res.company_name.toLowerCase(),
-                                          service_name: res.service_name.toLowerCase(),
-                                          price: res.price
+                                          id: resBodyResult.id,
+                                          company_name: resBodyResult.company_name.toLowerCase(),
+                                          service_name: resBodyResult.service_name.toLowerCase(),
+                                          price: resBodyResult.price
                                         }
                                       ]
                                     });
@@ -187,11 +191,12 @@ class App extends Component {
                                   //I need to repeat for each delivery time
                                   //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
                                   //and itarate over this array, but when I pass into function respond
-                                  //I got an error, I tride to do new Function but still there is some issues
+                                  //I got an error, I tried to do new Function but still there is some issues
                                   //later I will do something more universal
-                                  res.courier_delivery_time === "two_days"
+                                  resBodyResult.courier_delivery_time ===
+                                  "two_days"
                                 ) {
-                                  let courierName = res.courier_name.toLowerCase();
+                                  let courierName = resBodyResult.courier_name.toLowerCase();
                                   var dataTwoDays = this.state.quotes.two_days.find(
                                     function(ele) {
                                       return ele.courier === courierName;
@@ -200,27 +205,30 @@ class App extends Component {
 
                                   if (dataTwoDays) {
                                     dataTwoDays.data.push({
-                                      company_name: res.company_name,
-                                      service_name: res.service_name.toLowerCase(),
-                                      price: res.price
+                                      id: resBodyResult.id,
+                                      company_name: resBodyResult.company_name,
+                                      service_name: resBodyResult.service_name.toLowerCase(),
+                                      price: resBodyResult.price
                                     });
                                   } else {
                                     this.state.quotes.two_days.push({
-                                      price: res.price,
-                                      courier: res.courier_name.toLowerCase(),
+                                      price: resBodyResult.price,
+                                      courier: resBodyResult.courier_name.toLowerCase(),
                                       data: [
                                         {
-                                          company_name: res.company_name.toLowerCase(),
-                                          service_name: res.service_name.toLowerCase(),
-                                          price: res.price
+                                          id: resBodyResult.id,
+                                          company_name: resBodyResult.company_name.toLowerCase(),
+                                          service_name: resBodyResult.service_name.toLowerCase(),
+                                          price: resBodyResult.price
                                         }
                                       ]
                                     });
                                   }
                                 } else if (
-                                  res.courier_delivery_time === "over_two_days"
+                                  resBodyResult.courier_delivery_time ===
+                                  "over_two_days"
                                 ) {
-                                  let courierName = res.courier_name.toLowerCase();
+                                  let courierName = resBodyResult.courier_name.toLowerCase();
                                   var dataOverTwoDays = this.state.quotes.over_two_days.find(
                                     function(ele) {
                                       return ele.courier === courierName;
@@ -229,19 +237,21 @@ class App extends Component {
 
                                   if (dataOverTwoDays) {
                                     dataOverTwoDays.data.push({
-                                      company_name: res.company_name.toLowerCase(),
-                                      service_name: res.service_name.toLowerCase(),
-                                      price: res.price
+                                      id: resBodyResult.id,
+                                      company_name: resBodyResult.company_name.toLowerCase(),
+                                      service_name: resBodyResult.service_name.toLowerCase(),
+                                      price: resBodyResult.price
                                     });
                                   } else {
                                     this.state.quotes.over_two_days.push({
-                                      price: res.price,
-                                      courier: res.courier_name.toLowerCase(),
+                                      price: resBodyResult.price,
+                                      courier: resBodyResult.courier_name.toLowerCase(),
                                       data: [
                                         {
-                                          company_name: res.company_name.toLowerCase(),
-                                          service_name: res.service_name.toLowerCase(),
-                                          price: res.price
+                                          id: resBodyResult.id,
+                                          company_name: resBodyResult.company_name.toLowerCase(),
+                                          service_name: resBodyResult.service_name.toLowerCase(),
+                                          price: resBodyResult.price
                                         }
                                       ]
                                     });
@@ -348,14 +358,11 @@ class App extends Component {
                 {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
+
                   const resultPrice = Number(result.price).toFixed(2);
                   return (
                     <div
-                      key={
-                        result.courier +
-                        result.data[0].service_name +
-                        result.data[0].company_name
-                      }
+                      key={result.courier + result.data[0].id}
                       className="app_singleCurier"
                     >
                       <p>
@@ -370,9 +377,7 @@ class App extends Component {
                           const resPrice = Number(res.price).toFixed(2);
                           return (
                             <div
-                              key={
-                                res.company_name + res.service_name + res.price
-                              }
+                              key={res.id}
                               className="app_singleRespond--eachCourier"
                             >
                               <p>{res.company_name}</p>

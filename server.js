@@ -87,17 +87,6 @@ app.post("/api/p2g", (req, res) => {
     });
 });
 
-app.post("/api/results", function(req, res) {
-  const { unique_search_id } = req.body;
-  db.any(`SELECT * FROM results WHERE unique_search_id=$1 ORDER BY price ASC`, [
-    unique_search_id
-  ])
-    .then(response => res.json(response))
-    .catch(error => {
-      res.json({ error: error.message });
-    });
-});
-
 app.get("/api/key", function(req, res) {
   db.any("SELECT MAX(unique_search_id) FROM results")
     .then(response => res.json(response))
@@ -127,6 +116,17 @@ app.post("/api/search", function(req, res) {
     .then(data => {
       res.json(data);
     })
+    .catch(error => {
+      res.json({ error: error.message });
+    });
+});
+
+app.post("/api/results", function(req, res) {
+  const { unique_search_id } = req.body;
+  db.any(`SELECT * FROM results WHERE unique_search_id=$1 ORDER BY price ASC`, [
+    unique_search_id
+  ])
+    .then(response => res.json(response))
     .catch(error => {
       res.json({ error: error.message });
     });
