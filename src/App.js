@@ -263,6 +263,7 @@ class App extends Component {
                   } else if (res.Service.Classification === "Slow") {
                     deliveryTime = "over_two_days";
                   }
+                  console.log(res.Service.Classification);
 
                   //insering into databas results from bodyGetP2g
                   fetch("/api/search", {
@@ -306,9 +307,7 @@ class App extends Component {
 
                               //itarate over results from database
                               body.forEach(res => {
-                                if (
-                                  res.courier_delivery_time === "over_two_days"
-                                ) {
+                                if (res.courier_delivery_time === "one_day") {
                                   const courierName = res.courier_name.toLowerCase();
 
                                   //looking if courier name exist in array this.state.quotes.one_day
