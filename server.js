@@ -76,16 +76,14 @@ app.post("/api/p2g", (req, res) => {
             }
           })
           .catch(error => {
-            res.json(error);
-            console.log("Server failed to return data: " + error);
+            res.json({ error: error.message });
           });
       } else {
         res.json({ error: "no body after respond" });
       }
     })
     .catch(error => {
-      res.json(error);
-      console.log("Server failed to return data: " + error);
+      res.json({ error: error.message });
     });
 });
 
@@ -118,24 +116,19 @@ app.post("/api/search", function(req, res) {
     price
   } = req.body;
 
-  db.one(
-    `INSERT INTO results(id, unique_search_id, company_name, courier_name, courier_delivery_time, service_name, price) VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)`,
-    [
-      unique_search_id,
-      company_name,
-      courier_name,
-      courier_delivery_time,
-      service_name,
-      price
-    ]
-  )
+  db.one(`INSERT INTO results VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)`, [
+    unique_search_id,
+    company_name,
+    courier_name,
+    courier_delivery_time,
+    service_name,
+    price
+  ])
     .then(data => {
       res.json(data);
     })
     .catch(error => {
-      res.json({
-        error: error.message
-      });
+      res.json({ error: error.message });
     });
 });
 

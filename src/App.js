@@ -73,162 +73,8 @@ class App extends Component {
           //   ]
           // }
         ],
-        two_days: [
-          // {
-          //   id: 1,
-          //   price: "",
-          //   courier: "dpd",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "20.10"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "18.11"
-          //     }
-          //   ]
-          // },
-          // {
-          //   id: 2,
-          //   price: "",
-          //   courier: "ups",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "23.44"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "17.55"
-          //     },
-          //     {
-          //       company_name: "PDP",
-          //       id: 17,
-          //       price: "18.61"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "23.00"
-          //     }
-          //   ]
-          // },
-          // {
-          //   id: 3,
-          //   price: "",
-          //   courier: "hermes",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "20.11"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "18.02"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "19.90"
-          //     },
-          //     {
-          //       company_name: "inter",
-          //       id: 17,
-          //       price: "19.99"
-          //     },
-          //     {
-          //       company_name: "parcelmario",
-          //       id: 17,
-          //       price: "21.13"
-          //     }
-          //   ]
-          // }
-        ],
-        over_two_days: [
-          // {
-          //   id: 1,
-          //   price: "",
-          //   courier: "dpd",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "20.10"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "18.11"
-          //     }
-          //   ]
-          // },
-          // {
-          //   id: 2,
-          //   price: "",
-          //   courier: "ups",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "23.44"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "17.55"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "23.00"
-          //     }
-          //   ]
-          // },
-          // {
-          //   id: 3,
-          //   price: "",
-          //   courier: "hermes",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "15.11"
-          //     },
-          //     {
-          //       company_name: "PDP",
-          //       id: 17,
-          //       price: "12.61"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "11.02"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "12.90"
-          //     },
-          //     {
-          //       company_name: "inter",
-          //       id: 17,
-          //       price: "13.99"
-          //     },
-          //     {
-          //       company_name: "parcelmario",
-          //       id: 17,
-          //       price: "16.13"
-          //     }
-          //   ]
-          // }
-        ]
+        two_days: [],
+        over_two_days: []
       }
     };
     autoBind(this);
@@ -263,7 +109,6 @@ class App extends Component {
                   } else if (res.Service.Classification === "Slow") {
                     deliveryTime = "over_two_days";
                   }
-                  console.log(res.Service.Classification);
 
                   //insering into databas results from bodyGetP2g
                   fetch("/api/search", {
@@ -460,7 +305,6 @@ class App extends Component {
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
-        // console.log(isNumber(curier.data[0].price));
         minPrice = Number(curier.data[0].price);
         curier.price = minPrice;
       });
@@ -502,11 +346,10 @@ class App extends Component {
             return (
               <div className="app__days">
                 <p>{item[0]}</p>
-                {item[1].map((result, index) => {
+                {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-                  let resultPrice = result.price;
-                  resultPrice = resultPrice.toFixed(2);
+                  const resultPrice = Number(result.price).toFixed(2);
                   return (
                     <div className="app_singleCurier">
                       <p>
@@ -518,9 +361,7 @@ class App extends Component {
                         {result.data.map(res => {
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
-                          let resPrice = Number(res.price);
-                          resPrice = resPrice.toFixed(2);
-
+                          const resPrice = Number(res.price).toFixed(2);
                           return (
                             <div className="app_singleRespond--eachCourier">
                               <p>{res.company_name}</p>
