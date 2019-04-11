@@ -342,16 +342,22 @@ class App extends Component {
             //example: (3) [{…}, {…}, {…}]
             //item[0] is "one_day" or "two_days"...
             //item[1] is array with data
-
             return (
-              <div className="app__days">
+              <div key={item[0]} className="app__days">
                 <p>{item[0]}</p>
                 {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   const resultPrice = Number(result.price).toFixed(2);
                   return (
-                    <div className="app_singleCurier">
+                    <div
+                      key={
+                        result.courier +
+                        result.data[0].service_name +
+                        result.data[0].company_name
+                      }
+                      className="app_singleCurier"
+                    >
                       <p>
                         <b>
                           {result.courier}, from: £{resultPrice}
@@ -363,7 +369,12 @@ class App extends Component {
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
                           const resPrice = Number(res.price).toFixed(2);
                           return (
-                            <div className="app_singleRespond--eachCourier">
+                            <div
+                              key={
+                                res.company_name + res.service_name + res.price
+                              }
+                              className="app_singleRespond--eachCourier"
+                            >
                               <p>{res.company_name}</p>
                               <p>Service: {res.service_name}</p>
                               <p>Price: £{resPrice} inc VAT</p>
