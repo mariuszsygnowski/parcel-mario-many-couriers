@@ -460,7 +460,8 @@ class App extends Component {
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
-        minPrice = curier.data[0].price;
+        // console.log(isNumber(curier.data[0].price));
+        minPrice = Number(curier.data[0].price);
         curier.price = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
@@ -504,23 +505,27 @@ class App extends Component {
                 {item[1].map((result, index) => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-
+                  let resultPrice = result.price;
+                  resultPrice = resultPrice.toFixed(2);
                   return (
                     <div className="app_singleCurier">
                       <p>
                         <b>
-                          {result.courier}, from: £{result.price}
+                          {result.courier}, from: £{resultPrice}
                         </b>
                       </p>
                       <div className="app_singleRespond">
                         {result.data.map(res => {
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
+                          let resPrice = Number(res.price);
+                          resPrice = resPrice.toFixed(2);
+
                           return (
                             <div className="app_singleRespond--eachCourier">
                               <p>{res.company_name}</p>
                               <p>Service: {res.service_name}</p>
-                              <p>Price: £{res.price} inc VAT</p>
+                              <p>Price: £{resPrice} inc VAT</p>
                             </div>
                           );
                         })}
