@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import autoBind from "react-autobind";
 import "./App.css";
 import SingleBox from "./components/SingleBox";
 
@@ -231,35 +232,225 @@ class App extends Component {
       }
     };
     // this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
-    this.test = this.test.bind(this);
-    this.sortingBy = this.sortingBy.bind(this);
-    this.dynamicSort = this.dynamicSort.bind(this);
+    autoBind(this);
   }
 
-  // fetchCurrentBasket() {
-  //   this.setState({
-  //     searching: "searching"
-  //   });
-  //   fetch("/api/getToken", {
-  //     method: "POST"
-  //   })
-  //     .then(response => response.json())
-  //     .then(body => {
-  //       if (body) {
-  //         this.setState({
-  //           quotes: {
-  //             p2g: body
-  //           },
-  //           searching: "found"
-  //         });
-  //       } else {
-  //         // res.json({ error: "no body after respond" });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log("Server failed to return data: " + error);
-  //     });
-  // }
+  fetchCurrentBasket() {
+    fetch("/api/p2g", {
+      method: "POST"
+    })
+      .then(response => response.json())
+      .then(bodyGetP2g => {
+        if (bodyGetP2g) {
+          // this.setState({
+          //   searchingId: ""
+          // });
+          // console.log(body);
+
+          fetch("/api/key", {
+            method: "GET"
+          })
+            .then(response => response.json())
+            .then(bodyKey => {
+              if (bodyKey) {
+                const key = Number(bodyKey[0].max) + 1;
+                // console.log(bodyGetP2g);
+                bodyGetP2g.forEach(res => {
+                  console.log(res);
+                  let deliveryTime = "unkonow";
+                  if (res.Service.Classification === "Fast") {
+                    deliveryTime = "one_day";
+                  } else if (res.Service.Classification === "Medium") {
+                    deliveryTime = "two_days";
+                  } else if (res.Service.Classification === "Slow") {
+                    deliveryTime = "over_two_days";
+                  }
+                  // console.log(key);
+                  fetch("/api/search", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      unique_search_id: key,
+                      company_name: "p2g",
+                      courier_name: res.Service.CourierName,
+                      courier_delivery_time: deliveryTime,
+                      price: res.TotalPrice
+                    }),
+                    headers: {
+                      "Content-Type": "application/json"
+                    }
+                  })
+                    .then(response => response.json())
+                    .then(body => {
+                      if (body) {
+                        fetch("/api/results", {
+                          method: "POST",
+                          body: JSON.stringify({
+                            unique_search_id: key
+                          }),
+                          headers: {
+                            "Content-Type": "application/json"
+                          }
+                        })
+                          .then(response => response.json())
+                          .then(body => {
+                            if (body) {
+                              // console.log(body);
+
+                              this.setState({
+                                quotes: {
+                                  one_day: [],
+                                  two_days: [],
+                                  over_two_days: []
+                                }
+                              });
+                              body.forEach(res => {
+                                const deliveryTime = [
+                                  "one_day",
+                                  "two_days",
+                                  "over_two_days"
+                                ];
+                                // deliveryTime.forEach(dalivery => {
+
+                                // })
+                                if (res.courier_delivery_time === "one_day") {
+                                  // console.log(res);
+                                  const courierName = res.courier_name.toLowerCase();
+                                  const dataOneDay = this.state.quotes.one_day.find(
+                                    function(ele) {
+                                      return ele.courier === courierName;
+                                    }
+                                  );
+
+                                  if (dataOneDay) {
+                                    // console.log(dataOneDay);
+                                    dataOneDay.data.push({
+                                      company_name: res.company_name.toLowerCase(),
+                                      price: res.price
+                                    });
+                                  } else {
+                                    this.state.quotes.one_day.push({
+                                      price: res.price,
+                                      courier: res.courier_name.toLowerCase(),
+                                      data: [
+                                        {
+                                          company_name: res.company_name.toLowerCase(),
+                                          price: res.price
+                                        }
+                                      ]
+                                    });
+                                  }
+                                } else if (
+                                  res.courier_delivery_time === "two_days"
+                                ) {
+                                  // console.log(res);
+                                  let courierName = res.courier_name.toLowerCase();
+                                  var dataTwoDays = this.state.quotes.two_days.find(
+                                    function(ele) {
+                                      return ele.courier === courierName;
+                                    }
+                                  );
+
+                                  if (dataTwoDays) {
+                                    // console.log(dataTwoDays);
+                                    dataTwoDays.data.push({
+                                      company_name: res.company_name,
+                                      id: 17,
+                                      price: res.price
+                                    });
+                                  } else {
+                                    this.state.quotes.two_days.push({
+                                      price: res.price,
+                                      courier: res.courier_name.toLowerCase(),
+                                      data: [
+                                        {
+                                          company_name: res.company_name.toLowerCase(),
+                                          price: res.price
+                                        }
+                                      ]
+                                    });
+                                  }
+                                } else if (
+                                  res.courier_delivery_time === "over_two_days"
+                                ) {
+                                  // console.log(res);
+                                  let courierName = res.courier_name.toLowerCase();
+                                  var dataOverTwoDays = this.state.quotes.over_two_days.find(
+                                    function(ele) {
+                                      return ele.courier === courierName;
+                                    }
+                                  );
+
+                                  if (dataOverTwoDays) {
+                                    // console.log(data);
+                                    dataOverTwoDays.data.push({
+                                      company_name: res.company_name.toLowerCase(),
+                                      id: 17,
+                                      price: res.price
+                                    });
+                                  } else {
+                                    this.state.quotes.over_two_days.push({
+                                      price: res.price,
+                                      courier: res.courier_name.toLowerCase(),
+                                      data: [
+                                        {
+                                          company_name: res.company_name.toLowerCase(),
+                                          price: res.price
+                                        }
+                                      ]
+                                    });
+                                  }
+                                }
+                              });
+                              //I always sort by "price a-z" inside each courier as
+                              //what is a reason to know highest price from each parcel courier
+                              //But even I will change my mnid is easy to add that feature
+                              this.sortingBy("price");
+                            } else {
+                              console.log("no body after respond /api/results");
+                            }
+                          })
+                          .catch(error => {
+                            console.log(
+                              "Server failed to return data: " + error
+                            );
+                          });
+                      } else {
+                        // res.json({ error: "no body after respond" });
+                      }
+                    })
+                    .catch(error => {
+                      console.log("Server failed to return data: " + error);
+                    });
+                });
+
+                // this.setState({
+                //   quotes: {
+                //     p2g: body
+                //   },
+                //   searching: "found"
+                // });
+                // console.log(Number(body[0].max) + 1);
+                // this.setState({
+                //   quotes: {
+                //     p2g: body
+                //   },
+                //   searching: "found"
+                // });
+              } else {
+                // res.json({ error: "no body after respond" });
+              }
+            })
+            .catch(error => {
+              console.log("Server failed to return data: " + error);
+            });
+        } else {
+          // res.json({ error: "no body after respond" });
+        }
+      })
+      .catch(error => {
+        console.log("Server failed to return data: " + error);
+      });
+  }
 
   test() {
     fetch("/api/results", {
@@ -413,7 +604,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.test}>search button</button>
+        <button onClick={this.fetchCurrentBasket}>search button</button>
         <button onClick={() => this.sortingBy("price")}>
           sort by price low to high
         </button>

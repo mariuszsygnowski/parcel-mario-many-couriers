@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "build")));
 }
 
-app.post("/api/getToken", (req, res) => {
+app.post("/api/p2g", (req, res) => {
   //now everything is hard coded but later will be passed all data
   fetch("https://www.parcel2go.com/auth/connect/token", {
     method: "POST",
@@ -39,7 +39,7 @@ app.post("/api/getToken", (req, res) => {
     .then(body => {
       if (body) {
         // res.json(body);
-        console.log(body.access_token);
+        // console.log(body.access_token);
         fetch("https://www.parcel2go.com/api/quotes", {
           body: JSON.stringify({
             CollectionAddress: {
@@ -50,10 +50,10 @@ app.post("/api/getToken", (req, res) => {
             },
             Parcels: [
               {
-                Value: 150,
-                Weight: 2,
-                Length: 9,
-                Width: 8,
+                Value: 0,
+                Weight: 10,
+                Length: 10,
+                Width: 10,
                 Height: 10
               }
             ]
@@ -89,13 +89,45 @@ app.post("/api/getToken", (req, res) => {
     });
 });
 
-app.get("/api/results", function(req, res) {
-  db.any(
-    "SELECT * FROM results WHERE unique_search_id='1aa' ORDER BY price ASC"
-  )
+app.post("/api/results", function(req, res) {
+  const { unique_search_id } = req.body;
+  db.any(`SELECT * FROM results WHERE unique_search_id=$1 ORDER BY price ASC`, [
+    unique_search_id
+  ])
     .then(response => res.json(response))
     .catch(error => {
       res.json({ error: error.message });
+    });
+});
+
+app.get("/api/key", function(req, res) {
+  db.any("SELECT MAX(unique_search_id) FROM results")
+    .then(response => res.json(response))
+    .catch(error => {
+      res.json({ error: error.message });
+    });
+});
+
+app.post("/api/search", function(req, res) {
+  const {
+    unique_search_id,
+    company_name,
+    courier_name,
+    courier_delivery_time,
+    price
+  } = req.body;
+
+  db.one(
+    `INSERT INTO results(id, unique_search_id, company_name, courier_name, courier_delivery_time,price) VALUES (DEFAULT, $1, $2, $3, $4, $5)`,
+    [unique_search_id, company_name, courier_name, courier_delivery_time, price]
+  )
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      res.json({
+        error: error.message
+      });
     });
 });
 
