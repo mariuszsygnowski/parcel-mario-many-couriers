@@ -273,6 +273,7 @@ class App extends Component {
                       company_name: "p2g",
                       courier_name: res.Service.CourierName,
                       courier_delivery_time: deliveryTime,
+                      service_name: res.Service.Name,
                       price: res.TotalPrice
                     }),
                     headers: {
@@ -325,6 +326,7 @@ class App extends Component {
                                     // console.log(dataOneDay);
                                     dataOneDay.data.push({
                                       company_name: res.company_name.toLowerCase(),
+                                      service_name: res.service_name.toLowerCase(),
                                       price: res.price
                                     });
                                   } else {
@@ -334,6 +336,7 @@ class App extends Component {
                                       data: [
                                         {
                                           company_name: res.company_name.toLowerCase(),
+                                          service_name: res.service_name.toLowerCase(),
                                           price: res.price
                                         }
                                       ]
@@ -354,7 +357,7 @@ class App extends Component {
                                     // console.log(dataTwoDays);
                                     dataTwoDays.data.push({
                                       company_name: res.company_name,
-                                      id: 17,
+                                      service_name: res.service_name.toLowerCase(),
                                       price: res.price
                                     });
                                   } else {
@@ -364,6 +367,7 @@ class App extends Component {
                                       data: [
                                         {
                                           company_name: res.company_name.toLowerCase(),
+                                          service_name: res.service_name.toLowerCase(),
                                           price: res.price
                                         }
                                       ]
@@ -384,7 +388,7 @@ class App extends Component {
                                     // console.log(data);
                                     dataOverTwoDays.data.push({
                                       company_name: res.company_name.toLowerCase(),
-                                      id: 17,
+                                      service_name: res.service_name.toLowerCase(),
                                       price: res.price
                                     });
                                   } else {
@@ -394,6 +398,7 @@ class App extends Component {
                                       data: [
                                         {
                                           company_name: res.company_name.toLowerCase(),
+                                          service_name: res.service_name.toLowerCase(),
                                           price: res.price
                                         }
                                       ]
@@ -639,14 +644,15 @@ class App extends Component {
                           {result.courier}, from: £{result.price}
                         </b>
                       </p>
-                      <div>
+                      <div className="app_singleRespond">
                         {result.data.map(res => {
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
                           return (
-                            <div>
+                            <div className="app_singleRespond--eachCourier">
                               <p>{res.company_name}</p>
-                              <p>£{res.price}</p>
+                              <p>Service: {res.service_name}</p>
+                              <p>Price: £{res.price} inc VAT</p>
                             </div>
                           );
                         })}

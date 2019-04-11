@@ -4,9 +4,10 @@ CREATE TABLE results (
     company_name VARCHAR(20) NOT NULL,
     courier_name VARCHAR(20) NOT NULL,
     courier_delivery_time VARCHAR(20) NOT NULL,
+    service_name VARCHAR(60) NOT NULL,
     price NUMERIC NOT NULL
 );
-INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 30.24);
+INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 'TNT UK Saturday Express' 30.24);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'PARCELFORCE', 'one_day', 29.99);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'HERMES', 'one_day', 28.77);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'two_days', 25.24);

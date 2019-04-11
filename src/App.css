@@ -55,3 +55,13 @@
     display: grid;
     border: solid red;
 }
+
+.app_singleRespond {
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.app_singleRespond--eachCourier {
+    display: grid;
+    border: solid blue;
+}

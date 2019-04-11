@@ -114,12 +114,20 @@ app.post("/api/search", function(req, res) {
     company_name,
     courier_name,
     courier_delivery_time,
+    service_name,
     price
   } = req.body;
 
   db.one(
-    `INSERT INTO results(id, unique_search_id, company_name, courier_name, courier_delivery_time,price) VALUES (DEFAULT, $1, $2, $3, $4, $5)`,
-    [unique_search_id, company_name, courier_name, courier_delivery_time, price]
+    `INSERT INTO results(id, unique_search_id, company_name, courier_name, courier_delivery_time, service_name, price) VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)`,
+    [
+      unique_search_id,
+      company_name,
+      courier_name,
+      courier_delivery_time,
+      service_name,
+      price
+    ]
   )
     .then(data => {
       res.json(data);
