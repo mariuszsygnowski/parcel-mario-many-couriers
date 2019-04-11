@@ -231,7 +231,6 @@ class App extends Component {
         ]
       }
     };
-    // this.fetchCurrentBasket = this.fetchCurrentBasket.bind(this);
     autoBind(this);
   }
 
@@ -242,22 +241,21 @@ class App extends Component {
       .then(response => response.json())
       .then(bodyGetP2g => {
         if (bodyGetP2g) {
-          // this.setState({
-          //   searchingId: ""
-          // });
-          // console.log(body);
-
+          //if I get respond then I need to get a unique_id
+          //I asking my database for highest unique_search_id
           fetch("/api/key", {
             method: "GET"
           })
             .then(response => response.json())
             .then(bodyKey => {
               if (bodyKey) {
-                const key = Number(bodyKey[0].max) + 1;
-                // console.log(bodyGetP2g);
+                //if response is positive then I set unique_search_id
+                //with "highest unique id" + 1
+                const unique_search_id = Number(bodyKey[0].max) + 1;
+
+                //itarate over response from bodyGetP2g
                 bodyGetP2g.forEach(res => {
-                  console.log(res);
-                  let deliveryTime = "unkonow";
+                  let deliveryTime = "";
                   if (res.Service.Classification === "Fast") {
                     deliveryTime = "one_day";
                   } else if (res.Service.Classification === "Medium") {
@@ -265,11 +263,12 @@ class App extends Component {
                   } else if (res.Service.Classification === "Slow") {
                     deliveryTime = "over_two_days";
                   }
-                  // console.log(key);
+
+                  //insering into databas results from bodyGetP2g
                   fetch("/api/search", {
                     method: "POST",
                     body: JSON.stringify({
-                      unique_search_id: key,
+                      unique_search_id: unique_search_id,
                       company_name: "p2g",
                       courier_name: res.Service.CourierName,
                       courier_delivery_time: deliveryTime,
@@ -283,10 +282,11 @@ class App extends Component {
                     .then(response => response.json())
                     .then(body => {
                       if (body) {
+                        //get a results from database
                         fetch("/api/results", {
                           method: "POST",
                           body: JSON.stringify({
-                            unique_search_id: key
+                            unique_search_id: unique_search_id
                           }),
                           headers: {
                             "Content-Type": "application/json"
@@ -295,8 +295,7 @@ class App extends Component {
                           .then(response => response.json())
                           .then(body => {
                             if (body) {
-                              // console.log(body);
-
+                              //reset to default values results
                               this.setState({
                                 quotes: {
                                   one_day: [],
@@ -304,32 +303,30 @@ class App extends Component {
                                   over_two_days: []
                                 }
                               });
-                              body.forEach(res => {
-                                const deliveryTime = [
-                                  "one_day",
-                                  "two_days",
-                                  "over_two_days"
-                                ];
-                                // deliveryTime.forEach(dalivery => {
 
-                                // })
-                                if (res.courier_delivery_time === "one_day") {
-                                  // console.log(res);
+                              //itarate over results from database
+                              body.forEach(res => {
+                                if (
+                                  res.courier_delivery_time === "over_two_days"
+                                ) {
                                   const courierName = res.courier_name.toLowerCase();
+
+                                  //looking if courier name exist in array this.state.quotes.one_day
                                   const dataOneDay = this.state.quotes.one_day.find(
                                     function(ele) {
                                       return ele.courier === courierName;
                                     }
                                   );
 
+                                  //if exist then I just add new data
                                   if (dataOneDay) {
-                                    // console.log(dataOneDay);
                                     dataOneDay.data.push({
                                       company_name: res.company_name.toLowerCase(),
                                       service_name: res.service_name.toLowerCase(),
                                       price: res.price
                                     });
                                   } else {
+                                    //if not then I crate object plus add first entry into data
                                     this.state.quotes.one_day.push({
                                       price: res.price,
                                       courier: res.courier_name.toLowerCase(),
@@ -343,9 +340,13 @@ class App extends Component {
                                     });
                                   }
                                 } else if (
+                                  //I need to repeat for each delivery time
+                                  //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
+                                  //and itarate over this array, but when I pass into function respond
+                                  //I got an error, I tride to do new Function but still there is some issues
+                                  //later I will do something more universal
                                   res.courier_delivery_time === "two_days"
                                 ) {
-                                  // console.log(res);
                                   let courierName = res.courier_name.toLowerCase();
                                   var dataTwoDays = this.state.quotes.two_days.find(
                                     function(ele) {
@@ -354,7 +355,6 @@ class App extends Component {
                                   );
 
                                   if (dataTwoDays) {
-                                    // console.log(dataTwoDays);
                                     dataTwoDays.data.push({
                                       company_name: res.company_name,
                                       service_name: res.service_name.toLowerCase(),
@@ -376,7 +376,6 @@ class App extends Component {
                                 } else if (
                                   res.courier_delivery_time === "over_two_days"
                                 ) {
-                                  // console.log(res);
                                   let courierName = res.courier_name.toLowerCase();
                                   var dataOverTwoDays = this.state.quotes.over_two_days.find(
                                     function(ele) {
@@ -385,7 +384,6 @@ class App extends Component {
                                   );
 
                                   if (dataOverTwoDays) {
-                                    // console.log(data);
                                     dataOverTwoDays.data.push({
                                       company_name: res.company_name.toLowerCase(),
                                       service_name: res.service_name.toLowerCase(),
@@ -406,6 +404,7 @@ class App extends Component {
                                   }
                                 }
                               });
+
                               //I always sort by "price a-z" inside each courier as
                               //what is a reason to know highest price from each parcel courier
                               //But even I will change my mnid is easy to add that feature
@@ -420,151 +419,22 @@ class App extends Component {
                             );
                           });
                       } else {
-                        // res.json({ error: "no body after respond" });
+                        console.log("no body after respond /api/search");
                       }
                     })
                     .catch(error => {
                       console.log("Server failed to return data: " + error);
                     });
                 });
-
-                // this.setState({
-                //   quotes: {
-                //     p2g: body
-                //   },
-                //   searching: "found"
-                // });
-                // console.log(Number(body[0].max) + 1);
-                // this.setState({
-                //   quotes: {
-                //     p2g: body
-                //   },
-                //   searching: "found"
-                // });
               } else {
-                // res.json({ error: "no body after respond" });
+                console.log("no body after respond /api/key");
               }
             })
             .catch(error => {
               console.log("Server failed to return data: " + error);
             });
         } else {
-          // res.json({ error: "no body after respond" });
-        }
-      })
-      .catch(error => {
-        console.log("Server failed to return data: " + error);
-      });
-  }
-
-  test() {
-    fetch("/api/results", {
-      method: "GET"
-    })
-      .then(response => response.json())
-      .then(body => {
-        if (body) {
-          // console.log(body);
-
-          this.setState({
-            quotes: {
-              one_day: [],
-              two_days: [],
-              over_two_days: []
-            }
-          });
-          body.forEach(res => {
-            const deliveryTime = ["one_day", "two_days", "over_two_days"];
-            // deliveryTime.forEach(dalivery => {
-
-            // })
-            if (res.courier_delivery_time === "one_day") {
-              // console.log(res);
-              const courierName = res.courier_name.toLowerCase();
-              const dataOneDay = this.state.quotes.one_day.find(function(ele) {
-                return ele.courier === courierName;
-              });
-
-              if (dataOneDay) {
-                // console.log(dataOneDay);
-                dataOneDay.data.push({
-                  company_name: res.company_name.toLowerCase(),
-                  price: res.price
-                });
-              } else {
-                this.state.quotes.one_day.push({
-                  price: res.price,
-                  courier: res.courier_name.toLowerCase(),
-                  data: [
-                    {
-                      company_name: res.company_name.toLowerCase(),
-                      price: res.price
-                    }
-                  ]
-                });
-              }
-            } else if (res.courier_delivery_time === "two_days") {
-              // console.log(res);
-              let courierName = res.courier_name.toLowerCase();
-              var dataTwoDays = this.state.quotes.two_days.find(function(ele) {
-                return ele.courier === courierName;
-              });
-
-              if (dataTwoDays) {
-                // console.log(dataTwoDays);
-                dataTwoDays.data.push({
-                  company_name: res.company_name,
-                  id: 17,
-                  price: res.price
-                });
-              } else {
-                this.state.quotes.two_days.push({
-                  price: res.price,
-                  courier: res.courier_name.toLowerCase(),
-                  data: [
-                    {
-                      company_name: res.company_name.toLowerCase(),
-                      price: res.price
-                    }
-                  ]
-                });
-              }
-            } else if (res.courier_delivery_time === "over_two_days") {
-              // console.log(res);
-              let courierName = res.courier_name.toLowerCase();
-              var dataOverTwoDays = this.state.quotes.over_two_days.find(
-                function(ele) {
-                  return ele.courier === courierName;
-                }
-              );
-
-              if (dataOverTwoDays) {
-                // console.log(data);
-                dataOverTwoDays.data.push({
-                  company_name: res.company_name.toLowerCase(),
-                  id: 17,
-                  price: res.price
-                });
-              } else {
-                this.state.quotes.over_two_days.push({
-                  price: res.price,
-                  courier: res.courier_name.toLowerCase(),
-                  data: [
-                    {
-                      company_name: res.company_name.toLowerCase(),
-                      price: res.price
-                    }
-                  ]
-                });
-              }
-            }
-          });
-          //I always sort by "price a-z" inside each courier as
-          //what is a reason to know highest price from each parcel courier
-          //But even I will change my mnid is easy to add that feature
-          this.sortingBy("price");
-        } else {
-          console.log("no body after respond /api/results");
+          console.log("no body after respond /api/p2g");
         }
       })
       .catch(error => {
@@ -591,7 +461,6 @@ class App extends Component {
     Object.entries(this.state.quotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
-
         minPrice = curier.data[0].price;
         curier.price = minPrice;
       });

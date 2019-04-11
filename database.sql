@@ -9,6 +9,7 @@ CREATE TABLE results (
 );
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24);
 
+-- old database:
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'PARCELFORCE', 'one_day', 29.99);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'HERMES', 'one_day', 28.77);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'two_days', 25.24);
