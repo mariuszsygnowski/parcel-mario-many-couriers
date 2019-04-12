@@ -7,7 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      how_many_respond: 0,
+      how_many_responses: 0,
+      courierNames: ["p2g"],
       quotes: {
         one_day: [
           // {
@@ -104,7 +105,7 @@ class App extends Component {
           const unique_search_id = Number(bodyKey[0].max) + 1;
 
           //this is array with all names of our courier_names
-          const courierNames = ["p2g"];
+          const courierNames = [...this.state.courierNames];
 
           courierNames.forEach(courier => {
             this.getDataFromSingleCourier(courier, unique_search_id);
@@ -309,9 +310,9 @@ class App extends Component {
                 //But even I will change my mnid is easy to add that feature
                 this.sortingBy("price");
 
-                const how_many_respond = this.state.how_many_respond + 1;
+                const how_many_responses = this.state.how_many_responses + 1;
                 this.setState({
-                  how_many_respond
+                  how_many_responses
                 });
               } else {
                 console.log("no body after respond /api/results");
@@ -379,7 +380,10 @@ class App extends Component {
         <button onClick={() => this.sortingBy("-courier")}>
           sort by name z-a
         </button>
-        <p>{this.state.how_many_respond}</p>
+        <p>
+          Received responses {this.state.how_many_responses}/
+          {this.state.courierNames.length}
+        </p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
