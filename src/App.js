@@ -7,6 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      how_many_respond: 0,
       quotes: {
         one_day: [
           // {
@@ -90,6 +91,8 @@ class App extends Component {
       }
     });
 
+    //1. at the beggining I need to know unique_search_id
+    //I will pass to any searches and get data from database with that id
     fetch("/api/key", {
       method: "GET"
     })
@@ -99,11 +102,12 @@ class App extends Component {
           //if response is positive then I set unique_search_id
           //with "highest unique id" + 1
           const unique_search_id = Number(bodyKey[0].max) + 1;
-          // console.log(unique_search_id);
+
+          //this is array with all names of our courier_names
           const courierNames = ["p2g"];
 
           courierNames.forEach(courier => {
-            this.fetchCurrentBasket(courier, unique_search_id);
+            this.getDataFromSingleCourier(courier, unique_search_id);
           });
         } else {
           console.log("no body after respond /api/key");
@@ -114,7 +118,7 @@ class App extends Component {
       });
   }
 
-  fetchCurrentBasket(courierName, unique_search_id) {
+  getDataFromSingleCourier(courierName, unique_search_id) {
     const url = `/api/${courierName}`;
     fetch(url, {
       method: "POST"
@@ -129,7 +133,7 @@ class App extends Component {
           //if response is positive then I set unique_search_id
           //with "highest unique id" + 1
 
-          // itarate over response from bodyGetP2g
+          // itarate over response from bodyCourierName
           bodyCourierName.forEach(resSingleCourier => {
             let deliveryTime = "";
             if (resSingleCourier.deliveryTime === "Fast") {
@@ -140,7 +144,7 @@ class App extends Component {
               deliveryTime = "over_two_days";
             }
 
-            //insering into databas results from bodyGetP2g
+            //insering into database results from resSingleCourier
             fetch("/api/insertToDatabase", {
               method: "POST",
               body: JSON.stringify({
@@ -159,7 +163,7 @@ class App extends Component {
               .then(bodySearch => {
                 if (bodySearch) {
                 } else {
-                  console.log("no body after respond /api/search");
+                  console.log("no body after respond /api/insertToDatabase");
                 }
               })
               .catch(error => {
@@ -183,12 +187,19 @@ class App extends Component {
                 //itarate over results from database
                 bodyResult.forEach(resBodyResult => {
                   // console.log(resBodyResult);
+                  let thisStateQuotesOne_day = [...this.state.quotes.one_day];
+                  let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
+                  let thisStateQuotesOver_two_days = [
+                    ...this.state.quotes.over_two_days
+                  ];
+
                   if (resBodyResult.courier_delivery_time === "one_day") {
                     // console.log(resBodyResult);
                     // const courierName = resBodyResult.courier_name.toLowerCase();
 
                     //looking if courier name exist in array this.state.quotes.one_day
-                    let dataOneDay = this.state.quotes.one_day.find(function(
+
+                    const dataOneDay = thisStateQuotesOne_day.find(function(
                       ele
                     ) {
                       return ele.courier === resBodyResult.courier_name;
@@ -196,19 +207,20 @@ class App extends Component {
 
                     //if exist then I just add new data
                     if (dataOneDay) {
-                      console.log(this.state.quotes.one_day);
                       dataOneDay.data.push({
+                        id: resBodyResult.id,
                         company_name: resBodyResult.company_name.toLowerCase(),
                         service_name: resBodyResult.service_name.toLowerCase(),
                         price: resBodyResult.price
                       });
                     } else {
                       //if not then I crate object plus add first entry into data
-                      this.state.quotes.one_day.push({
+                      thisStateQuotesOne_day.push({
                         price: resBodyResult.price,
                         courier: resBodyResult.courier_name,
                         data: [
                           {
+                            id: resBodyResult.id,
                             company_name: resBodyResult.company_name.toLowerCase(),
                             service_name: resBodyResult.service_name.toLowerCase(),
                             price: resBodyResult.price
@@ -224,24 +236,26 @@ class App extends Component {
                     //later I will do something more universal
                     resBodyResult.courier_delivery_time === "two_days"
                   ) {
-                    const dataTwoDays = this.state.quotes.two_days.find(
-                      function(ele) {
-                        return ele.courier === resBodyResult.courier_name;
-                      }
-                    );
+                    const dataTwoDays = thisStateQuotesTwo_days.find(function(
+                      ele
+                    ) {
+                      return ele.courier === resBodyResult.courier_name;
+                    });
 
                     if (dataTwoDays) {
                       dataTwoDays.data.push({
+                        id: resBodyResult.id,
                         company_name: resBodyResult.company_name,
                         service_name: resBodyResult.service_name.toLowerCase(),
                         price: resBodyResult.price
                       });
                     } else {
-                      this.state.quotes.two_days.push({
+                      thisStateQuotesTwo_days.push({
                         price: resBodyResult.price,
                         courier: resBodyResult.courier_name,
                         data: [
                           {
+                            id: resBodyResult.id,
                             company_name: resBodyResult.company_name.toLowerCase(),
                             service_name: resBodyResult.service_name.toLowerCase(),
                             price: resBodyResult.price
@@ -252,7 +266,7 @@ class App extends Component {
                   } else if (
                     resBodyResult.courier_delivery_time === "over_two_days"
                   ) {
-                    const dataOverTwoDays = this.state.quotes.over_two_days.find(
+                    const dataOverTwoDays = thisStateQuotesOver_two_days.find(
                       function(ele) {
                         return ele.courier === resBodyResult.courier_name;
                       }
@@ -260,16 +274,18 @@ class App extends Component {
 
                     if (dataOverTwoDays) {
                       dataOverTwoDays.data.push({
+                        id: resBodyResult.id,
                         company_name: resBodyResult.company_name.toLowerCase(),
                         service_name: resBodyResult.service_name.toLowerCase(),
                         price: resBodyResult.price
                       });
                     } else {
-                      this.state.quotes.over_two_days.push({
+                      thisStateQuotesOver_two_days.push({
                         price: resBodyResult.price,
                         courier: resBodyResult.courier_name,
                         data: [
                           {
+                            id: resBodyResult.id,
                             company_name: resBodyResult.company_name.toLowerCase(),
                             service_name: resBodyResult.service_name.toLowerCase(),
                             price: resBodyResult.price
@@ -278,12 +294,25 @@ class App extends Component {
                       });
                     }
                   }
+
+                  this.setState({
+                    quotes: {
+                      one_day: thisStateQuotesOne_day,
+                      two_days: thisStateQuotesTwo_days,
+                      over_two_days: thisStateQuotesOver_two_days
+                    }
+                  });
                 });
 
                 //I always sort by "price a-z" inside each courier as
                 //what is a reason to know highest price from each parcel courier
                 //But even I will change my mnid is easy to add that feature
                 this.sortingBy("price");
+
+                const how_many_respond = this.state.how_many_respond + 1;
+                this.setState({
+                  how_many_respond
+                });
               } else {
                 console.log("no body after respond /api/results");
               }
@@ -292,7 +321,7 @@ class App extends Component {
               console.log("Server failed to return data: " + error);
             });
         } else {
-          console.log("no body after respond /api/p2g");
+          console.log(`no body after respond /api/${courierName}`);
         }
       })
       .catch(error => {
@@ -316,7 +345,8 @@ class App extends Component {
   sortingBy(e) {
     let output = {};
     let minPrice = 0;
-    Object.entries(this.state.quotes).forEach(item => {
+    let thisStateQuotes = Object.assign({}, this.state.quotes);
+    Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(curier => {
         //sorting inside each courier via searching company
         minPrice = Number(curier.data[0].price);
@@ -349,7 +379,7 @@ class App extends Component {
         <button onClick={() => this.sortingBy("-courier")}>
           sort by name z-a
         </button>
-
+        <p>{this.state.how_many_respond}</p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
@@ -366,7 +396,7 @@ class App extends Component {
                   const resultPrice = Number(result.price).toFixed(2);
                   return (
                     <div
-                      // key={result.courier + result.data[0].id}
+                      key={result.courier + result.data[0].id}
                       className="app_singleCurier"
                     >
                       <p>
@@ -376,15 +406,12 @@ class App extends Component {
                       </p>
                       <div className="app_singleRespond">
                         {result.data.map(res => {
-                          {
-                            /* console.log(res); */
-                          }
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
                           const resPrice = Number(res.price).toFixed(2);
                           return (
                             <div
-                              // key={res.id}
+                              key={res.id}
                               className="app_singleRespond--eachCourier"
                             >
                               <p>{res.company_name}</p>
