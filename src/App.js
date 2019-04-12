@@ -85,6 +85,7 @@ class App extends Component {
   fetchCouriers() {
     //reset to default values results
     this.setState({
+      how_many_responses: 0,
       quotes: {
         one_day: [],
         two_days: [],
