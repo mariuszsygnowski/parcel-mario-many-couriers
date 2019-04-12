@@ -80,208 +80,212 @@ class App extends Component {
     autoBind(this);
   }
 
-  fetchCurrentBasket() {
-    fetch("/api/p2g", {
+  fetchCouriers() {
+    //reset to default values results
+    this.setState({
+      quotes: {
+        one_day: [],
+        two_days: [],
+        over_two_days: []
+      }
+    });
+
+    fetch("/api/key", {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .then(bodyKey => {
+        if (bodyKey) {
+          //if response is positive then I set unique_search_id
+          //with "highest unique id" + 1
+          const unique_search_id = Number(bodyKey[0].max) + 1;
+          // console.log(unique_search_id);
+          const courierNames = ["p2g"];
+
+          courierNames.forEach(courier => {
+            this.fetchCurrentBasket(courier, unique_search_id);
+          });
+        } else {
+          console.log("no body after respond /api/key");
+        }
+      })
+      .catch(error => {
+        console.log("Server failed to return data: " + error);
+      });
+  }
+
+  fetchCurrentBasket(courierName, unique_search_id) {
+    const url = `/api/${courierName}`;
+    fetch(url, {
       method: "POST"
     })
       .then(response => response.json())
-      .then(bodyGetP2g => {
-        if (bodyGetP2g) {
+      .then(bodyCourierName => {
+        if (bodyCourierName) {
+          // console.log(bodyCourierName);
           //if I get respond then I need to get a unique_id
           //I asking my database for highest unique_search_id
-          fetch("/api/key", {
-            method: "GET"
+
+          //if response is positive then I set unique_search_id
+          //with "highest unique id" + 1
+
+          // itarate over response from bodyGetP2g
+          bodyCourierName.forEach(resSingleCourier => {
+            let deliveryTime = "";
+            if (resSingleCourier.deliveryTime === "Fast") {
+              deliveryTime = "one_day";
+            } else if (resSingleCourier.deliveryTime === "Medium") {
+              deliveryTime = "two_days";
+            } else if (resSingleCourier.deliveryTime === "Slow") {
+              deliveryTime = "over_two_days";
+            }
+
+            //insering into databas results from bodyGetP2g
+            fetch("/api/insertToDatabase", {
+              method: "POST",
+              body: JSON.stringify({
+                unique_search_id: unique_search_id,
+                company_name: resSingleCourier.company_name,
+                courier_name: resSingleCourier.courier_name,
+                courier_delivery_time: deliveryTime,
+                service_name: resSingleCourier.service_name,
+                price: resSingleCourier.price
+              }),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(response => response.json())
+              .then(bodySearch => {
+                if (bodySearch) {
+                } else {
+                  console.log("no body after respond /api/search");
+                }
+              })
+              .catch(error => {
+                console.log("Server failed to return data: " + error);
+              });
+          });
+
+          //get a results from database
+          fetch("/api/results", {
+            method: "POST",
+            body: JSON.stringify({
+              unique_search_id: unique_search_id
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            }
           })
             .then(response => response.json())
-            .then(bodyKey => {
-              if (bodyKey) {
-                //if response is positive then I set unique_search_id
-                //with "highest unique id" + 1
-                const unique_search_id = Number(bodyKey[0].max) + 1;
+            .then(bodyResult => {
+              if (bodyResult) {
+                //itarate over results from database
+                bodyResult.forEach(resBodyResult => {
+                  // console.log(resBodyResult);
+                  if (resBodyResult.courier_delivery_time === "one_day") {
+                    // console.log(resBodyResult);
+                    // const courierName = resBodyResult.courier_name.toLowerCase();
 
-                //itarate over response from bodyGetP2g
-                bodyGetP2g.forEach(res => {
-                  let deliveryTime = "";
-                  if (res.Service.Classification === "Fast") {
-                    deliveryTime = "one_day";
-                  } else if (res.Service.Classification === "Medium") {
-                    deliveryTime = "two_days";
-                  } else if (res.Service.Classification === "Slow") {
-                    deliveryTime = "over_two_days";
-                  }
-
-                  //insering into databas results from bodyGetP2g
-                  fetch("/api/search", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      unique_search_id: unique_search_id,
-                      company_name: "p2g",
-                      courier_name: res.Service.CourierName,
-                      courier_delivery_time: deliveryTime,
-                      service_name: res.Service.Name,
-                      price: res.TotalPrice
-                    }),
-                    headers: {
-                      "Content-Type": "application/json"
-                    }
-                  })
-                    .then(response => response.json())
-                    .then(bodySearch => {
-                      if (bodySearch) {
-                        //get a results from database
-                        fetch("/api/results", {
-                          method: "POST",
-                          body: JSON.stringify({
-                            unique_search_id: unique_search_id
-                          }),
-                          headers: {
-                            "Content-Type": "application/json"
-                          }
-                        })
-                          .then(response => response.json())
-                          .then(bodyResult => {
-                            if (bodyResult) {
-                              //reset to default values results
-                              this.setState({
-                                quotes: {
-                                  one_day: [],
-                                  two_days: [],
-                                  over_two_days: []
-                                }
-                              });
-                              //itarate over results from database
-                              bodyResult.forEach(resBodyResult => {
-                                if (
-                                  resBodyResult.courier_delivery_time ===
-                                  "one_day"
-                                ) {
-                                  const courierName = resBodyResult.courier_name.toLowerCase();
-
-                                  //looking if courier name exist in array this.state.quotes.one_day
-                                  const dataOneDay = this.state.quotes.one_day.find(
-                                    function(ele) {
-                                      return ele.courier === courierName;
-                                    }
-                                  );
-
-                                  //if exist then I just add new data
-                                  if (dataOneDay) {
-                                    dataOneDay.data.push({
-                                      id: resBodyResult.id,
-                                      company_name: resBodyResult.company_name.toLowerCase(),
-                                      service_name: resBodyResult.service_name.toLowerCase(),
-                                      price: resBodyResult.price
-                                    });
-                                  } else {
-                                    //if not then I crate object plus add first entry into data
-                                    this.state.quotes.one_day.push({
-                                      price: resBodyResult.price,
-                                      courier: resBodyResult.courier_name.toLowerCase(),
-                                      data: [
-                                        {
-                                          id: resBodyResult.id,
-                                          company_name: resBodyResult.company_name.toLowerCase(),
-                                          service_name: resBodyResult.service_name.toLowerCase(),
-                                          price: resBodyResult.price
-                                        }
-                                      ]
-                                    });
-                                  }
-                                } else if (
-                                  //I need to repeat for each delivery time
-                                  //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
-                                  //and itarate over this array, but when I pass into function respond
-                                  //I got an error, I tried to do new Function but still there is some issues
-                                  //later I will do something more universal
-                                  resBodyResult.courier_delivery_time ===
-                                  "two_days"
-                                ) {
-                                  let courierName = resBodyResult.courier_name.toLowerCase();
-                                  var dataTwoDays = this.state.quotes.two_days.find(
-                                    function(ele) {
-                                      return ele.courier === courierName;
-                                    }
-                                  );
-
-                                  if (dataTwoDays) {
-                                    dataTwoDays.data.push({
-                                      id: resBodyResult.id,
-                                      company_name: resBodyResult.company_name,
-                                      service_name: resBodyResult.service_name.toLowerCase(),
-                                      price: resBodyResult.price
-                                    });
-                                  } else {
-                                    this.state.quotes.two_days.push({
-                                      price: resBodyResult.price,
-                                      courier: resBodyResult.courier_name.toLowerCase(),
-                                      data: [
-                                        {
-                                          id: resBodyResult.id,
-                                          company_name: resBodyResult.company_name.toLowerCase(),
-                                          service_name: resBodyResult.service_name.toLowerCase(),
-                                          price: resBodyResult.price
-                                        }
-                                      ]
-                                    });
-                                  }
-                                } else if (
-                                  resBodyResult.courier_delivery_time ===
-                                  "over_two_days"
-                                ) {
-                                  let courierName = resBodyResult.courier_name.toLowerCase();
-                                  var dataOverTwoDays = this.state.quotes.over_two_days.find(
-                                    function(ele) {
-                                      return ele.courier === courierName;
-                                    }
-                                  );
-
-                                  if (dataOverTwoDays) {
-                                    dataOverTwoDays.data.push({
-                                      id: resBodyResult.id,
-                                      company_name: resBodyResult.company_name.toLowerCase(),
-                                      service_name: resBodyResult.service_name.toLowerCase(),
-                                      price: resBodyResult.price
-                                    });
-                                  } else {
-                                    this.state.quotes.over_two_days.push({
-                                      price: resBodyResult.price,
-                                      courier: resBodyResult.courier_name.toLowerCase(),
-                                      data: [
-                                        {
-                                          id: resBodyResult.id,
-                                          company_name: resBodyResult.company_name.toLowerCase(),
-                                          service_name: resBodyResult.service_name.toLowerCase(),
-                                          price: resBodyResult.price
-                                        }
-                                      ]
-                                    });
-                                  }
-                                }
-                              });
-
-                              //I always sort by "price a-z" inside each courier as
-                              //what is a reason to know highest price from each parcel courier
-                              //But even I will change my mnid is easy to add that feature
-                              this.sortingBy("price");
-                            } else {
-                              console.log("no body after respond /api/results");
-                            }
-                          })
-                          .catch(error => {
-                            console.log(
-                              "Server failed to return data: " + error
-                            );
-                          });
-                      } else {
-                        console.log("no body after respond /api/search");
-                      }
-                    })
-                    .catch(error => {
-                      console.log("Server failed to return data: " + error);
+                    //looking if courier name exist in array this.state.quotes.one_day
+                    let dataOneDay = this.state.quotes.one_day.find(function(
+                      ele
+                    ) {
+                      return ele.courier === resBodyResult.courier_name;
                     });
+
+                    //if exist then I just add new data
+                    if (dataOneDay) {
+                      console.log(this.state.quotes.one_day);
+                      dataOneDay.data.push({
+                        company_name: resBodyResult.company_name.toLowerCase(),
+                        service_name: resBodyResult.service_name.toLowerCase(),
+                        price: resBodyResult.price
+                      });
+                    } else {
+                      //if not then I crate object plus add first entry into data
+                      this.state.quotes.one_day.push({
+                        price: resBodyResult.price,
+                        courier: resBodyResult.courier_name,
+                        data: [
+                          {
+                            company_name: resBodyResult.company_name.toLowerCase(),
+                            service_name: resBodyResult.service_name.toLowerCase(),
+                            price: resBodyResult.price
+                          }
+                        ]
+                      });
+                    }
+                  } else if (
+                    //I need to repeat for each delivery time
+                    //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
+                    //and itarate over this array, but when I pass into function respond
+                    //I got an error, I tried to do new Function but still there is some issues
+                    //later I will do something more universal
+                    resBodyResult.courier_delivery_time === "two_days"
+                  ) {
+                    const dataTwoDays = this.state.quotes.two_days.find(
+                      function(ele) {
+                        return ele.courier === resBodyResult.courier_name;
+                      }
+                    );
+
+                    if (dataTwoDays) {
+                      dataTwoDays.data.push({
+                        company_name: resBodyResult.company_name,
+                        service_name: resBodyResult.service_name.toLowerCase(),
+                        price: resBodyResult.price
+                      });
+                    } else {
+                      this.state.quotes.two_days.push({
+                        price: resBodyResult.price,
+                        courier: resBodyResult.courier_name,
+                        data: [
+                          {
+                            company_name: resBodyResult.company_name.toLowerCase(),
+                            service_name: resBodyResult.service_name.toLowerCase(),
+                            price: resBodyResult.price
+                          }
+                        ]
+                      });
+                    }
+                  } else if (
+                    resBodyResult.courier_delivery_time === "over_two_days"
+                  ) {
+                    const dataOverTwoDays = this.state.quotes.over_two_days.find(
+                      function(ele) {
+                        return ele.courier === resBodyResult.courier_name;
+                      }
+                    );
+
+                    if (dataOverTwoDays) {
+                      dataOverTwoDays.data.push({
+                        company_name: resBodyResult.company_name.toLowerCase(),
+                        service_name: resBodyResult.service_name.toLowerCase(),
+                        price: resBodyResult.price
+                      });
+                    } else {
+                      this.state.quotes.over_two_days.push({
+                        price: resBodyResult.price,
+                        courier: resBodyResult.courier_name,
+                        data: [
+                          {
+                            company_name: resBodyResult.company_name.toLowerCase(),
+                            service_name: resBodyResult.service_name.toLowerCase(),
+                            price: resBodyResult.price
+                          }
+                        ]
+                      });
+                    }
+                  }
                 });
+
+                //I always sort by "price a-z" inside each courier as
+                //what is a reason to know highest price from each parcel courier
+                //But even I will change my mnid is easy to add that feature
+                this.sortingBy("price");
               } else {
-                console.log("no body after respond /api/key");
+                console.log("no body after respond /api/results");
               }
             })
             .catch(error => {
@@ -332,7 +336,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.fetchCurrentBasket}>search button</button>
+        <button onClick={this.fetchCouriers}>search button</button>
         <button onClick={() => this.sortingBy("price")}>
           sort by price low to high
         </button>
@@ -362,7 +366,7 @@ class App extends Component {
                   const resultPrice = Number(result.price).toFixed(2);
                   return (
                     <div
-                      key={result.courier + result.data[0].id}
+                      // key={result.courier + result.data[0].id}
                       className="app_singleCurier"
                     >
                       <p>
@@ -372,12 +376,15 @@ class App extends Component {
                       </p>
                       <div className="app_singleRespond">
                         {result.data.map(res => {
+                          {
+                            /* console.log(res); */
+                          }
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
                           const resPrice = Number(res.price).toFixed(2);
                           return (
                             <div
-                              key={res.id}
+                              // key={res.id}
                               className="app_singleRespond--eachCourier"
                             >
                               <p>{res.company_name}</p>

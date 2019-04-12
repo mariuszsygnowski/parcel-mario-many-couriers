@@ -69,7 +69,17 @@ app.post("/api/p2g", (req, res) => {
           .then(response => response.json())
           .then(body => {
             if (body) {
-              res.json(body.Quotes);
+              let outputArray = [];
+              body.Quotes.forEach(item => {
+                outputArray.push({
+                  company_name: "p2g",
+                  courier_name: item.Service.CourierName,
+                  service_name: item.Service.Name,
+                  price: item.TotalPrice,
+                  deliveryTime: item.Service.Classification
+                });
+              });
+              res.json(outputArray);
               // console.log(body);
             } else {
               res.json({ error: "no body after respond" });
@@ -95,7 +105,7 @@ app.get("/api/key", function(req, res) {
     });
 });
 
-app.post("/api/search", function(req, res) {
+app.post("/api/insertToDatabase", function(req, res) {
   const {
     unique_search_id,
     company_name,
@@ -123,6 +133,7 @@ app.post("/api/search", function(req, res) {
 
 app.post("/api/results", function(req, res) {
   const { unique_search_id } = req.body;
+
   db.any(`SELECT * FROM results WHERE unique_search_id=$1 ORDER BY price ASC`, [
     unique_search_id
   ])
