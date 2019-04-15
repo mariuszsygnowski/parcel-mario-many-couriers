@@ -9,9 +9,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      a: [],
-      aaa: {},
-      ar: [],
       bodyResult: [],
       how_many_responses: 0,
       courierNames: ["p2g", "parcelmonkey"],
@@ -114,59 +111,10 @@ class App extends Component {
           // let ar = this.state.ar;
 
           courierNames.forEach(courier => {
-            // console.log(this.state.bodyResult);
             this.state.bodyResult.push(
               this.getDataFromSingleCourier(courier, unique_search_id)
             );
-            // console.log(this.state.aaa);
           });
-
-          // this.a(unique_search_id);
-
-          // async function getSomeAsyncData() {
-          //   const result = await Promise.all(
-          //     this.getDataFromSingleCourier("p2g", unique_search_id)
-          //   );
-          //   console.log(result);
-          //   return result;
-          // }
-          // getSomeAsyncData();
-          //this is array with all names of our courier_names
-          // function query() {
-          //   var r = yield wait.for( this.getDataFromSingleCourier(
-          //     "p2g",
-          //     unique_search_id
-          //   ));
-          //   return r;
-          // }
-          // async function businessLogic() {
-          //   try {
-          //     const result = await this.getDataFromSingleCourier(
-          //       "p2g",
-          //       unique_search_id
-          //     );
-          //     console.log(result);
-          //     // the next line will fail
-          //     const result2 = await this.getDataFromSingleCourier(
-          //       "parcelmonkey",
-          //       unique_search_id
-          //     );
-          //     console.log(result2);
-          //   } catch (error) {
-          //     console.error("ERROR:" + error);
-          //   }
-          // }
-
-          // // call the main function
-          // businessLogic();
-
-          // const o1 = this.getDataFromSingleCourier(
-          //   courierNames[0],
-          //   unique_search_id
-          // );
-          // const o2 = this.getDataFromSingleCourier(
-          //   courierNames[1],
-          //   unique_search_id
           // );
         } else {
           console.log("no body after respond /api/key");
@@ -178,8 +126,6 @@ class App extends Component {
   }
 
   getDataFromSingleCourier(courierName, unique_search_id) {
-    let output = [];
-
     const url = `/api/${courierName}`;
     fetch(url, {
       method: "POST"
@@ -249,21 +195,6 @@ class App extends Component {
             .then(bodyResult => {
               if (bodyResult) {
                 console.log(bodyResult);
-                // output.push(bodyResult);
-                // console.log(output);
-                // return output;
-                //itarate over results from database
-                // this.sortingBy("price", output);
-                // console.log("aa:", {
-                //   aaa: {
-                //     [courierName]: output
-                //   }
-                // });
-                // let aw = {
-                //   [courierName]: bodyResult
-                // };
-                // return aw;
-                // // console.log(aw);
                 bodyResult.forEach(res => {
                   res.price = Number(res.price);
                 });
@@ -273,22 +204,6 @@ class App extends Component {
                     [courierName]: bodyResult
                   }
                 });
-
-                // console.log(output, this.state.quotes);
-                // let outputt = Object.assign({}, output);
-                // console.log(outputt);
-                //I always sort by "price a-z" inside each courier as
-                //what is a reason to know highest price from each parcel courier
-                //But even I will change my mnid is easy to add that feature
-                // this.sortingBy("price", outputt);
-
-                // const how_many_responses = this.state.how_many_responses + 1;
-                // this.setState({
-                //   how_many_responses,
-                //   quotes: outputt
-                // });
-
-                // this.setState(Object.assign(this.state.quotes, output));
               } else {
                 console.log("no body after respond /api/results");
               }
@@ -318,14 +233,17 @@ class App extends Component {
     };
   }
 
-  sortingBy(e, outputt) {
+  sortingBy(e) {
     let output = {};
     let minPrice = 0;
     let thisStateQuotes = Object.assign({}, this.state.quotes);
     Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(courier => {
         //sorting inside each courier via searching company
-        // console.log(courier);
+
+        //I always sort by "price a-z" inside each courier as
+        //what is a reason to know highest price from each parcel courier
+        //But even I will change my mnid is easy to add that feature
         courier.data.sort(this.dynamicSort("price"));
         minPrice = courier.data[0].price;
         courier.price = minPrice;
@@ -334,7 +252,6 @@ class App extends Component {
       // console.log(output[item[0]]);
       //sorting via each courier
       output[item[0]].sort(this.dynamicSort(e));
-      // console.log([item[1]]);
     });
     this.setState({
       quotes: output
@@ -349,29 +266,12 @@ class App extends Component {
     if (prevState.aaa !== this.state.aaa) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
-      // let a = Object.values(this.state.aaa).map(value => {
-      //   return value;
-      // });
       let lenthAaa = Object.values(this.state.aaa)[0];
-      // console.log(
-      //   "is different",
-      //   Object.values(this.state.aaa)[0],
-      //   this.state.quotes.one_day
-      // );
-      // let a = Object.values(this.state.aaa)[lenthAaa];
       let thisStateQuotesOne_day = [...this.state.quotes.one_day];
       let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
       let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
-      // console.log(thisStateQuotesOne_day);
-      // console.log(this.state.quotes);
-      // let bodyResult = [
-      //   ...this.state.bodyResult[this.state.bodyResult.length - 1]
-      // ];
       lenthAaa.forEach(resBodyResult => {
         if (resBodyResult.courier_delivery_time === "one_day") {
-          // console.log(resBodyResult);
-          // const courierName = resBodyResult.courier_name.toLowerCase();
-
           //looking if courier name exist in array this.state.quotes.one_day
 
           const dataOneDay = thisStateQuotesOne_day.find(function(ele) {
@@ -517,7 +417,7 @@ class App extends Component {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
 
-                  const resultPrice = Number(result.price).toFixed(2);
+                  const resultPrice = result.price.toFixed(2);
                   return (
                     <div
                       // key={result.courier + result.data[0].id}
@@ -532,7 +432,7 @@ class App extends Component {
                         {result.data.map(res => {
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
-                          const resPrice = Number(res.price).toFixed(2);
+                          const resPrice = res.price.toFixed(2);
                           return (
                             <div
                               // key={res.id}
