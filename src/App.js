@@ -248,7 +248,7 @@ class App extends Component {
             .then(response => response.json())
             .then(bodyResult => {
               if (bodyResult) {
-                // console.log(bodyResult);
+                console.log(bodyResult);
                 // output.push(bodyResult);
                 // console.log(output);
                 // return output;
@@ -264,6 +264,9 @@ class App extends Component {
                 // };
                 // return aw;
                 // // console.log(aw);
+                bodyResult.forEach(res => {
+                  res.price = Number(res.price);
+                });
 
                 this.setState({
                   aaa: {
@@ -322,9 +325,9 @@ class App extends Component {
     Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(courier => {
         //sorting inside each courier via searching company
-        console.log(courier);
+        // console.log(courier);
         courier.data.sort(this.dynamicSort("price"));
-        minPrice = Number(courier.data[0].price);
+        minPrice = courier.data[0].price;
         courier.price = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
