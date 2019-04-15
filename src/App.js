@@ -108,14 +108,11 @@ class App extends Component {
           //with "highest unique id" + 1
           const unique_search_id = Number(bodyKey[0].max) + 1;
           const courierNames = [...this.state.courierNames];
-          // let ar = this.state.ar;
 
+          //here I run this.getDataFromSingleCourier with courier name comming from array this.state.courierNames
           courierNames.forEach(courier => {
-            this.state.bodyResult.push(
-              this.getDataFromSingleCourier(courier, unique_search_id)
-            );
+            this.getDataFromSingleCourier(courier, unique_search_id);
           });
-          // );
         } else {
           console.log("no body after respond /api/key");
         }
@@ -133,14 +130,7 @@ class App extends Component {
       .then(response => response.json())
       .then(bodyCourierName => {
         if (bodyCourierName) {
-          // console.log(bodyCourierName);
-          //if I get respond then I need to get a unique_id
-          //I asking my database for highest unique_search_id
-
-          //if response is positive then I set unique_search_id
-          //with "highest unique id" + 1
-
-          // itarate over response from bodyCourierName
+          // preparation data to be instered into database
           let company_name = "";
           bodyCourierName.forEach(resSingleCourier => {
             company_name = resSingleCourier.company_name;
@@ -238,8 +228,6 @@ class App extends Component {
     let thisStateQuotes = Object.assign({}, this.state.quotes);
     Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(courier => {
-        //sorting inside each courier via searching company
-
         //I always sort by "price a-z" inside each courier as
         //what is a reason to know highest price from each parcel courier
         //But even I will change my mnid is easy to add that feature
@@ -248,7 +236,7 @@ class App extends Component {
         courier.price = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
-      // console.log(output[item[0]]);
+
       //sorting via each courier
       output[item[0]].sort(this.dynamicSort(e));
     });
@@ -257,10 +245,6 @@ class App extends Component {
     });
   }
 
-  aaa() {
-    console.log(this.state.quotes);
-    this.sortingBy("price");
-  }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.bodyResult !== this.state.bodyResult) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
@@ -372,12 +356,11 @@ class App extends Component {
             }
           },
           () => {
+            //by default I sorting by price low to high
             this.sortingBy("price");
           }
         );
       });
-      // this.sortingBy("price");
-      // console.log(this.state.quotes);
     }
   }
 
@@ -415,11 +398,15 @@ class App extends Component {
                 {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-
                   const resultPrice = result.price.toFixed(2);
                   return (
                     <div
-                      // key={result.courier + result.data[0].id}
+                      key={
+                        result.courier +
+                        result.data[0].company_name +
+                        result.data[0].price +
+                        +result.data[0].service_name
+                      }
                       className="app_singleCurier"
                     >
                       <p>
@@ -431,10 +418,14 @@ class App extends Component {
                         {result.data.map(res => {
                           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
                           //example: {company_name: "interparcel", id: 17, price: "21.11"}.
+
+                          //converting numbers to have always 2 numbers after dot
                           const resPrice = res.price.toFixed(2);
                           return (
                             <div
-                              // key={res.id}
+                              key={
+                                res.company_name + res.service_name + res.price
+                              }
                               className="app_singleRespond--eachCourier"
                             >
                               <p>{res.company_name}</p>
