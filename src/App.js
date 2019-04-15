@@ -1,9 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import autoBind from "react-autobind";
 import "./App.css";
-import SingleBox from "./components/SingleBox";
-import { watchFile } from "fs";
-import { promised } from "q";
+// import SingleBox from "./components/SingleBox";
 
 class App extends Component {
   constructor(props) {
@@ -251,12 +249,11 @@ class App extends Component {
     if (prevState.bodyResult !== this.state.bodyResult) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
-      console.log(this.state.bodyResult);
       //I always set new data into this.state.bodyResult
-      const bodyResult = Object.values(this.state.bodyResult)[0];
-      const thisStateQuotesOne_day = [...this.state.quotes.one_day];
-      const thisStateQuotesTwo_days = [...this.state.quotes.two_days];
-      const thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
+      let bodyResult = Object.values(this.state.bodyResult)[0];
+      let thisStateQuotesOne_day = [...this.state.quotes.one_day];
+      let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
+      let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
       bodyResult.forEach(resBodyResult => {
         if (resBodyResult.courier_delivery_time === "one_day") {
           //looking if courier name exist in array this.state.quotes.one_day
