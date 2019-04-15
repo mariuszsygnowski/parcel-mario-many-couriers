@@ -40,7 +40,6 @@ app.post("/api/p2g", (req, res) => {
     .then(body => {
       if (body) {
         // res.json(body);
-        // console.log(body.access_token);
         fetch("https://www.parcel2go.com/api/quotes", {
           body: JSON.stringify({
             CollectionAddress: {
@@ -155,7 +154,6 @@ app.post("/api/parcelmonkey", (req, res) => {
       if (body) {
         let outputArray = [];
         body.forEach(item => {
-          console.log(item.carrier);
           const courier_name = normalizerNames.courierName(item.carrier);
           const service_name = normalizerNames.serviceName(item.service);
           const deliveryTime = normalizerNames.deliveryTime(item.service_name);
@@ -178,75 +176,6 @@ app.post("/api/parcelmonkey", (req, res) => {
       res.json(error);
       console.log("Server failed to return data: " + error);
     });
-  // fetch("https://api.parcelmonkey.co.uk/GetQuote", {
-  //   method: "POST",
-  //   headers: {
-  //     apiversion: 3.1,
-  //     userid: 308283,
-  //     token: "4j0bGNwJgm"
-  //   },
-  //   body: JSON.stringify({
-  //     origin: "UK",
-  //     destination: "UK",
-  //     boxes: [
-  //       {
-  //         length: 10,
-  //         width: 10,
-  //         height: 10,
-  //         weight: 10
-  //       }
-  //     ],
-  //     goods_value: 0,
-  //     sender: {
-  //       name: "Rich",
-  //       phone: "01234567890",
-  //       address1: "Unit 21 Tollgate",
-  //       town: "purfleet",
-  //       county: "essex",
-  //       postcode: "RM19 1ZY"
-  //     },
-  //     recipient: {
-  //       name: "Nicola",
-  //       phone: "01234567890",
-  //       email: "nicola@example.com",
-  //       address1: "2 Baker's Yard",
-  //       address2: "",
-  //       town: "purfleet",
-  //       county: "essex",
-  //       postcode: "RM19 1ZY"
-  //     }
-  //   })
-  // })
-  //   .then(response => response.json())
-  //   .then(body => {
-  //     if (body) {
-  //       console.log(body);
-  //       // let outputArray = [];
-  //       // body.Quotes.forEach(item => {
-  //       //   const courier_name = normalizerNames.courierName(
-  //       //     item.Service.CourierName
-  //       //   );
-  //       //   const service_name = normalizerNames.serviceName(
-  //       //     item.Service.Name
-  //       //   );
-  //       //   const deliveryTime = normalizerNames.deliveryTime(
-  //       //     item.Service.Classification
-  //       //   );
-
-  //       //   outputArray.push({
-  //       //     company_name: "p2g",
-  //       //     courier_name: courier_name,
-  //       //     service_name: service_name,
-  //       //     price: item.TotalPrice,
-  //       //     deliveryTime: deliveryTime
-  //       //   });
-  //       // });
-  //       // res.json(outputArray);
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.log("Server failed to return data: " + error);
-  //   });
 });
 
 app.get("/api/key", function(req, res) {
@@ -285,7 +214,9 @@ app.post("/api/insertToDatabase", function(req, res) {
 
 app.post("/api/results", function(req, res) {
   const { unique_search_id, company_name } = req.body;
-
+  //I had a issue with my results as I received always full results with unique id
+  //I added company_name=$2 to get data only with company_name
+  //I used DISTINCT as data from parcelmonkey have duplicated entries
   db.any(
     `SELECT DISTINCT company_name,
     courier_name,

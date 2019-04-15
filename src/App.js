@@ -246,16 +246,17 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-
     //so if I will get a new array in bodyResult then
     //code below is using to soring this.state.quotes
     if (prevState.bodyResult !== this.state.bodyResult) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
-      let bodyResult = Object.values(this.state.bodyResult)[0];
-      let thisStateQuotesOne_day = [...this.state.quotes.one_day];
-      let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
-      let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
+      console.log(this.state.bodyResult);
+      //I always set new data into this.state.bodyResult
+      const bodyResult = Object.values(this.state.bodyResult)[0];
+      const thisStateQuotesOne_day = [...this.state.quotes.one_day];
+      const thisStateQuotesTwo_days = [...this.state.quotes.two_days];
+      const thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
       bodyResult.forEach(resBodyResult => {
         if (resBodyResult.courier_delivery_time === "one_day") {
           //looking if courier name exist in array this.state.quotes.one_day
