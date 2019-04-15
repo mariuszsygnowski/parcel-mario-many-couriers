@@ -2,13 +2,19 @@ import React, { Component, Fragment } from "react";
 import autoBind from "react-autobind";
 import "./App.css";
 import SingleBox from "./components/SingleBox";
+import { watchFile } from "fs";
+import { promised } from "q";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      a: [],
+      aaa: {},
+      ar: [],
+      bodyResult: [],
       how_many_responses: 0,
-      courierNames: ["p2g"],
+      courierNames: ["p2g", "parcelmonkey"],
       quotes: {
         one_day: [
           // {
@@ -104,13 +110,64 @@ class App extends Component {
           //if response is positive then I set unique_search_id
           //with "highest unique id" + 1
           const unique_search_id = Number(bodyKey[0].max) + 1;
-
-          //this is array with all names of our courier_names
           const courierNames = [...this.state.courierNames];
+          // let ar = this.state.ar;
 
           courierNames.forEach(courier => {
-            this.getDataFromSingleCourier(courier, unique_search_id);
+            // console.log(this.state.bodyResult);
+            this.state.bodyResult.push(
+              this.getDataFromSingleCourier(courier, unique_search_id)
+            );
+            // console.log(this.state.aaa);
           });
+
+          // this.a(unique_search_id);
+
+          // async function getSomeAsyncData() {
+          //   const result = await Promise.all(
+          //     this.getDataFromSingleCourier("p2g", unique_search_id)
+          //   );
+          //   console.log(result);
+          //   return result;
+          // }
+          // getSomeAsyncData();
+          //this is array with all names of our courier_names
+          // function query() {
+          //   var r = yield wait.for( this.getDataFromSingleCourier(
+          //     "p2g",
+          //     unique_search_id
+          //   ));
+          //   return r;
+          // }
+          // async function businessLogic() {
+          //   try {
+          //     const result = await this.getDataFromSingleCourier(
+          //       "p2g",
+          //       unique_search_id
+          //     );
+          //     console.log(result);
+          //     // the next line will fail
+          //     const result2 = await this.getDataFromSingleCourier(
+          //       "parcelmonkey",
+          //       unique_search_id
+          //     );
+          //     console.log(result2);
+          //   } catch (error) {
+          //     console.error("ERROR:" + error);
+          //   }
+          // }
+
+          // // call the main function
+          // businessLogic();
+
+          // const o1 = this.getDataFromSingleCourier(
+          //   courierNames[0],
+          //   unique_search_id
+          // );
+          // const o2 = this.getDataFromSingleCourier(
+          //   courierNames[1],
+          //   unique_search_id
+          // );
         } else {
           console.log("no body after respond /api/key");
         }
@@ -121,6 +178,8 @@ class App extends Component {
   }
 
   getDataFromSingleCourier(courierName, unique_search_id) {
+    let output = [];
+
     const url = `/api/${courierName}`;
     fetch(url, {
       method: "POST"
@@ -136,7 +195,9 @@ class App extends Component {
           //with "highest unique id" + 1
 
           // itarate over response from bodyCourierName
+          let company_name = "";
           bodyCourierName.forEach(resSingleCourier => {
+            company_name = resSingleCourier.company_name;
             let deliveryTime = "";
             if (resSingleCourier.deliveryTime === "Fast") {
               deliveryTime = "one_day";
@@ -177,7 +238,8 @@ class App extends Component {
           fetch("/api/results", {
             method: "POST",
             body: JSON.stringify({
-              unique_search_id: unique_search_id
+              unique_search_id: unique_search_id,
+              company_name: company_name
             }),
             headers: {
               "Content-Type": "application/json"
@@ -186,135 +248,44 @@ class App extends Component {
             .then(response => response.json())
             .then(bodyResult => {
               if (bodyResult) {
+                // console.log(bodyResult);
+                // output.push(bodyResult);
+                // console.log(output);
+                // return output;
                 //itarate over results from database
-                bodyResult.forEach(resBodyResult => {
-                  // console.log(resBodyResult);
-                  let thisStateQuotesOne_day = [...this.state.quotes.one_day];
-                  let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
-                  let thisStateQuotesOver_two_days = [
-                    ...this.state.quotes.over_two_days
-                  ];
+                // this.sortingBy("price", output);
+                // console.log("aa:", {
+                //   aaa: {
+                //     [courierName]: output
+                //   }
+                // });
+                // let aw = {
+                //   [courierName]: bodyResult
+                // };
+                // return aw;
+                // // console.log(aw);
 
-                  if (resBodyResult.courier_delivery_time === "one_day") {
-                    // console.log(resBodyResult);
-                    // const courierName = resBodyResult.courier_name.toLowerCase();
-
-                    //looking if courier name exist in array this.state.quotes.one_day
-
-                    const dataOneDay = thisStateQuotesOne_day.find(function(
-                      ele
-                    ) {
-                      return ele.courier === resBodyResult.courier_name;
-                    });
-
-                    //if exist then I just add new data
-                    if (dataOneDay) {
-                      dataOneDay.data.push({
-                        id: resBodyResult.id,
-                        company_name: resBodyResult.company_name.toLowerCase(),
-                        service_name: resBodyResult.service_name.toLowerCase(),
-                        price: resBodyResult.price
-                      });
-                    } else {
-                      //if not then I crate object plus add first entry into data
-                      thisStateQuotesOne_day.push({
-                        price: resBodyResult.price,
-                        courier: resBodyResult.courier_name,
-                        data: [
-                          {
-                            id: resBodyResult.id,
-                            company_name: resBodyResult.company_name.toLowerCase(),
-                            service_name: resBodyResult.service_name.toLowerCase(),
-                            price: resBodyResult.price
-                          }
-                        ]
-                      });
-                    }
-                  } else if (
-                    //I need to repeat for each delivery time
-                    //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
-                    //and itarate over this array, but when I pass into function respond
-                    //I got an error, I tried to do new Function but still there is some issues
-                    //later I will do something more universal
-                    resBodyResult.courier_delivery_time === "two_days"
-                  ) {
-                    const dataTwoDays = thisStateQuotesTwo_days.find(function(
-                      ele
-                    ) {
-                      return ele.courier === resBodyResult.courier_name;
-                    });
-
-                    if (dataTwoDays) {
-                      dataTwoDays.data.push({
-                        id: resBodyResult.id,
-                        company_name: resBodyResult.company_name,
-                        service_name: resBodyResult.service_name.toLowerCase(),
-                        price: resBodyResult.price
-                      });
-                    } else {
-                      thisStateQuotesTwo_days.push({
-                        price: resBodyResult.price,
-                        courier: resBodyResult.courier_name,
-                        data: [
-                          {
-                            id: resBodyResult.id,
-                            company_name: resBodyResult.company_name.toLowerCase(),
-                            service_name: resBodyResult.service_name.toLowerCase(),
-                            price: resBodyResult.price
-                          }
-                        ]
-                      });
-                    }
-                  } else if (
-                    resBodyResult.courier_delivery_time === "over_two_days"
-                  ) {
-                    const dataOverTwoDays = thisStateQuotesOver_two_days.find(
-                      function(ele) {
-                        return ele.courier === resBodyResult.courier_name;
-                      }
-                    );
-
-                    if (dataOverTwoDays) {
-                      dataOverTwoDays.data.push({
-                        id: resBodyResult.id,
-                        company_name: resBodyResult.company_name.toLowerCase(),
-                        service_name: resBodyResult.service_name.toLowerCase(),
-                        price: resBodyResult.price
-                      });
-                    } else {
-                      thisStateQuotesOver_two_days.push({
-                        price: resBodyResult.price,
-                        courier: resBodyResult.courier_name,
-                        data: [
-                          {
-                            id: resBodyResult.id,
-                            company_name: resBodyResult.company_name.toLowerCase(),
-                            service_name: resBodyResult.service_name.toLowerCase(),
-                            price: resBodyResult.price
-                          }
-                        ]
-                      });
-                    }
+                this.setState({
+                  aaa: {
+                    [courierName]: bodyResult
                   }
-
-                  this.setState({
-                    quotes: {
-                      one_day: thisStateQuotesOne_day,
-                      two_days: thisStateQuotesTwo_days,
-                      over_two_days: thisStateQuotesOver_two_days
-                    }
-                  });
                 });
 
+                // console.log(output, this.state.quotes);
+                // let outputt = Object.assign({}, output);
+                // console.log(outputt);
                 //I always sort by "price a-z" inside each courier as
                 //what is a reason to know highest price from each parcel courier
                 //But even I will change my mnid is easy to add that feature
-                this.sortingBy("price");
+                // this.sortingBy("price", outputt);
 
-                const how_many_responses = this.state.how_many_responses + 1;
-                this.setState({
-                  how_many_responses
-                });
+                // const how_many_responses = this.state.how_many_responses + 1;
+                // this.setState({
+                //   how_many_responses,
+                //   quotes: outputt
+                // });
+
+                // this.setState(Object.assign(this.state.quotes, output));
               } else {
                 console.log("no body after respond /api/results");
               }
@@ -344,25 +315,168 @@ class App extends Component {
     };
   }
 
-  sortingBy(e) {
+  sortingBy(e, outputt) {
     let output = {};
     let minPrice = 0;
     let thisStateQuotes = Object.assign({}, this.state.quotes);
     Object.entries(thisStateQuotes).forEach(item => {
-      item[1].forEach(curier => {
+      item[1].forEach(courier => {
         //sorting inside each courier via searching company
-        minPrice = Number(curier.data[0].price);
-        curier.price = minPrice;
+        console.log(courier);
+        courier.data.sort(this.dynamicSort("price"));
+        minPrice = Number(courier.data[0].price);
+        courier.price = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
-
+      // console.log(output[item[0]]);
       //sorting via each courier
       output[item[0]].sort(this.dynamicSort(e));
+      // console.log([item[1]]);
     });
-
     this.setState({
       quotes: output
     });
+  }
+
+  aaa() {
+    console.log(this.state.quotes);
+    this.sortingBy("price");
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.aaa !== this.state.aaa) {
+      this.setState({ how_many_responses: this.state.how_many_responses + 1 });
+
+      // let a = Object.values(this.state.aaa).map(value => {
+      //   return value;
+      // });
+      let lenthAaa = Object.values(this.state.aaa)[0];
+      // console.log(
+      //   "is different",
+      //   Object.values(this.state.aaa)[0],
+      //   this.state.quotes.one_day
+      // );
+      // let a = Object.values(this.state.aaa)[lenthAaa];
+      let thisStateQuotesOne_day = [...this.state.quotes.one_day];
+      let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
+      let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
+      // console.log(thisStateQuotesOne_day);
+      // console.log(this.state.quotes);
+      // let bodyResult = [
+      //   ...this.state.bodyResult[this.state.bodyResult.length - 1]
+      // ];
+      lenthAaa.forEach(resBodyResult => {
+        if (resBodyResult.courier_delivery_time === "one_day") {
+          // console.log(resBodyResult);
+          // const courierName = resBodyResult.courier_name.toLowerCase();
+
+          //looking if courier name exist in array this.state.quotes.one_day
+
+          const dataOneDay = thisStateQuotesOne_day.find(function(ele) {
+            return ele.courier === resBodyResult.courier_name;
+          });
+
+          //if exist then I just add new data
+          if (dataOneDay) {
+            dataOneDay.data.push({
+              // id: resBodyResult.id,
+              company_name: resBodyResult.company_name.toLowerCase(),
+              service_name: resBodyResult.service_name.toLowerCase(),
+              price: resBodyResult.price
+            });
+          } else {
+            //if not then I crate object plus add first entry into data
+            thisStateQuotesOne_day.push({
+              price: resBodyResult.price,
+              courier: resBodyResult.courier_name,
+              data: [
+                {
+                  // id: resBodyResult.id,
+                  company_name: resBodyResult.company_name.toLowerCase(),
+                  service_name: resBodyResult.service_name.toLowerCase(),
+                  price: resBodyResult.price
+                }
+              ]
+            });
+          }
+        } else if (
+          //I need to repeat for each delivery time
+          //I can crate a array with arr=["one_day", "two_days", "over_two_days"]
+          //and itarate over this array, but when I pass into function respond
+          //I got an error, I tried to do new Function but still there is some issues
+          //later I will do something more universal
+          resBodyResult.courier_delivery_time === "two_days"
+        ) {
+          const dataTwoDays = thisStateQuotesTwo_days.find(function(ele) {
+            return ele.courier === resBodyResult.courier_name;
+          });
+
+          if (dataTwoDays) {
+            dataTwoDays.data.push({
+              // id: resBodyResult.id,
+              company_name: resBodyResult.company_name,
+              service_name: resBodyResult.service_name.toLowerCase(),
+              price: resBodyResult.price
+            });
+          } else {
+            thisStateQuotesTwo_days.push({
+              price: resBodyResult.price,
+              courier: resBodyResult.courier_name,
+              data: [
+                {
+                  // id: resBodyResult.id,
+                  company_name: resBodyResult.company_name.toLowerCase(),
+                  service_name: resBodyResult.service_name.toLowerCase(),
+                  price: resBodyResult.price
+                }
+              ]
+            });
+          }
+        } else if (resBodyResult.courier_delivery_time === "over_two_days") {
+          const dataOverTwoDays = thisStateQuotesOver_two_days.find(function(
+            ele
+          ) {
+            return ele.courier === resBodyResult.courier_name;
+          });
+
+          if (dataOverTwoDays) {
+            dataOverTwoDays.data.push({
+              // id: resBodyResult.id,
+              company_name: resBodyResult.company_name.toLowerCase(),
+              service_name: resBodyResult.service_name.toLowerCase(),
+              price: resBodyResult.price
+            });
+          } else {
+            thisStateQuotesOver_two_days.push({
+              price: resBodyResult.price,
+              courier: resBodyResult.courier_name,
+              data: [
+                {
+                  // id: resBodyResult.id,
+                  company_name: resBodyResult.company_name.toLowerCase(),
+                  service_name: resBodyResult.service_name.toLowerCase(),
+                  price: resBodyResult.price
+                }
+              ]
+            });
+          }
+        }
+        //to make sure that
+        this.setState(
+          {
+            quotes: {
+              one_day: thisStateQuotesOne_day,
+              two_days: thisStateQuotesTwo_days,
+              over_two_days: thisStateQuotesOver_two_days
+            }
+          },
+          () => {
+            this.sortingBy("price");
+          }
+        );
+      });
+      // this.sortingBy("price");
+      // console.log(this.state.quotes);
+    }
   }
 
   render() {
@@ -381,10 +495,12 @@ class App extends Component {
         <button onClick={() => this.sortingBy("-courier")}>
           sort by name z-a
         </button>
+        <button onClick={this.aaa}>aaa</button>
         <p>
           Received responses {this.state.how_many_responses}/
           {this.state.courierNames.length}
         </p>
+        <p>{this.state.re}</p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
@@ -401,7 +517,7 @@ class App extends Component {
                   const resultPrice = Number(result.price).toFixed(2);
                   return (
                     <div
-                      key={result.courier + result.data[0].id}
+                      // key={result.courier + result.data[0].id}
                       className="app_singleCurier"
                     >
                       <p>
@@ -416,7 +532,7 @@ class App extends Component {
                           const resPrice = Number(res.price).toFixed(2);
                           return (
                             <div
-                              key={res.id}
+                              // key={res.id}
                               className="app_singleRespond--eachCourier"
                             >
                               <p>{res.company_name}</p>
