@@ -246,6 +246,9 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+
+    //so if I will get a new array in bodyResult then
+    //code below is using to soring this.state.quotes
     if (prevState.bodyResult !== this.state.bodyResult) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
@@ -380,12 +383,10 @@ class App extends Component {
         <button onClick={() => this.sortingBy("-courier")}>
           sort by name z-a
         </button>
-        <button onClick={this.aaa}>aaa</button>
         <p>
           Received responses {this.state.how_many_responses}/
           {this.state.courierNames.length}
         </p>
-        <p>{this.state.re}</p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
