@@ -194,13 +194,12 @@ class App extends Component {
             .then(response => response.json())
             .then(bodyResult => {
               if (bodyResult) {
-                console.log(bodyResult);
                 bodyResult.forEach(res => {
                   res.price = Number(res.price);
                 });
 
                 this.setState({
-                  aaa: {
+                  bodyResult: {
                     [courierName]: bodyResult
                   }
                 });
@@ -263,14 +262,14 @@ class App extends Component {
     this.sortingBy("price");
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.aaa !== this.state.aaa) {
+    if (prevState.bodyResult !== this.state.bodyResult) {
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
-      let lenthAaa = Object.values(this.state.aaa)[0];
+      let bodyResult = Object.values(this.state.bodyResult)[0];
       let thisStateQuotesOne_day = [...this.state.quotes.one_day];
       let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
       let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
-      lenthAaa.forEach(resBodyResult => {
+      bodyResult.forEach(resBodyResult => {
         if (resBodyResult.courier_delivery_time === "one_day") {
           //looking if courier name exist in array this.state.quotes.one_day
 
