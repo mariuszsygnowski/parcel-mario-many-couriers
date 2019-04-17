@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const cheerio = require("cheerio");
+const superagent = require("superagent");
 const fetch = require("node-fetch");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -23,6 +25,70 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "build")));
 }
+
+app.post("/api/p4d", (req, res) => {
+  // (async () => {
+  //   try {
+  //     const res = await superagent.post('/api/pet');
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+  let $;
+  let outputArray = [];
+
+  const url = "http://www.p4d.co.uk/go/domestic/GB/GB/10,10,10,10";
+  superagent
+    .get(url)
+    .query()
+    .end(function(err, response) {
+      if (err) {
+        res.json({
+          confirmation: "fail",
+          message: err
+        });
+        return;
+      }
+      $ = cheerio.load(response.text);
+
+      $("#newquote-list li form .newquote-title").each(function(i, el) {
+        const service_nameP4D = $(this).text();
+
+        //.split("\n") = I split to array where each value are splited by enter key
+        const service_nameArray = service_nameP4D.split("\n");
+        service_nameArray.forEach((name, i) => {
+          //.trim() remove white spaces
+          service_nameArray[i] = name.trim();
+        });
+
+        const service_name = service_nameArray[1];
+        const priceP4D = service_nameArray[3];
+
+        //remove from string priceP4D all characters but not numbers
+        const price = priceP4D.replace(/[^\d.-]/g, "");
+        const courier_name = normalizerNames.courierNameP4D(service_name);
+
+        outputArray[i] = Object.assign({}, outputArray[i], {
+          company_name: "p4d",
+          price: price,
+          service_name: service_name,
+          courier_name: courier_name
+        });
+      });
+
+      $(
+        "#newquote-list li form  .newquote-topbox .newquote-delivery-time b"
+      ).each(function(i, el) {
+        const deliveryTimeP4D = $(this).text();
+        const deliveryTime = normalizerNames.deliveryTime(deliveryTimeP4D);
+        outputArray[i] = Object.assign({}, outputArray[i], {
+          deliveryTime
+        });
+      });
+      res.json(outputArray);
+    });
+});
 
 app.post("/api/p2g", (req, res) => {
   //now everything is hard coded but later will be passed all data
@@ -204,6 +270,7 @@ app.post("/api/insertToDatabase", function(req, res) {
     service_name,
     price
   ])
+    //I don't need right now any response
     .then(data => {
       res.json(data);
     })

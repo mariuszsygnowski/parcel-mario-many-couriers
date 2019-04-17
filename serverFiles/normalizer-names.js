@@ -3,6 +3,39 @@ module.exports = {
   // The parameters 'name' and 'surname' will be provided inside the function
   // when the function is called in the main file.
   // Example: concatenameNames('John,'Doe');
+  courierNameP4D: function(courier_name) {
+    let output = courier_name;
+
+    if (
+      courier_name === "Parcelforce 24" ||
+      courier_name === "Parcelforce by 9am" ||
+      courier_name === "Parcelforce by 10am" ||
+      courier_name === "Parcelforce 48" ||
+      courier_name === "Parcelforce AM" ||
+      courier_name === "Parcelforce Large" ||
+      courier_name === "Sunday Delivery" ||
+      courier_name === "Saturday Delivery" ||
+      courier_name === "Parcelforce by 12pm"
+    ) {
+      output = "Parcelforce";
+    } else if (
+      courier_name === "Express Sameday Collect" ||
+      courier_name === "UPS Express"
+    ) {
+      output = "UPS";
+    } else if (
+      courier_name === "DHL Express" ||
+      courier_name === "DHL Express PRE NOON" ||
+      courier_name === "DHL Express PRE 9AM" ||
+      courier_name === "DHL Express"
+    ) {
+      output = "DHL";
+    } else {
+      console.log("new courier_nameP4D: ", courier_name);
+    }
+
+    return output;
+  },
   courierName: function(courier_name) {
     let output = courier_name;
 
@@ -62,6 +95,7 @@ module.exports = {
       deliveryTime === "DPD Pickup" ||
       deliveryTime === "Next Day Before 9am" ||
       deliveryTime === "Sunday" ||
+      deliveryTime === "Next working day" ||
       deliveryTime === "DX Next Day"
     ) {
       output = "Fast";
@@ -69,7 +103,7 @@ module.exports = {
       deliveryTime === "Parcelforce 48" ||
       deliveryTime === "1-2 days drop off service" ||
       deliveryTime === "Medium" ||
-      deliveryTime === "Medium"
+      deliveryTime === "2 working days"
     ) {
       output = "Medium";
     } else if (deliveryTime === "Slow") {
