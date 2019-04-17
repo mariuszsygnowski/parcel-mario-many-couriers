@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bodyResult: [],
+      bodyResult: {},
       how_many_responses: 0,
       courierNames: ["p2g", "parcelmonkey", "p4d"],
       quotes: {
@@ -187,6 +187,9 @@ class App extends Component {
                   res.price = Number(res.price);
                 });
 
+                //I always overirde with new data in bodyResult
+                //so in componentDidUpdate I checking if new data arrived
+                //and then push into this.state.quotes sorted data
                 this.setState({
                   bodyResult: {
                     [courierName]: bodyResult
@@ -245,12 +248,14 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    //so if I will get a new array in bodyResult then
-    //code below is using to soring this.state.quotes
     if (prevState.bodyResult !== this.state.bodyResult) {
-      this.setState({ how_many_responses: this.state.how_many_responses + 1 });
+      //so if I new data will be overwritten in this.sate.bodyResult then
+      //code below is using to push new data (and sorted data) into this.state.quotes
 
-      //I always set new data into this.state.bodyResult
+      this.setState({ how_many_responses: this.state.how_many_responses + 1 });
+      console.log(this.state.bodyResult);
+
+      //New data is always as first value so it is [0]
       let bodyResult = Object.values(this.state.bodyResult)[0];
       let thisStateQuotesOne_day = [...this.state.quotes.one_day];
       let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
@@ -259,7 +264,7 @@ class App extends Component {
         if (resBodyResult.courier_delivery_time === "one_day") {
           //looking if courier name exist in array this.state.quotes.one_day
 
-          const dataOneDay = thisStateQuotesOne_day.find(function(ele) {
+          const dataOneDay = thisStateQuotesOne_day.find(ele => {
             return ele.courier === resBodyResult.courier_name;
           });
 
@@ -294,7 +299,7 @@ class App extends Component {
           //later I will do something more universal
           resBodyResult.courier_delivery_time === "two_days"
         ) {
-          const dataTwoDays = thisStateQuotesTwo_days.find(function(ele) {
+          const dataTwoDays = thisStateQuotesTwo_days.find(ele => {
             return ele.courier === resBodyResult.courier_name;
           });
 
@@ -320,9 +325,7 @@ class App extends Component {
             });
           }
         } else if (resBodyResult.courier_delivery_time === "over_two_days") {
-          const dataOverTwoDays = thisStateQuotesOver_two_days.find(function(
-            ele
-          ) {
+          const dataOverTwoDays = thisStateQuotesOver_two_days.find(ele => {
             return ele.courier === resBodyResult.courier_name;
           });
 
@@ -357,6 +360,8 @@ class App extends Component {
               over_two_days: thisStateQuotesOver_two_days
             }
           },
+          //I need to do after when I set new data into quotes as 
+          //this.sortingBy() always take a new data from this.state.quotes
           () => {
             //by default I sorting by price low to high
             this.sortingBy("price");
