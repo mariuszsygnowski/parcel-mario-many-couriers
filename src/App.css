@@ -42,7 +42,7 @@
 
 .app__days {
     display: grid;
-    grid-gap: 2px;
+    grid-gap: 1px;
     border: solid green;
     grid-auto-rows: min-content;
 }
