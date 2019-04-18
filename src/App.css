@@ -37,12 +37,12 @@
     /* grid-template-columns: repeat(3, 1fr); */
     grid-auto-columns: 1fr;
     grid-auto-flow: column;
-    grid-gap: 1rem;
+    grid-gap: 0.3rem;
 }
 
 .app__days {
     display: grid;
-    grid-gap: 1rem;
+    grid-gap: 0.3rem;
     border: solid green;
     grid-auto-rows: min-content;
 }
@@ -53,12 +53,12 @@
 
 .app_singleCurier {
     display: grid;
-    border: solid red;
+    /* border: solid red; */
 }
 
 .app_singleRespond {
     display: grid;
-    grid-gap: 1rem;
+    /* grid-gap: 0.3rem; */
 }
 
 .app_singleRespond--eachCourier {

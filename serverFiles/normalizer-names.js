@@ -3,7 +3,7 @@ module.exports = {
   // The parameters 'name' and 'surname' will be provided inside the function
   // when the function is called in the main file.
   // Example: concatenameNames('John,'Doe');
-  courierNameP4D: function(courier_name) {
+  courierNameP4D: courier_name => {
     let output = courier_name;
 
     if (
@@ -36,7 +36,7 @@ module.exports = {
 
     return output;
   },
-  courierName: function(courier_name) {
+  courierName: courier_name => {
     let output = courier_name;
 
     if (courier_name === "MyHermes" || courier_name === "Hermes") {
@@ -74,7 +74,7 @@ module.exports = {
     return output;
   },
 
-  deliveryTime: function(deliveryTime) {
+  deliveryTime: deliveryTime => {
     let output = deliveryTime;
 
     if (
@@ -95,6 +95,7 @@ module.exports = {
       deliveryTime === "DPD Pickup" ||
       deliveryTime === "Next Day Before 9am" ||
       deliveryTime === "Sunday" ||
+      deliveryTime === "Saturday" ||
       deliveryTime === "Next working day" ||
       deliveryTime === "DX Next Day"
     ) {
@@ -103,6 +104,7 @@ module.exports = {
       deliveryTime === "Parcelforce 48" ||
       deliveryTime === "1-2 days drop off service" ||
       deliveryTime === "Medium" ||
+      deliveryTime === "Parcelforce Large" ||
       deliveryTime === "2 working days"
     ) {
       output = "Medium";
@@ -113,7 +115,7 @@ module.exports = {
     }
     return output;
   },
-  serviceName: function(serviceName) {
+  serviceName: serviceName => {
     let output = serviceName;
 
     if (serviceName === "Service: access point™ to access point™") {

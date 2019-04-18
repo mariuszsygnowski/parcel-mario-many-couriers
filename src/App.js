@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
+import {
+  CollapsibleComponent,
+  CollapsibleHead,
+  CollapsibleContent
+} from "react-collapsible-component";
+
 import "./App.css";
 // import SingleBox from "./components/SingleBox";
 
@@ -360,7 +366,7 @@ class App extends Component {
               over_two_days: thisStateQuotesOver_two_days
             }
           },
-          //I need to do after when I set new data into quotes as 
+          //I need to do after when I set new data into quotes as
           //this.sortingBy() always take a new data from this.state.quotes
           () => {
             //by default I sorting by price low to high
@@ -414,32 +420,39 @@ class App extends Component {
                       }
                       className="app_singleCurier"
                     >
-                      <p>
-                        <b>
-                          {result.courier}, from: £{resultPrice}
-                        </b>
-                      </p>
-                      <div className="app_singleRespond">
-                        {result.data.map(res => {
-                          //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
-                          //example: {company_name: "interparcel", id: 17, price: "21.11"}.
+                      <CollapsibleComponent>
+                        <CollapsibleHead isExpanded={false}>
+                          <b>
+                            {result.courier} ({result.data.length}) from: £
+                            {resultPrice}
+                          </b>
+                        </CollapsibleHead>
+                        <CollapsibleContent isExpanded={false}>
+                          <div className="app_singleRespond">
+                            {result.data.map(res => {
+                              //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
+                              //example: {company_name: "interparcel", id: 17, price: "21.11"}.
 
-                          //converting numbers to have always 2 numbers after dot
-                          const resPrice = res.price.toFixed(2);
-                          return (
-                            <div
-                              key={
-                                res.company_name + res.service_name + res.price
-                              }
-                              className="app_singleRespond--eachCourier"
-                            >
-                              <p>{res.company_name}</p>
-                              <p>Service: {res.service_name}</p>
-                              <p>Price: £{resPrice} inc VAT</p>
-                            </div>
-                          );
-                        })}
-                      </div>
+                              //converting numbers to have always 2 numbers after dot
+                              const resPrice = res.price.toFixed(2);
+                              return (
+                                <div
+                                  key={
+                                    res.company_name +
+                                    res.service_name +
+                                    res.price
+                                  }
+                                  className="app_singleRespond--eachCourier"
+                                >
+                                  <p>{res.company_name}</p>
+                                  <p>Service: {res.service_name}</p>
+                                  <p>Price: £{resPrice} inc VAT</p>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </CollapsibleContent>
+                      </CollapsibleComponent>
                     </div>
                   );
                 })}
