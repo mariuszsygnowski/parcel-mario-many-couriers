@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
-import {
-  CollapsibleComponent,
-  CollapsibleHead,
-  CollapsibleContent
-} from "react-collapsible-component";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { CardBody, Card } from "reactstrap";
 
 import "./App.css";
+import { SingleCourier } from "./SingleCourier";
+
 // import SingleBox from "./components/SingleBox";
 
 class App extends Component {
@@ -420,39 +419,10 @@ class App extends Component {
                       }
                       className="app_singleCurier"
                     >
-                      <CollapsibleComponent>
-                        <CollapsibleHead isExpanded={false}>
-                          <b>
-                            {result.courier} ({result.data.length}) from: £
-                            {resultPrice}
-                          </b>
-                        </CollapsibleHead>
-                        <CollapsibleContent isExpanded={false}>
-                          <div className="app_singleRespond">
-                            {result.data.map(res => {
-                              //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
-                              //example: {company_name: "interparcel", id: 17, price: "21.11"}.
-
-                              //converting numbers to have always 2 numbers after dot
-                              const resPrice = res.price.toFixed(2);
-                              return (
-                                <div
-                                  key={
-                                    res.company_name +
-                                    res.service_name +
-                                    res.price
-                                  }
-                                  className="app_singleRespond--eachCourier"
-                                >
-                                  <p>{res.company_name}</p>
-                                  <p>Service: {res.service_name}</p>
-                                  <p>Price: £{resPrice} inc VAT</p>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </CollapsibleContent>
-                      </CollapsibleComponent>
+                      <SingleCourier
+                        resultPrice={resultPrice}
+                        result={result}
+                      />
                     </div>
                   );
                 })}
