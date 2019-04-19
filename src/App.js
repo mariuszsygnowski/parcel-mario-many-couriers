@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, Badge } from "reactstrap";
+import { Modal, ModalBody, Button, Badge } from "reactstrap";
 
 import "./App.css";
 import { SingleCourier } from "./SingleCourier";
@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modal: false,
       bodyResult: {},
       how_many_responses: 0,
       courierNames: ["p2g", "parcelmonkey", "p4d"],
@@ -91,6 +92,7 @@ class App extends Component {
   fetchCouriers() {
     //reset to default values results
     this.setState({
+      modal: true,
       how_many_responses: 0,
       quotes: {
         one_day: [],
@@ -370,6 +372,13 @@ class App extends Component {
           () => {
             //by default I sorting by price low to high
             this.sortingBy("price");
+            if (
+              this.state.how_many_responses === this.state.courierNames.length
+            ) {
+              this.setState({
+                modal: false
+              });
+            }
           }
         );
       });
@@ -379,6 +388,13 @@ class App extends Component {
   render() {
     return (
       <div className="parcel_mario">
+        <Modal isOpen={this.state.modal}>
+          <ModalBody>
+            Received responses {this.state.how_many_responses}/
+            {this.state.courierNames.length}
+          </ModalBody>
+        </Modal>
+
         <div className="buttons">
           <Button
             className="buttons--search"

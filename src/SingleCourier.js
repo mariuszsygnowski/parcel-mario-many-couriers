@@ -34,6 +34,7 @@ export class SingleCourier extends React.Component {
             //example: {company_name: "interparcel", id: 17, price: "21.11"}.
             //converting numbers to have always 2 numbers after dot
             const resPrice = res.price.toFixed(2);
+
             return (
               <DropdownItem
                 key={res.company_name + res.service_name + res.price}

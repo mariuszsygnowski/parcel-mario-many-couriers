@@ -70,7 +70,7 @@ app.post("/api/p4d", (req, res) => {
         const courier_name = normalizerNames.courierNameP4D(service_name);
 
         outputArray[i] = Object.assign({}, outputArray[i], {
-          company_name: "p4d",
+          company_name: "p4d.co.uk",
           price: price,
           service_name: service_name,
           courier_name: courier_name
@@ -148,7 +148,7 @@ app.post("/api/p2g", (req, res) => {
                 );
 
                 outputArray.push({
-                  company_name: "p2g",
+                  company_name: "parcel2go.com",
                   courier_name: courier_name,
                   service_name: item.Service.Name,
                   price: item.TotalPrice,
@@ -226,7 +226,7 @@ app.post("/api/parcelmonkey", (req, res) => {
           const price = item.total_price_gross;
 
           outputArray.push({
-            company_name: "parcelmonkey",
+            company_name: "parcelmonkey.co.uk",
             courier_name: courier_name,
             service_name: item.service,
             price: price,
