@@ -15,59 +15,7 @@ class App extends Component {
       modal: false,
       bodyResult: {},
       how_many_responses: 0,
-      courierNames: [
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d",
-        "p2g",
-        "parcelmonkey",
-        "p4d"
-      ],
+      courierNames: ["p2g", "parcelmonkey", "p4d"],
       quotes: {
         one_day: [
           // {
@@ -448,10 +396,7 @@ class App extends Component {
       <div className="parcel_mario">
         <Modal isOpen={this.state.modal} style={{ top: "15px" }}>
           <ModalBody>
-            <Progress
-              value={this.state.how_many_responses}
-              max={this.state.courierNames.length}
-            />
+            <Progress value={how_many_responses} max={courierNames_length} />
             Received responses {how_many_responses}/{courierNames_length}
           </ModalBody>
         </Modal>
