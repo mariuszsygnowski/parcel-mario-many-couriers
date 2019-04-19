@@ -375,9 +375,11 @@ class App extends Component {
             if (
               this.state.how_many_responses === this.state.courierNames.length
             ) {
-              this.setState({
-                modal: false
-              });
+              setTimeout(() => {
+                this.setState({
+                  modal: false
+                });
+              }, 500);
             }
           }
         );
@@ -390,7 +392,7 @@ class App extends Component {
     const courierNames_length = this.state.courierNames.length;
     return (
       <div className="parcel_mario">
-        <Modal isOpen={this.state.modal}>
+        <Modal isOpen={this.state.modal} style={{ top: "15px" }}>
           <ModalBody>
             <Progress value={how_many_responses} max={courierNames_length} />
             Received responses {how_many_responses}/{courierNames_length}
