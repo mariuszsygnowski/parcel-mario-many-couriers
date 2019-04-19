@@ -118,7 +118,10 @@ module.exports = {
   serviceName: serviceName => {
     let output = serviceName;
 
-    if (serviceName === "Service: access point™ to access point™") {
+    if (
+      serviceName === "Service: access point™ to access point™" ||
+      serviceName === "Access Point™ to Access Point™"
+    ) {
       output = "Service: access point™ to access point™";
     } else if (serviceName === "Yodel Northern Ireland") {
       output = "Yodel Northern Ireland";
@@ -152,12 +155,20 @@ module.exports = {
       output = "TNT UK 10:00 Express";
     } else if (serviceName === "TNT UK 09:00 Express") {
       output = "TNT UK 09:00 Express";
-    } else if (serviceName === "Yodel 24") {
+    } else if (
+      serviceName === "Yodel 24" ||
+      serviceName === "Yodel XpressPack 24"
+    ) {
       output = "Yodel 24";
+    } else if (
+      serviceName === "Yodel 48" ||
+      serviceName === "Yodel XpressPack 48"
+    ) {
+      output = "Yodel 48";
     } else if (serviceName === "Slow") {
       output = "Slow";
     } else {
-      // console.log("new serviceName: ", serviceName);
+      console.log("new serviceName: ", serviceName);
     }
     return output;
   }

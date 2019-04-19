@@ -62,12 +62,15 @@ app.post("/api/p4d", (req, res) => {
           service_nameArray[i] = name.trim();
         });
 
-        const service_name = service_nameArray[1];
+        const service_nameP4DArray = service_nameArray[1];
         const priceP4D = service_nameArray[3];
 
         //remove from string priceP4D all characters but not numbers
         const price = priceP4D.replace(/[^\d.-]/g, "");
-        const courier_name = normalizerNames.courierNameP4D(service_name);
+        const courier_name = normalizerNames.courierNameP4D(
+          service_nameP4DArray
+        );
+        const service_name = normalizerNames.serviceName(service_nameP4DArray);
 
         outputArray[i] = Object.assign({}, outputArray[i], {
           company_name: "p4d.co.uk",
@@ -150,7 +153,7 @@ app.post("/api/p2g", (req, res) => {
                 outputArray.push({
                   company_name: "parcel2go.com",
                   courier_name: courier_name,
-                  service_name: item.Service.Name,
+                  service_name: service_name,
                   price: item.TotalPrice,
                   deliveryTime: deliveryTime
                 });
@@ -228,7 +231,7 @@ app.post("/api/parcelmonkey", (req, res) => {
           outputArray.push({
             company_name: "parcelmonkey.co.uk",
             courier_name: courier_name,
-            service_name: item.service,
+            service_name: service_name,
             price: price,
             deliveryTime: deliveryTime
           });

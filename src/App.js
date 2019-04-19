@@ -15,7 +15,59 @@ class App extends Component {
       modal: false,
       bodyResult: {},
       how_many_responses: 0,
-      courierNames: ["p2g", "parcelmonkey", "p4d"],
+      courierNames: [
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d",
+        "p2g",
+        "parcelmonkey",
+        "p4d"
+      ],
       quotes: {
         one_day: [
           // {
@@ -260,7 +312,7 @@ class App extends Component {
       //code below is using to push new data (and sorted data) into this.state.quotes
 
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
-      console.log(this.state.bodyResult);
+      // console.log(this.state.bodyResult);
 
       //New data is always as first value so it is [0]
       let bodyResult = Object.values(this.state.bodyResult)[0];
@@ -372,6 +424,8 @@ class App extends Component {
           () => {
             //by default I sorting by price low to high
             this.sortingBy("price");
+
+            //if received all responses then modal will dissapear (after 0.5s)
             if (
               this.state.how_many_responses === this.state.courierNames.length
             ) {
@@ -394,7 +448,10 @@ class App extends Component {
       <div className="parcel_mario">
         <Modal isOpen={this.state.modal} style={{ top: "15px" }}>
           <ModalBody>
-            <Progress value={how_many_responses} max={courierNames_length} />
+            <Progress
+              value={this.state.how_many_responses}
+              max={this.state.courierNames.length}
+            />
             Received responses {how_many_responses}/{courierNames_length}
           </ModalBody>
         </Modal>
