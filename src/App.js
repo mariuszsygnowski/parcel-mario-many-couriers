@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, ModalBody, Button, Badge } from "reactstrap";
+import { Progress, Modal, ModalBody, Button, Badge } from "reactstrap";
 
 import "./App.css";
 import { SingleCourier } from "./SingleCourier";
@@ -386,12 +386,14 @@ class App extends Component {
   }
 
   render() {
+    const how_many_responses = this.state.how_many_responses;
+    const courierNames_length = this.state.courierNames.length;
     return (
       <div className="parcel_mario">
         <Modal isOpen={this.state.modal}>
           <ModalBody>
-            Received responses {this.state.how_many_responses}/
-            {this.state.courierNames.length}
+            <Progress value={how_many_responses} max={courierNames_length} />
+            Received responses {how_many_responses}/{courierNames_length}
           </ModalBody>
         </Modal>
 
