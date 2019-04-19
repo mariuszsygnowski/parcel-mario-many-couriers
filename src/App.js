@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import autoBind from "react-autobind";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { CardBody, Card } from "reactstrap";
+import { Button, Badge } from "reactstrap";
 
 import "./App.css";
 import { SingleCourier } from "./SingleCourier";
@@ -378,20 +378,51 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.fetchCouriers}>search button</button>
-        <button onClick={() => this.sortingBy("price")}>
-          sort by price low to high
-        </button>
-        <button onClick={() => this.sortingBy("-price")}>
-          sort by price high to low
-        </button>
-        <button onClick={() => this.sortingBy("courier")}>
-          sort by name a-z
-        </button>
-        <button onClick={() => this.sortingBy("-courier")}>
-          sort by name z-a
-        </button>
+      <div className="parcel_mario">
+        <div className="buttons">
+          <Button
+            className="buttons--search"
+            color="info"
+            size="sm"
+            onClick={this.fetchCouriers}
+          >
+            search Button
+          </Button>
+
+          <Button
+            className="buttons--sortByPriceLH"
+            color="info"
+            size="sm"
+            onClick={() => this.sortingBy("price")}
+          >
+            sort by price low to high
+          </Button>
+          <Button
+            className="buttons--sortByPriceHL"
+            color="info"
+            size="sm"
+            onClick={() => this.sortingBy("-price")}
+          >
+            sort by price high to low
+          </Button>
+
+          <Button
+            className="buttons--sortByNameAZ"
+            color="info"
+            size="sm"
+            onClick={() => this.sortingBy("courier")}
+          >
+            sort by name a-z
+          </Button>
+          <Button
+            className="buttons--sortByNameZA"
+            color="info"
+            size="sm"
+            onClick={() => this.sortingBy("-courier")}
+          >
+            sort by name z-a
+          </Button>
+        </div>
         <p>
           Received responses {this.state.how_many_responses}/
           {this.state.courierNames.length}
@@ -404,26 +435,22 @@ class App extends Component {
             //item[1] is array with data
             return (
               <div key={item[0]} className="app__days">
-                <p>{item[0]}</p>
+                <Badge color="success">{item[0]}</Badge>
                 {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   const resultPrice = result.price.toFixed(2);
                   return (
-                    <div
+                    <SingleCourier
                       key={
                         result.courier +
                         result.data[0].company_name +
                         result.data[0].price +
                         +result.data[0].service_name
                       }
-                      className="app_singleCurier"
-                    >
-                      <SingleCourier
-                        resultPrice={resultPrice}
-                        result={result}
-                      />
-                    </div>
+                      resultPrice={resultPrice}
+                      result={result}
+                    />
                   );
                 })}
               </div>
