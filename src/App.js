@@ -147,7 +147,7 @@ class App extends Component {
             } else if (resSingleCourier.deliveryTime === "Slow") {
               deliveryTime = "over_two_days";
             }
-
+            const currentTime = new Date().toLocaleString();
             //insering into database results from resSingleCourier
             fetch("/api/insertToDatabase", {
               method: "POST",
@@ -157,7 +157,8 @@ class App extends Component {
                 courier_name: resSingleCourier.courier_name,
                 courier_delivery_time: deliveryTime,
                 service_name: resSingleCourier.service_name,
-                price: resSingleCourier.price
+                price: resSingleCourier.price,
+                currentTime: currentTime
               }),
               headers: {
                 "Content-Type": "application/json"
@@ -191,7 +192,7 @@ class App extends Component {
             .then(bodyResult => {
               if (bodyResult) {
                 bodyResult.forEach(res => {
-                  res.price = Number(res.price);
+                  res.price = Number(res.price).toFixed(2);
                 });
 
                 //I always overirde with new data in bodyResult
@@ -255,6 +256,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log(request.connection.remoteAddress);
     if (prevState.bodyResult !== this.state.bodyResult) {
       //so if I new data will be overwritten in this.sate.bodyResult then
       //code below is using to push new data (and sorted data) into this.state.quotes
@@ -461,7 +463,6 @@ class App extends Component {
                 {item[1].map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-                  const resultPrice = result.price.toFixed(2);
                   return (
                     <SingleCourier
                       key={
@@ -470,7 +471,6 @@ class App extends Component {
                         result.data[0].price +
                         +result.data[0].service_name
                       }
-                      resultPrice={resultPrice}
                       result={result}
                     />
                   );
