@@ -8,7 +8,7 @@ CREATE TABLE results (
      price NUMERIC(6,2) NOT NULL,
      currentTime VARCHAR(60) NOT NULL
 );
-INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24);
+INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24, 'currentTime');
 
 -- old database:
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'PARCELFORCE', 'one_day', 29.99);

@@ -192,9 +192,10 @@ class App extends Component {
             .then(bodyResult => {
               if (bodyResult) {
                 bodyResult.forEach(res => {
-                  res.price = Number(res.price).toFixed(2);
+                  const copyResPrice = res.price.slice();
+                  const toNumber = Number(copyResPrice);
+                  res.price = toNumber;
                 });
-
                 //I always overirde with new data in bodyResult
                 //so in componentDidUpdate I checking if new data arrived
                 //and then push into this.state.quotes sorted data
@@ -256,7 +257,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(request.connection.remoteAddress);
     if (prevState.bodyResult !== this.state.bodyResult) {
       //so if I new data will be overwritten in this.sate.bodyResult then
       //code below is using to push new data (and sorted data) into this.state.quotes
