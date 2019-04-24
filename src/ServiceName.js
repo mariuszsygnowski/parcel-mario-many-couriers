@@ -1,12 +1,5 @@
 import React, { Fragment } from "react";
-import {
-  Button,
-  ButtonDropdown,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Button } from "reactstrap";
 import autoBind from "react-autobind";
 
 export class ServiceName extends React.Component {
@@ -47,9 +40,9 @@ export class ServiceName extends React.Component {
           {this.props.res_result_data.min_price_service_name.toFixed(2)}
         </Button>
         <div className={this.state.className}>
-          {this.props.res_result_data.entries.map(res => {
+          {this.props.res_result_data.entries.map((res, i) => {
             return (
-              <div>
+              <div key={i + res.company_name + res.price}>
                 <Button
                   color="secondary"
                   block

@@ -104,9 +104,7 @@ class App extends Component {
 
     //1. at the beggining I need to know unique_search_id
     //I will pass to any searches and get data from database with that id
-    let a = [];
-
-    const aa = await fetch("/api/key", {
+    fetch("/api/key", {
       method: "GET"
     })
       .then(response => response.json())
@@ -282,12 +280,10 @@ class App extends Component {
     Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(courier => {
         courier.data.forEach(en => {
-          // console.log(en);
           en.entries.sort(this.dynamicSort("price"));
           en.min_price_service_name = en.entries[0].price;
         });
         courier.min_price_in_courier = courier.data[0].min_price_service_name;
-        // console.log(courier);
         //I always sort by "price a-z" inside each courier as
         //what is a reason to know highest price from each parcel courier
         //But even I will change my mnid is easy to add that feature
@@ -313,7 +309,6 @@ class App extends Component {
       //code below is using to push new data (and sorted data) into this.state.quotes
 
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
-      // console.log(this.state.bodyResult);
 
       //New data is always as first value so it is [0]
       let bodyResult = Object.values(this.state.bodyResult)[0];
@@ -327,10 +322,6 @@ class App extends Component {
           const dataOneDay = thisStateQuotesOne_day.find(e => {
             return e.courier === resBodyResult.courier_name;
           });
-          // const ddataOneDay = thisStateQuotesOne_day.find(ele => {
-          //   return ele.courier === resBodyResult.courier_name;
-          // });
-          // console.log(thisStateQuotesOne_day);
 
           //if exist then I just add new data
           if (dataOneDay) {
@@ -338,8 +329,8 @@ class App extends Component {
               const objectDataOneDay_data = dataOneDay.data.find(
                 res_dataOneDay_find => {
                   return (
-                    res_dataOneDay_find.service_name.toLowerCase() ===
-                    resBodyResult.service_name.toLowerCase()
+                    res_dataOneDay_find.service_name ===
+                    resBodyResult.service_name
                   );
                 }
               );
@@ -350,17 +341,17 @@ class App extends Component {
                   objectDataOneDay_data.service_name
                 ) {
                   resDataOneDaydata.entries.push({
-                    company_name: resBodyResult.company_name.toLowerCase(),
+                    company_name: resBodyResult.company_name,
                     price: resBodyResult.price
                   });
                 }
               } else {
                 dataOneDay.data.push({
-                  service_name: resBodyResult.service_name.toLowerCase(),
+                  service_name: resBodyResult.service_name,
                   min_price_service_name: resBodyResult.price,
                   entries: [
                     {
-                      company_name: resBodyResult.company_name.toLowerCase(),
+                      company_name: resBodyResult.company_name,
                       price: resBodyResult.price
                     }
                   ]
@@ -374,11 +365,11 @@ class App extends Component {
               courier: resBodyResult.courier_name,
               data: [
                 {
-                  service_name: resBodyResult.service_name.toLowerCase(),
+                  service_name: resBodyResult.service_name,
                   min_price_service_name: resBodyResult.price,
                   entries: [
                     {
-                      company_name: resBodyResult.company_name.toLowerCase(),
+                      company_name: resBodyResult.company_name,
                       price: resBodyResult.price
                     }
                   ]
@@ -404,8 +395,8 @@ class App extends Component {
               const objectdataTwoDays_data = dataTwoDays.data.find(
                 res_dataTwoDays_find => {
                   return (
-                    res_dataTwoDays_find.service_name.toLowerCase() ===
-                    resBodyResult.service_name.toLowerCase()
+                    res_dataTwoDays_find.service_name ===
+                    resBodyResult.service_name
                   );
                 }
               );
@@ -416,17 +407,17 @@ class App extends Component {
                   objectdataTwoDays_data.service_name
                 ) {
                   resDataTwoDaysdata.entries.push({
-                    company_name: resBodyResult.company_name.toLowerCase(),
+                    company_name: resBodyResult.company_name,
                     price: resBodyResult.price
                   });
                 }
               } else {
                 dataTwoDays.data.push({
-                  service_name: resBodyResult.service_name.toLowerCase(),
+                  service_name: resBodyResult.service_name,
                   min_price_service_name: resBodyResult.price,
                   entries: [
                     {
-                      company_name: resBodyResult.company_name.toLowerCase(),
+                      company_name: resBodyResult.company_name,
                       price: resBodyResult.price
                     }
                   ]
@@ -440,11 +431,11 @@ class App extends Component {
               courier: resBodyResult.courier_name,
               data: [
                 {
-                  service_name: resBodyResult.service_name.toLowerCase(),
+                  service_name: resBodyResult.service_name,
                   min_price_service_name: resBodyResult.price,
                   entries: [
                     {
-                      company_name: resBodyResult.company_name.toLowerCase(),
+                      company_name: resBodyResult.company_name,
                       price: resBodyResult.price
                     }
                   ]
@@ -464,8 +455,8 @@ class App extends Component {
                 const objectdataOverTwoDays_data = dataOverTwoDays.data.find(
                   res_dataOverTwoDays_find => {
                     return (
-                      res_dataOverTwoDays_find.service_name.toLowerCase() ===
-                      resBodyResult.service_name.toLowerCase()
+                      res_dataOverTwoDays_find.service_name ===
+                      resBodyResult.service_name
                     );
                   }
                 );
@@ -476,17 +467,17 @@ class App extends Component {
                     objectdataOverTwoDays_data.service_name
                   ) {
                     resDataOverTwoDaysdata.entries.push({
-                      company_name: resBodyResult.company_name.toLowerCase(),
+                      company_name: resBodyResult.company_name,
                       price: resBodyResult.price
                     });
                   }
                 } else {
                   dataOverTwoDays.data.push({
-                    service_name: resBodyResult.service_name.toLowerCase(),
+                    service_name: resBodyResult.service_name,
                     min_price_service_name: resBodyResult.price,
                     entries: [
                       {
-                        company_name: resBodyResult.company_name.toLowerCase(),
+                        company_name: resBodyResult.company_name,
                         price: resBodyResult.price
                       }
                     ]
@@ -500,11 +491,11 @@ class App extends Component {
                 courier: resBodyResult.courier_name,
                 data: [
                   {
-                    service_name: resBodyResult.service_name.toLowerCase(),
+                    service_name: resBodyResult.service_name,
                     min_price_service_name: resBodyResult.price,
                     entries: [
                       {
-                        company_name: resBodyResult.company_name.toLowerCase(),
+                        company_name: resBodyResult.company_name,
                         price: resBodyResult.price
                       }
                     ]

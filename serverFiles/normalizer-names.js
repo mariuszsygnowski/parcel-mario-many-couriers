@@ -147,14 +147,14 @@ module.exports = {
     ) {
       output = "Parcelforce Worldwide by 9am";
     } else if (serviceName === "ukparcels_podopfby09") {
-      output = "drop off at post office - Parcelforce Worldwide by 9am";
+      output = "Drop off at post office - Parcelforce Worldwide by 9am";
     } else if (
       serviceName === "Parcelforce Worldwide by 10am" ||
       serviceName === "ukparcels_pf24before1000"
     ) {
       output = "Parcelforce Worldwide by 10am";
     } else if (serviceName === "ukparcels_podopfby10") {
-      output = "drop off at post office - Parcelforce Worldwide by 10am";
+      output = "Drop off at post office - Parcelforce Worldwide by 10am";
     } else if (
       serviceName === "Parcelforce Worldwide Express AM" ||
       serviceName === "ukparcels_pf24before1200" ||

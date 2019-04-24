@@ -1,12 +1,5 @@
 import React, { Fragment } from "react";
-import {
-  Button,
-  ButtonDropdown,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Button } from "reactstrap";
 import autoBind from "react-autobind";
 import { ServiceName } from "./ServiceName";
 
@@ -68,8 +61,16 @@ export class SingleCourier extends React.Component {
             //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
             //example: {company_name: "interparcel", id: 17, price: "21.11"}.
             //converting numbers to have always 2 numbers after dot
-
-            return <ServiceName res_result_data={res_result_data} />;
+            return (
+              <ServiceName
+                key={
+                  i +
+                  res_result_data.service_name +
+                  res_result_data.min_price_service_name
+                }
+                res_result_data={res_result_data}
+              />
+            );
           })}
         </div>
       </Fragment>
