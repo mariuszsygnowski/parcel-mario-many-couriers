@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Progress, Modal, ModalBody, Button, Badge } from "reactstrap";
 
 import "./App.css";
-import { SingleCourier } from "./SingleCourier";
+import { SingleCourier } from "./components/SingleCourier";
 
 // import SingleBox from "./components/SingleBox";
 
