@@ -87,8 +87,14 @@ p {
 .on {
     display: grid;
     grid-gap: 2px;
+    margin: 0 0.7rem;
 }
 
 .off {
     display: none;
+}
+
+.gridGap {
+    display: grid;
+    grid-gap: 2px;
 }

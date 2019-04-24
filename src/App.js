@@ -520,6 +520,7 @@ class App extends Component {
             //by default I sorting by price low to high
             this.sortingBy("min_price_in_courier");
             // console.log(this.state.quotes);
+
             //if received all responses then modal will dissapear (after 0.5s)
             if (
               this.state.how_many_responses === this.state.courierNames.length
@@ -598,9 +599,6 @@ class App extends Component {
         </p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
-            {
-              /* console.log(item); */
-            }
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
             //example: (3) [{…}, {…}, {…}]
             //item[0] is "one_day" or "two_days"...
@@ -609,9 +607,6 @@ class App extends Component {
               <div key={item[0]} className="app__days">
                 <Badge color="success">{item[0]}</Badge>
                 {item[1].map(result => {
-                  {
-                    /* console.log(result); */
-                  }
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   return (
