@@ -83,3 +83,12 @@ p {
 .buttons--sortByNameZA {
     grid-area: buttons--sortByNameZA;
 }
+
+.on {
+    display: grid;
+    grid-gap: 0.3rem;
+}
+
+.off {
+    display: none;
+}

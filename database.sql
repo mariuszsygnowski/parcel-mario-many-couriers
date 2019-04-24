@@ -5,11 +5,10 @@ CREATE TABLE results (
     courier_name VARCHAR(20) NOT NULL,
     courier_delivery_time VARCHAR(20) NOT NULL,
     service_name VARCHAR(60) NOT NULL,
-     price NUMERIC(6,2) NOT NULL,
-     currentTime VARCHAR(60) NOT NULL
+    price NUMERIC(6,2) NOT NULL,
+    time VARCHAR(25) NOT NULL
 );
-INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24, 'currentTime');
-
+INSERT INTO results VALUES (DEFAULT, 1, 'parcelmonkey.co.uk', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24, '20/04/2019, 12:16:38');
 -- old database:
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'PARCELFORCE', 'one_day', 29.99);
 INSERT INTO results VALUES (DEFAULT, 1, 'p2g', 'HERMES', 'one_day', 28.77);

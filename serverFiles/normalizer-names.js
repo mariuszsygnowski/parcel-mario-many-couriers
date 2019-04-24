@@ -45,14 +45,12 @@ module.exports = {
       output = "Parcelforce";
     } else if (courier_name === "Yodel") {
       output = "Yodel";
-    } else if (courier_name === "UPS") {
+    } else if (courier_name === "UPS" || courier_name === "UPS Access Point") {
       output = "UPS";
     } else if (courier_name === "TNT") {
       output = "TNT";
     } else if (courier_name === "Collect+") {
       output = "Collect+";
-    } else if (courier_name === "UPS Access Point") {
-      output = "UPS Access Point";
     } else if (courier_name === "InPost") {
       output = "InPost";
     } else if (courier_name === "DX") {
@@ -123,26 +121,83 @@ module.exports = {
       serviceName === "Access Point™ to Access Point™"
     ) {
       output = "Service: access point™ to access point™";
+    } else if (serviceName === "ukparcels_dpddropoff24") {
+      output = "Drop off - DPD";
     } else if (serviceName === "Yodel Northern Ireland") {
       output = "Yodel Northern Ireland";
     } else if (serviceName === "Yodel Highland and Islands") {
       output = "Yodel Highland and Islands";
-    } else if (serviceName === "Parcelforce Worldwide Express AM") {
+    } else if (
+      serviceName === "Parcelforce Worldwide Express 24 Drop Off" ||
+      serviceName === "ukparcels_podopf24"
+    ) {
+      output = "Drop off at post office - Parcelforce Worldwide Express 24";
+    } else if (serviceName === "ukparcels_pfdropoff24") {
+      output = "Drop off at depot - Parcelforce Worldwide Express 24";
+    } else if (
+      serviceName === "Parcelforce Worldwide Express 48 Drop Off" ||
+      serviceName === "ukparcels_podopf48"
+    ) {
+      output = "Drop off at post office - Parcelforce Worldwide Express 48";
+    } else if (serviceName === "ukparcels_pfdropoff48") {
+      output = "Drop off at depot - Parcelforce Worldwide Express 48";
+    } else if (
+      serviceName === "Parcelforce Worldwide by 9am" ||
+      serviceName === "ukparcels_pf24before0900"
+    ) {
+      output = "Parcelforce Worldwide by 9am";
+    } else if (serviceName === "ukparcels_podopfby09") {
+      output = "drop off at post office - Parcelforce Worldwide by 9am";
+    } else if (
+      serviceName === "Parcelforce Worldwide by 10am" ||
+      serviceName === "ukparcels_pf24before1000"
+    ) {
+      output = "Parcelforce Worldwide by 10am";
+    } else if (serviceName === "ukparcels_podopfby10") {
+      output = "drop off at post office - Parcelforce Worldwide by 10am";
+    } else if (
+      serviceName === "Parcelforce Worldwide Express AM" ||
+      serviceName === "ukparcels_pf24before1200" ||
+      serviceName === "Parcelforce AM"
+    ) {
       output = "Parcelforce Worldwide Express AM";
-    } else if (serviceName === "Parcelforce Worldwide Express 24") {
-      output = "Parcelforce Worldwide Express 24";
-    } else if (serviceName === "Parcelforce Worldwide Express 48") {
-      output = "Parcelforce Worldwide Express 48";
-    } else if (serviceName === "Palletforce Delivery - 48 Hours") {
-      output = "Palletforce Delivery - 48 Hours";
-    } else if (serviceName === "Next Day") {
-      output = "Next Day";
+    } else if (serviceName === "ukparcels_podopfby12") {
+      output = "drop off at post office - Parcelforce Worldwide by 12am";
     } else if (serviceName === "Parcelforce Worldwide Multi 12 Noon") {
       output = "Parcelforce Worldwide Multi 12 Noon";
-    } else if (serviceName === "Parcelforce Worldwide Large 48") {
+    } else if (serviceName === "Parcelforce Worldwide Large 24") {
+      output = "Parcelforce Worldwide Large 24";
+    } else if (
+      serviceName === "Parcelforce Worldwide Large 48" ||
+      serviceName === "Parcelforce Large"
+    ) {
       output = "Parcelforce Worldwide Large 48";
+    } else if (
+      serviceName === "Parcelforce Worldwide Express 24" ||
+      serviceName === "ukparcels_pf24" ||
+      serviceName === "Parcelforce 24"
+    ) {
+      output = "Parcelforce Worldwide Express 24";
+    } else if (
+      serviceName === "Parcelforce Worldwide Express 48" ||
+      serviceName === "ukparcels_pf48" ||
+      serviceName === "Parcelforce 48"
+    ) {
+      output = "Parcelforce Worldwide Express 48";
     } else if (serviceName === "Palletforce Delivery - Next Day") {
       output = "Palletforce Delivery - Next Day";
+    } else if (serviceName === "Palletforce Delivery - 48 Hours") {
+      output = "Palletforce Delivery - 48 Hours";
+    } else if (
+      serviceName === "ukparcels_pfsaturday" ||
+      serviceName === "Saturday Delivery"
+    ) {
+      output = "Parcelforce Saturday delivery";
+    } else if (
+      serviceName === "ukparcels_pfsunday" ||
+      serviceName === "Sunday Delivery"
+    ) {
+      output = "Parcelforce Sunday delivery";
     } else if (serviceName === "TNT UK Saturday Express") {
       output = "TNT UK Saturday Express";
     } else if (serviceName === "TNT UK 12:00 Express") {
@@ -165,8 +220,67 @@ module.exports = {
       serviceName === "Yodel XpressPack 48"
     ) {
       output = "Yodel 48";
-    } else if (serviceName === "Slow") {
-      output = "Slow";
+    } else if (serviceName === "Collect+ Economy") {
+      output = "Collect+ Economy";
+    } else if (serviceName === "Hermes ParcelShop") {
+      output = "Drop off - Hermes ParcelShop";
+    } else if (serviceName === "Hermes Light and Large") {
+      output = "Hermes Light and Large";
+    } else if (
+      serviceName === "UPS Standard®" ||
+      serviceName === "UPS Express" ||
+      serviceName === "Next Day"
+    ) {
+      output = "UPS Standard";
+    } else if (serviceName === "Express Sameday Collect") {
+      output = "UPS Express Sameday Collect";
+    } else if (serviceName === "UPS Access Point™") {
+      output = "Drop off - UPS Access Point™";
+    } else if (serviceName === "InPost 48") {
+      output = "Drop off - InPost 48";
+    } else if (serviceName === "DX24" || serviceName === "ukbag_fast") {
+      output = "DX 24H";
+    } else if (serviceName === "DX48") {
+      output = "DX 48H";
+    } else if (serviceName === "InPost 24") {
+      output = "Drop off - InPost 24";
+    } else if (serviceName === "DPD Drop Off") {
+      output = "Drop off - DPD";
+    } else if (serviceName === "UPS Express® by 10.30am") {
+      output = "UPS Express® by 10.30am";
+    } else if (serviceName === "UPS Express Saver® by 12pm") {
+      output = "UPS Express Saver® by 12pm";
+    } else if (serviceName === "Collect+") {
+      output = "Drop off - Collect+";
+    } else if (serviceName === "TNT UK Standard Service") {
+      output = "TNT UK Standard Service";
+    } else if (serviceName === "Yodel by 12pm") {
+      output = "Yodel by 12pm";
+    } else if (
+      serviceName === "DHL UK" ||
+      serviceName === "ukparcels_UKMailDomestic_NextDay" ||
+      serviceName === "DHL Express"
+    ) {
+      output = "DHL UK NextDay";
+    } else if (
+      serviceName === "ukparcels_UKMailDomestic_NextDay0900" ||
+      serviceName === "DHL Express PRE 9AM"
+    ) {
+      output = "DHL UK NextDay by 9am";
+    } else if (serviceName === "ukparcels_UKMailDomestic_NextDay1030") {
+      output = "DHL UK NextDay by 10am";
+    } else if (serviceName === "DHL Express PRE NOON") {
+      output = "DHL UK NextDay by 12am";
+    } else if (serviceName === "ukparcels_UKMailDomestic_Saturday") {
+      output = "DHL UK Saturday delivery";
+    } else if (serviceName === "") {
+      output = "";
+    } else if (serviceName === "") {
+      output = "";
+    } else if (serviceName === "") {
+      output = "";
+    } else if (serviceName === "") {
+      output = "";
     } else {
       console.log("new serviceName: ", serviceName);
     }

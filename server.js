@@ -266,15 +266,18 @@ app.post("/api/insertToDatabase", function(req, res) {
     currentTime
   } = req.body;
 
-  db.one(`INSERT INTO results VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)`, [
-    unique_search_id,
-    company_name,
-    courier_name,
-    courier_delivery_time,
-    service_name,
-    price,
-    currentTime
-  ])
+  db.one(
+    `INSERT INTO results VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7) RETURNING company_name, courier_name, courier_delivery_time, service_name, price`,
+    [
+      unique_search_id,
+      company_name,
+      courier_name,
+      courier_delivery_time,
+      service_name,
+      price,
+      currentTime
+    ]
+  )
     //I don't need right now any response
     .then(data => {
       res.json(data);

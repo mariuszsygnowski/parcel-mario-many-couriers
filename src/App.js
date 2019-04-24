@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataReturn: [],
       modal: false,
       bodyResult: {},
       how_many_responses: 0,
@@ -89,7 +90,7 @@ class App extends Component {
     autoBind(this);
   }
 
-  fetchCouriers() {
+  async fetchCouriers() {
     //reset to default values results
     this.setState({
       modal: true,
@@ -103,7 +104,9 @@ class App extends Component {
 
     //1. at the beggining I need to know unique_search_id
     //I will pass to any searches and get data from database with that id
-    fetch("/api/key", {
+    let a = [];
+
+    const aa = await fetch("/api/key", {
       method: "GET"
     })
       .then(response => response.json())
@@ -116,6 +119,7 @@ class App extends Component {
 
           //here I run this.getDataFromSingleCourier with courier name comming from array this.state.courierNames
           courierNames.forEach(courier => {
+            // this.getDataFromSingleCourier(courier, unique_search_id);
             this.getDataFromSingleCourier(courier, unique_search_id);
           });
         } else {
@@ -125,10 +129,14 @@ class App extends Component {
       .catch(error => {
         console.log("Server failed to return data: " + error);
       });
+    // console.log(a, aa);
+    // return aa;
   }
 
   getDataFromSingleCourier(courierName, unique_search_id) {
     const url = `/api/${courierName}`;
+    let resultsBodySearch = [];
+
     fetch(url, {
       method: "POST"
     })
@@ -137,45 +145,78 @@ class App extends Component {
         if (bodyCourierName) {
           // preparation data to be instered into database
           let company_name = "";
-          bodyCourierName.forEach(resSingleCourier => {
-            company_name = resSingleCourier.company_name;
-            let deliveryTime = "";
-            if (resSingleCourier.deliveryTime === "Fast") {
-              deliveryTime = "one_day";
-            } else if (resSingleCourier.deliveryTime === "Medium") {
-              deliveryTime = "two_days";
-            } else if (resSingleCourier.deliveryTime === "Slow") {
-              deliveryTime = "over_two_days";
-            }
-            const currentTime = new Date().toLocaleString();
-            //insering into database results from resSingleCourier
-            fetch("/api/insertToDatabase", {
-              method: "POST",
-              body: JSON.stringify({
-                unique_search_id: unique_search_id,
-                company_name: resSingleCourier.company_name,
-                courier_name: resSingleCourier.courier_name,
-                courier_delivery_time: deliveryTime,
-                service_name: resSingleCourier.service_name,
-                price: resSingleCourier.price,
-                currentTime: currentTime
-              }),
-              headers: {
-                "Content-Type": "application/json"
-              }
-            })
-              //I don't need right now any response
-              .then(response => response.json())
-              .then(bodySearch => {
-                if (bodySearch) {
-                } else {
-                  console.log("no body after respond /api/insertToDatabase");
+          const dataFromSingleCourier = new Promise((resolve, reject) => {
+            resolve(
+              bodyCourierName.map(async resSingleCourier => {
+                company_name = resSingleCourier.company_name;
+                let deliveryTime = "";
+                if (resSingleCourier.deliveryTime === "Fast") {
+                  deliveryTime = "one_day";
+                } else if (resSingleCourier.deliveryTime === "Medium") {
+                  deliveryTime = "two_days";
+                } else if (resSingleCourier.deliveryTime === "Slow") {
+                  deliveryTime = "over_two_days";
+                }
+                const currentTime = new Date().toLocaleString();
+                //insering into database results from resSingleCourier
+                try {
+                  const response = await fetch("/api/insertToDatabase", {
+                    method: "POST",
+                    body: JSON.stringify({
+                      unique_search_id: unique_search_id,
+                      company_name: resSingleCourier.company_name,
+                      courier_name: resSingleCourier.courier_name,
+                      courier_delivery_time: deliveryTime,
+                      service_name: resSingleCourier.service_name,
+                      price: resSingleCourier.price,
+                      currentTime: currentTime
+                    }),
+                    headers: {
+                      "Content-Type": "application/json"
+                    }
+                  });
+                  const bodySearch = await response.json();
+                  if (bodySearch) {
+                    return bodySearch;
+                    // resultsBodySearch.push(bodySearch);
+                  } else {
+                    console.log("no body after respond /api/insertToDatabase");
+                  }
+                } catch (error) {
+                  console.log("Server failed to return data: " + error);
                 }
               })
-              .catch(error => {
-                console.log("Server failed to return data: " + error);
-              });
+            );
           });
+          // let rrr = Promise.resolve(a);
+
+          // if (Promise.resolve(a)) {
+          //   console.log("object");
+          // }
+          Promise.all([dataFromSingleCourier]).then(arraySingleCourier => {
+            arraySingleCourier.forEach(eachValue => {
+              Promise.all(eachValue).then(m => {
+                // console.log(m);
+              });
+            });
+          });
+
+          // a.then(val => {
+          //   console.log(val);
+          // }).then(a => {
+          //   console.log(a);
+          // });
+          // a.then(
+          //   // Log the fulfillment value
+          //   function(val) {
+          //     console.log(val);
+          //   }
+          // ).catch(
+          //   // Log the rejection reason
+          //   reason => {
+          //     console.log("Handle rejected promise (" + reason + ") here.");
+          //   }
+          // );
 
           //get a results from database
           fetch("/api/results", {
@@ -218,6 +259,7 @@ class App extends Component {
       .catch(error => {
         console.log("Server failed to return data: " + error);
       });
+    return resultsBodySearch;
   }
 
   dynamicSort(property) {
@@ -239,15 +281,21 @@ class App extends Component {
     let thisStateQuotes = Object.assign({}, this.state.quotes);
     Object.entries(thisStateQuotes).forEach(item => {
       item[1].forEach(courier => {
+        courier.data.forEach(en => {
+          // console.log(en);
+          en.entries.sort(this.dynamicSort("price"));
+          en.min_price_service_name = en.entries[0].price;
+        });
+        courier.min_price_in_courier = courier.data[0].min_price_service_name;
+        // console.log(courier);
         //I always sort by "price a-z" inside each courier as
         //what is a reason to know highest price from each parcel courier
         //But even I will change my mnid is easy to add that feature
-        courier.data.sort(this.dynamicSort("price"));
-        minPrice = courier.data[0].price;
-        courier.price = minPrice;
+        courier.data.sort(this.dynamicSort("min_price_service_name"));
+        minPrice = courier.data[0].min_price_service_name;
+        courier.min_price_service_name = minPrice;
       });
       output = Object.assign(output, { [item[0]]: item[1] });
-
       //sorting via each courier
       output[item[0]].sort(this.dynamicSort(e));
     });
@@ -257,6 +305,9 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevState.dataReturn !== this.state.dataReturn) {
+      // console.log(this.state.dataReturn);
+    }
     if (prevState.bodyResult !== this.state.bodyResult) {
       //so if I new data will be overwritten in this.sate.bodyResult then
       //code below is using to push new data (and sorted data) into this.state.quotes
@@ -273,29 +324,64 @@ class App extends Component {
         if (resBodyResult.courier_delivery_time === "one_day") {
           //looking if courier name exist in array this.state.quotes.one_day
 
-          const dataOneDay = thisStateQuotesOne_day.find(ele => {
-            return ele.courier === resBodyResult.courier_name;
+          const dataOneDay = thisStateQuotesOne_day.find(e => {
+            return e.courier === resBodyResult.courier_name;
           });
+          // const ddataOneDay = thisStateQuotesOne_day.find(ele => {
+          //   return ele.courier === resBodyResult.courier_name;
+          // });
+          // console.log(thisStateQuotesOne_day);
 
           //if exist then I just add new data
           if (dataOneDay) {
-            dataOneDay.data.push({
-              // id: resBodyResult.id,
-              company_name: resBodyResult.company_name.toLowerCase(),
-              service_name: resBodyResult.service_name.toLowerCase(),
-              price: resBodyResult.price
+            dataOneDay.data.forEach(resDataOneDaydata => {
+              const objectDataOneDay_data = dataOneDay.data.find(
+                res_dataOneDay_find => {
+                  return (
+                    res_dataOneDay_find.service_name.toLowerCase() ===
+                    resBodyResult.service_name.toLowerCase()
+                  );
+                }
+              );
+
+              if (objectDataOneDay_data) {
+                if (
+                  resDataOneDaydata.service_name ===
+                  objectDataOneDay_data.service_name
+                ) {
+                  resDataOneDaydata.entries.push({
+                    company_name: resBodyResult.company_name.toLowerCase(),
+                    price: resBodyResult.price
+                  });
+                }
+              } else {
+                dataOneDay.data.push({
+                  service_name: resBodyResult.service_name.toLowerCase(),
+                  min_price_service_name: resBodyResult.price,
+                  entries: [
+                    {
+                      company_name: resBodyResult.company_name.toLowerCase(),
+                      price: resBodyResult.price
+                    }
+                  ]
+                });
+              }
             });
           } else {
-            //if not then I crate object plus add first entry into data
+            //if not then I create object plus add first entry into data
             thisStateQuotesOne_day.push({
-              price: resBodyResult.price,
+              min_price_in_courier: resBodyResult.price,
               courier: resBodyResult.courier_name,
               data: [
                 {
-                  // id: resBodyResult.id,
-                  company_name: resBodyResult.company_name.toLowerCase(),
                   service_name: resBodyResult.service_name.toLowerCase(),
-                  price: resBodyResult.price
+                  min_price_service_name: resBodyResult.price,
+                  entries: [
+                    {
+                      company_name: resBodyResult.company_name.toLowerCase(),
+                      price: resBodyResult.price
+                    }
+                  ]
                 }
               ]
             });
@@ -308,56 +394,124 @@ class App extends Component {
           //later I will do something more universal
           resBodyResult.courier_delivery_time === "two_days"
         ) {
-          const dataTwoDays = thisStateQuotesTwo_days.find(ele => {
-            return ele.courier === resBodyResult.courier_name;
+          const dataTwoDays = thisStateQuotesTwo_days.find(e => {
+            return e.courier === resBodyResult.courier_name;
           });
 
+          //if exist then I just add new data
           if (dataTwoDays) {
-            dataTwoDays.data.push({
-              // id: resBodyResult.id,
-              company_name: resBodyResult.company_name,
-              service_name: resBodyResult.service_name.toLowerCase(),
-              price: resBodyResult.price
+            dataTwoDays.data.forEach(resDataTwoDaysdata => {
+              const objectdataTwoDays_data = dataTwoDays.data.find(
+                res_dataTwoDays_find => {
+                  return (
+                    res_dataTwoDays_find.service_name.toLowerCase() ===
+                    resBodyResult.service_name.toLowerCase()
+                  );
+                }
+              );
+
+              if (objectdataTwoDays_data) {
+                if (
+                  resDataTwoDaysdata.service_name ===
+                  objectdataTwoDays_data.service_name
+                ) {
+                  resDataTwoDaysdata.entries.push({
+                    company_name: resBodyResult.company_name.toLowerCase(),
+                    price: resBodyResult.price
+                  });
+                }
+              } else {
+                dataTwoDays.data.push({
+                  service_name: resBodyResult.service_name.toLowerCase(),
+                  min_price_service_name: resBodyResult.price,
+                  entries: [
+                    {
+                      company_name: resBodyResult.company_name.toLowerCase(),
+                      price: resBodyResult.price
+                    }
+                  ]
+                });
+              }
             });
           } else {
+            //if not then I create object plus add first entry into data
             thisStateQuotesTwo_days.push({
-              price: resBodyResult.price,
+              min_price_in_courier: resBodyResult.price,
               courier: resBodyResult.courier_name,
               data: [
                 {
-                  // id: resBodyResult.id,
-                  company_name: resBodyResult.company_name.toLowerCase(),
                   service_name: resBodyResult.service_name.toLowerCase(),
-                  price: resBodyResult.price
+                  min_price_service_name: resBodyResult.price,
+                  entries: [
+                    {
+                      company_name: resBodyResult.company_name.toLowerCase(),
+                      price: resBodyResult.price
+                    }
+                  ]
                 }
               ]
             });
           }
         } else if (resBodyResult.courier_delivery_time === "over_two_days") {
-          const dataOverTwoDays = thisStateQuotesOver_two_days.find(ele => {
-            return ele.courier === resBodyResult.courier_name;
-          });
+          {
+            const dataOverTwoDays = thisStateQuotesOver_two_days.find(e => {
+              return e.courier === resBodyResult.courier_name;
+            });
 
-          if (dataOverTwoDays) {
-            dataOverTwoDays.data.push({
-              // id: resBodyResult.id,
-              company_name: resBodyResult.company_name.toLowerCase(),
-              service_name: resBodyResult.service_name.toLowerCase(),
-              price: resBodyResult.price
-            });
-          } else {
-            thisStateQuotesOver_two_days.push({
-              price: resBodyResult.price,
-              courier: resBodyResult.courier_name,
-              data: [
-                {
-                  // id: resBodyResult.id,
-                  company_name: resBodyResult.company_name.toLowerCase(),
-                  service_name: resBodyResult.service_name.toLowerCase(),
-                  price: resBodyResult.price
+            //if exist then I just add new data
+            if (dataOverTwoDays) {
+              dataOverTwoDays.data.forEach(resDataOverTwoDaysdata => {
+                const objectdataOverTwoDays_data = dataOverTwoDays.data.find(
+                  res_dataOverTwoDays_find => {
+                    return (
+                      res_dataOverTwoDays_find.service_name.toLowerCase() ===
+                      resBodyResult.service_name.toLowerCase()
+                    );
+                  }
+                );
+
+                if (objectdataOverTwoDays_data) {
+                  if (
+                    resDataOverTwoDaysdata.service_name ===
+                    objectdataOverTwoDays_data.service_name
+                  ) {
+                    resDataOverTwoDaysdata.entries.push({
+                      company_name: resBodyResult.company_name.toLowerCase(),
+                      price: resBodyResult.price
+                    });
+                  }
+                } else {
+                  dataOverTwoDays.data.push({
+                    service_name: resBodyResult.service_name.toLowerCase(),
+                    min_price_service_name: resBodyResult.price,
+                    entries: [
+                      {
+                        company_name: resBodyResult.company_name.toLowerCase(),
+                        price: resBodyResult.price
+                      }
+                    ]
+                  });
                 }
-              ]
-            });
+              });
+            } else {
+              //if not then I create object plus add first entry into data
+              thisStateQuotesOver_two_days.push({
+                min_price_in_courier: resBodyResult.price,
+                courier: resBodyResult.courier_name,
+                data: [
+                  {
+                    service_name: resBodyResult.service_name.toLowerCase(),
+                    min_price_service_name: resBodyResult.price,
+                    entries: [
+                      {
+                        company_name: resBodyResult.company_name.toLowerCase(),
+                        price: resBodyResult.price
+                      }
+                    ]
+                  }
+                ]
+              });
+            }
           }
         }
         //to make sure that
@@ -373,8 +527,8 @@ class App extends Component {
           //this.sortingBy() always take a new data from this.state.quotes
           () => {
             //by default I sorting by price low to high
-            this.sortingBy("price");
-
+            this.sortingBy("min_price_in_courier");
+            // console.log(this.state.quotes);
             //if received all responses then modal will dissapear (after 0.5s)
             if (
               this.state.how_many_responses === this.state.courierNames.length
@@ -417,7 +571,7 @@ class App extends Component {
             className="buttons--sortByPriceLH"
             color="info"
             size="sm"
-            onClick={() => this.sortingBy("price")}
+            onClick={() => this.sortingBy("min_price_in_courier")}
           >
             sort by price low to high
           </Button>
@@ -425,7 +579,7 @@ class App extends Component {
             className="buttons--sortByPriceHL"
             color="info"
             size="sm"
-            onClick={() => this.sortingBy("-price")}
+            onClick={() => this.sortingBy("-min_price_in_courier")}
           >
             sort by price high to low
           </Button>
@@ -453,6 +607,9 @@ class App extends Component {
         </p>
         <div className="app__singleBox">
           {Object.entries(this.state.quotes).map(item => {
+            {
+              /* console.log(item); */
+            }
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
             //example: (3) [{…}, {…}, {…}]
             //item[0] is "one_day" or "two_days"...
@@ -461,14 +618,17 @@ class App extends Component {
               <div key={item[0]} className="app__days">
                 <Badge color="success">{item[0]}</Badge>
                 {item[1].map(result => {
+                  {
+                    /* console.log(result); */
+                  }
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   return (
                     <SingleCourier
                       key={
                         result.courier +
-                        result.data[0].company_name +
-                        result.data[0].price +
+                        result.data[0].entries[0].company_name +
+                        result.data[0].min_price_service_name +
                         +result.data[0].service_name
                       }
                       result={result}
