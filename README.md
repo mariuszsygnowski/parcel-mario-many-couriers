@@ -17,7 +17,7 @@ Live preview: https://parcel-mario-many-couriers.herokuapp.com/
 
 ## Inspiration
 
-When I was running my company, I sent parcels to various countries around the world. Usually, these were large packages: 20kg 65cm x 55cm x 35 cm. I searched for the best prices in a dozen or so search engines such as parcel2go.com. Each such company has its own contracts signed with courier companies, as a result of the price of such large packages differ very much. Typing the price of a package from each of these search engines takes a lot of time. This application will solve this problem.
+When I was running my company, I sent parcels to various countries around the world. Usually, these were large packages: 20kg 65cm x 55cm x 35 cm. I searched for the best prices in a dozen or so search engines such as parcel2go.com. Each such company has its own contracts signed with courier companies, as a result of the price of such large packages differ very much. Typing dimensions, weight and country from and destination country of a package from each of these search engines takes a lot of time. This application will solve this problem.
 
 ## What technologies it uses?
 
