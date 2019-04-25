@@ -8,6 +8,7 @@ At this moment, the parcel dimensions is permanently entered and this is: 10kg, 
 ## Technical notes
 
 Trelo board: https://trello.com/b/IUPKOh2o/parcel-mario
+
 Live preview: https://parcel-mario-many-couriers.herokuapp.com/
 
 - Run `npm install` after cloning to download all dependencies
