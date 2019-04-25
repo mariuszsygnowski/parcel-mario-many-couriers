@@ -29,3 +29,11 @@ When I was running my company, I sent parcels to various countries around the wo
 - Express
 - Database postgress
 - Responsive Web Design (with mobile first approach)
+
+## Few boring stuff how this application works
+
+1. Application "ask" server for fetch data.
+2. Server ask company couriers.
+3. After received data back, insert that data into postgress database.
+4. Then application "ask" data from database.
+5. When receive data from single courier company, I push to this.state that data and then componentDidUpdate cath that change so is starting create object with that data and sort by price by default.
