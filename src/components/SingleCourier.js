@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button } from "reactstrap";
+import { Button, Badge } from "reactstrap";
 import autoBind from "react-autobind";
 import { ServiceName } from "./ServiceName";
 
@@ -51,7 +51,7 @@ export class SingleCourier extends React.Component {
           {this.props.result.min_price_in_courier.toFixed(2)}
         </Button>
         <div className={this.state.className}>
-          <Button color="success">Service:</Button>
+          <Badge color="success">Service:</Badge>
           {this.props.result.data.map((res_result_data, i) => {
             //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
             //example: {company_name: "interparcel", id: 17, price: "21.11"}.

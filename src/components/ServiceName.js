@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button } from "reactstrap";
+import { Button, Badge } from "reactstrap";
 import autoBind from "react-autobind";
 
 export class ServiceName extends React.Component {
@@ -40,7 +40,7 @@ export class ServiceName extends React.Component {
           {this.props.res_result_data.min_price_service_name.toFixed(2)}
         </Button>
         <div className={this.state.className}>
-          <Button color="success">Couriers:</Button>
+          <Badge color="success">Couriers:</Badge>
           {this.props.res_result_data.entries.map((res, i) => {
             return (
               <div key={i + res.company_name + res.price}>

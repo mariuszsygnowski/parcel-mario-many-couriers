@@ -12,6 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      className: "off",
       modal: false,
       bodyResult: {},
       how_many_responses: 0,
@@ -355,6 +356,7 @@ class App extends Component {
           } else {
             //if not then I create object plus add first entry into data
             thisStateQuotesOne_day.push({
+              delivery_time: "One day couriers:",
               min_price_in_courier: resBodyResult.price,
               courier: resBodyResult.courier_name,
               data: [
@@ -421,6 +423,7 @@ class App extends Component {
           } else {
             //if not then I create object plus add first entry into data
             thisStateQuotesTwo_days.push({
+              delivery_time: "Two days couriers:",
               min_price_in_courier: resBodyResult.price,
               courier: resBodyResult.courier_name,
               data: [
@@ -481,6 +484,7 @@ class App extends Component {
             } else {
               //if not then I create object plus add first entry into data
               thisStateQuotesOver_two_days.push({
+                delivery_time: "More than two days couriers:",
                 min_price_in_courier: resBodyResult.price,
                 courier: resBodyResult.courier_name,
                 data: [
@@ -528,6 +532,14 @@ class App extends Component {
           }
         );
       });
+    }
+  }
+
+  className() {
+    if (this.state.className === "off") {
+      this.setState({ className: "app__days" });
+    } else {
+      this.setState({ className: "off" });
     }
   }
 
@@ -592,15 +604,21 @@ class App extends Component {
           {this.state.courierNames.length}
         </p>
         <div className="app__singleBox">
-          {Object.entries(this.state.quotes).map(item => {
+          {Object.values(this.state.quotes).map((item, i) => {
+            let deliveryTime = "";
+            let key = i;
+            if (item[0]) {
+              deliveryTime = item[0].delivery_time;
+              key = key + item[0].delivery_time + item[0].min_price_in_couriers;
+            }
             //item is array this.state.quotes.one_day, this.state.quotes.two_days...
             //example: (3) [{…}, {…}, {…}]
             //item[0] is "one_day" or "two_days"...
             //item[1] is array with data
             return (
-              <div key={item[0]} className="app__days">
-                <Badge color="success">{item[0]}</Badge>
-                {item[1].map(result => {
+              <div key={key} className="app__days">
+                <Badge color="success">{deliveryTime}</Badge>
+                {item.map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   return (
