@@ -37,3 +37,5 @@ When I was running my company, I sent parcels to various countries around the wo
 3. After received data back, insert that data into postgress database.
 4. Then application "ask" data from database.
 5. When receive data from single courier company, I push to this.state that data and then componentDidUpdate cath that change so is starting create object with that data and sort by price by default.
+
+I know, that I made a lot of faults but I don't affraid to do them so if you have any suggestion please leave me a feedback.
