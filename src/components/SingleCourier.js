@@ -46,17 +46,12 @@ export class SingleCourier extends React.Component {
   render() {
     return (
       <Fragment>
-        <Button
-          color="primary"
-          block
-          onClick={this.className}
-          // isOpen={this.state.dropdownOpen}
-          // toggle={this.toggle}
-        >
+        <Button color="primary" block onClick={this.className}>
           {this.props.result.courier} ({this.state.counter}) from: £
           {this.props.result.min_price_in_courier.toFixed(2)}
         </Button>
         <div className={this.state.className}>
+          <Button color="success">Service:</Button>
           {this.props.result.data.map((res_result_data, i) => {
             //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...
             //example: {company_name: "interparcel", id: 17, price: "21.11"}.

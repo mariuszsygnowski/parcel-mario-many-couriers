@@ -12,7 +12,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataReturn: [],
       modal: false,
       bodyResult: {},
       how_many_responses: 0,
@@ -102,15 +101,15 @@ class App extends Component {
       }
     });
 
-    //1. at the beggining I need to know unique_search_id
-    //I will pass to any searches and get data from database with that id
+    //At the beggining I need to set new unique_search_id
+    //I will pass to any searches and get data from database with last unique id
     fetch("/api/key", {
       method: "GET"
     })
       .then(response => response.json())
       .then(bodyKey => {
         if (bodyKey) {
-          //if response is positive then I set unique_search_id
+          //if response is positive then I set new unique_search_id
           //with "highest unique id" + 1
           const unique_search_id = Number(bodyKey[0].max) + 1;
           const courierNames = [...this.state.courierNames];
@@ -127,8 +126,6 @@ class App extends Component {
       .catch(error => {
         console.log("Server failed to return data: " + error);
       });
-    // console.log(a, aa);
-    // return aa;
   }
 
   getDataFromSingleCourier(courierName, unique_search_id) {
@@ -301,9 +298,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.dataReturn !== this.state.dataReturn) {
-      // console.log(this.state.dataReturn);
-    }
     if (prevState.bodyResult !== this.state.bodyResult) {
       //so if I new data will be overwritten in this.sate.bodyResult then
       //code below is using to push new data (and sorted data) into this.state.quotes

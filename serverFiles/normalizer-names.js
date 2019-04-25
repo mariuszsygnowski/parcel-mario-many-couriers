@@ -162,7 +162,7 @@ module.exports = {
     ) {
       output = "Parcelforce Worldwide Express AM";
     } else if (serviceName === "ukparcels_podopfby12") {
-      output = "drop off at post office - Parcelforce Worldwide by 12am";
+      output = "Drop off at post office - Parcelforce Worldwide by 12am";
     } else if (serviceName === "Parcelforce Worldwide Multi 12 Noon") {
       output = "Parcelforce Worldwide Multi 12 Noon";
     } else if (serviceName === "Parcelforce Worldwide Large 24") {
