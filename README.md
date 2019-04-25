@@ -1,68 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Parcel Mario Many Couriers
 
-## Available Scripts
+## What the project does?
 
-In the project directory, you can run:
+Trivago compares hotel prices from other search engines, this application compares parcel prices from other search engines. At the moment, searching from 3 companies: parcel2go.com, parcelmonkey.co.uk and www.p4d.co.uk. From the first two, receives data trough the API, from www.p4d.co.uk receives data by scanning the website and searching for data (scraping).
+At this moment, the parcel dimensions is permanently entered and this is: 10kg, 10cm height, 10cm width and 10cm length and country from and destination is UK.
 
-### `npm start`
+## Technical notes
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Trelo board: https://trello.com/b/IUPKOh2o/parcel-mario
+Live preview: https://parcel-mario-many-couriers.herokuapp.com/
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Run `npm install` after cloning to download all dependencies
+- Use `npm start` to build application and run server
+- Run postgress server with data from database.sql
 
-### `npm test`
+## Inspiration
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When I was running my company, I sent parcels to various countries around the world. Usually, these were large packages: 20kg 65cm x 55cm x 35 cm. I searched for the best prices in a dozen or so search engines such as parcel2go.com. Each such company has its own contracts signed with courier companies, as a result of the price of such large packages differ very much. Typing the price of a package from each of these search engines takes a lot of time. This application will solve this problem.
 
-### `npm run build`
+## What technologies it uses?
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- (will have) HTML5 - BEM class names
+- (will have) CSS3 (SCSS)
+- Java Script
+- React - use as much as is possible only Vanilla Java Script
+- Node
+- Express
+- Database postgress
+- Responsive Web Design (with mobile first approach)
