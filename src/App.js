@@ -104,9 +104,7 @@ class App extends Component {
 
     //At the beggining I need to set new unique_search_id
     //I will pass to any searches and get data from database with last unique id
-    fetch("/api/key", {
-      method: "GET"
-    })
+    fetch("/api/key")
       .then(response => {
         console.log(response);
         return response.json();
