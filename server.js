@@ -1,3 +1,4 @@
+"use strict";
 require("dotenv").config();
 
 const cheerio = require("cheerio");
@@ -22,9 +23,9 @@ const db = pgp({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "build")));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "build")));
+// }
 
 app.post("/api/p4d", (req, res) => {
   // (async () => {
