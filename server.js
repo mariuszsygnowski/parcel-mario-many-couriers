@@ -23,9 +23,9 @@ const db = pgp({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "build")));
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "build")));
+}
 
 app.post("/api/p4d", (req, res) => {
   // (async () => {
@@ -254,7 +254,7 @@ app.get("/api/key", function(req, res) {
   //   .catch(error => {
   //     res.json({ error: error.message });
   //   });
-  res.render("index");
+  res.send("hello world");
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
