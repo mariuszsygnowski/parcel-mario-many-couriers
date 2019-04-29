@@ -21,7 +21,7 @@ const db = pgp({
 });
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "build")));
@@ -254,7 +254,7 @@ app.get("/api/key", function(req, res) {
   //   .catch(error => {
   //     res.json({ error: error.message });
   //   });
-  res.send("hello world");
+  res.json({ a: "hello world" });
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
