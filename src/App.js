@@ -113,22 +113,20 @@ class App extends Component {
       })
       .then(body => {
         console.log(body);
-        // if (bodyKey) {
-        //if response is positive then I set new unique_search_id
-        //with "highest unique id" + 1
-        // const unique_search_id = Number(bodyKey[0].max) + 1;
-        // const courierNames = [...this.state.courierNames];
-
-        // console.log(bodyKey);
-
-        //here I run this.getDataFromSingleCourier with courier name comming from array this.state.courierNames
-        // courierNames.forEach(courier => {
-        //   // this.getDataFromSingleCourier(courier, unique_search_id);
-        //   this.getDataFromSingleCourier(courier, unique_search_id);
-        // });
-        // } else {
-        // console.log("no body after respond /api/key");
-        // }
+        if (body) {
+          //if response is positive then I set new unique_search_id
+          //with "highest unique id" + 1
+          // const unique_search_id = Number(bodyKey[0].max) + 1;
+          // const courierNames = [...this.state.courierNames];
+          // console.log(bodyKey);
+          //here I run this.getDataFromSingleCourier with courier name comming from array this.state.courierNames
+          // courierNames.forEach(courier => {
+          //   // this.getDataFromSingleCourier(courier, unique_search_id);
+          //   this.getDataFromSingleCourier(courier, unique_search_id);
+          // });
+        } else {
+          console.log("no body after respond /api/key");
+        }
       })
       .catch(error => {
         console.log("Server failed to return data: " + error);
