@@ -254,7 +254,7 @@ app.get("/api/key", function(req, res) {
     .catch(error => {
       res.json({ error: error.message });
     });
-  // res.json({ a: "hello world" });
+  // res.json({ a: "hello world" });;
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
