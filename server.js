@@ -248,11 +248,12 @@ app.post("/api/parcelmonkey", (req, res) => {
 });
 
 app.get("/api/key", function(req, res) {
-  db.any("SELECT MAX(unique_search_id) FROM results")
-    .then(response => res.json(response))
-    .catch(error => {
-      res.json({ error: error.message });
-    });
+  // db.any("SELECT MAX(unique_search_id) FROM results")
+  //   .then(response => res.json(response))
+  //   .catch(error => {
+  //     res.json({ error: error.message });
+  //   });
+  res.json({ code: process.env.DB_HOST });
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
