@@ -107,7 +107,10 @@ class App extends Component {
     fetch("/api/key", {
       method: "GET"
     })
-      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
       .then(bodyKey => {
         if (bodyKey) {
           //if response is positive then I set new unique_search_id
