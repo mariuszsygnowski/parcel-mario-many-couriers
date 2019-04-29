@@ -139,6 +139,7 @@ class App extends Component {
       .then(response => response.json())
       .then(bodyCourierName => {
         if (bodyCourierName) {
+          console.log(bodyCourierName);
           // preparation data to be instered into database
           let company_name = "";
           const dataFromSingleCourier = new Promise((resolve, reject) => {
@@ -215,6 +216,9 @@ class App extends Component {
           // );
 
           //get a results from database
+          //I might to do in previous fetch request but sometimes I getting the same
+          //courier service so when I getting data back from database I use "SELECT DISTINCT"
+          //to not get doubled data
           fetch("/api/results", {
             method: "POST",
             body: JSON.stringify({
@@ -302,7 +306,7 @@ class App extends Component {
     if (prevState.bodyResult !== this.state.bodyResult) {
       //so if I new data will be overwritten in this.sate.bodyResult then
       //code below is using to push new data (and sorted data) into this.state.quotes
-
+      console.log(this.state.bodyResult);
       this.setState({ how_many_responses: this.state.how_many_responses + 1 });
 
       //New data is always as first value so it is [0]

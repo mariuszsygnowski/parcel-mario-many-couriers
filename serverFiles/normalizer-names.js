@@ -204,8 +204,21 @@ module.exports = {
       output = "TNT UK 12:00 Express";
     } else if (serviceName === "TNT UK Express Service") {
       output = "TNT UK Express Service";
-    } else if (serviceName === "Hermes UK Collection") {
+    } else if (
+      serviceName === "Hermes UK Collection" ||
+      serviceName === "Hermes UK Collection Small Parcel"
+    ) {
       output = "Hermes UK Collection";
+    } else if (serviceName === "Hermes ParcelShop") {
+      output = "Drop off - Hermes ParcelShop";
+    } else if (serviceName === "Hermes UK Collection Medium Parcel") {
+      output = "Hermes UK Collection Medium Parcel";
+    } else if (serviceName === "Hermes ParcelShop Small") {
+      output = "Drop off - Hermes ParcelShop Small";
+    } else if (serviceName === "Hermes ParcelShop Medium") {
+      output = "Drop off - Hermes ParcelShop Medium";
+    } else if (serviceName === "Hermes Light and Large") {
+      output = "Hermes Light and Large";
     } else if (serviceName === "TNT UK 10:00 Express") {
       output = "TNT UK 10:00 Express";
     } else if (serviceName === "TNT UK 09:00 Express") {
@@ -222,10 +235,6 @@ module.exports = {
       output = "Yodel 48";
     } else if (serviceName === "Collect+ Economy") {
       output = "Collect+ Economy";
-    } else if (serviceName === "Hermes ParcelShop") {
-      output = "Drop off - Hermes ParcelShop";
-    } else if (serviceName === "Hermes Light and Large") {
-      output = "Hermes Light and Large";
     } else if (
       serviceName === "UPS Standard®" ||
       serviceName === "UPS Express" ||
