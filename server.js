@@ -249,12 +249,12 @@ app.post("/api/parcelmonkey", (req, res) => {
 });
 
 app.get("/api/key", function(req, res) {
-  // db.any("SELECT MAX(unique_search_id) FROM results")
-  //   .then(response => res.json(response))
-  //   .catch(error => {
-  //     res.json({ error: error.message });
-  //   });
-  res.json({ a: "hello world" });
+  db.any("SELECT MAX(unique_search_id) FROM results")
+    .then(response => res.json(response))
+    .catch(error => {
+      res.json({ error: error.message });
+    });
+  // res.json({ a: "hello world" });
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
