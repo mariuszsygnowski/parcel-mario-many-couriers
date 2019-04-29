@@ -90,7 +90,7 @@ class App extends Component {
     autoBind(this);
   }
 
-  async fetchCouriers() {
+  fetchCouriers() {
     //reset to default values results
     this.setState({
       modal: true,

@@ -253,7 +253,7 @@ app.get("/api/key", function(req, res) {
   //   .catch(error => {
   //     res.json({ error: error.message });
   //   });
-  res.json({ code: process.env.DB_HOST });
+  res.render("index");
 });
 
 app.post("/api/insertToDatabase", function(req, res) {
