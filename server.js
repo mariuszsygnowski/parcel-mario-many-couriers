@@ -71,7 +71,10 @@ app.post("/api/p4d", (req, res) => {
         const courier_name = normalizerNames.courierNameP4D(
           service_nameP4DArray
         );
-        const service_name = normalizerNames.serviceName(service_nameP4DArray);
+        const service_name = normalizerNames.serviceName(
+          service_nameP4DArray,
+          "p4d.co.uk"
+        );
 
         outputArray[i] = Object.assign({}, outputArray[i], {
           company_name: "p4d.co.uk",
@@ -85,7 +88,10 @@ app.post("/api/p4d", (req, res) => {
         "#newquote-list li form  .newquote-topbox .newquote-delivery-time b"
       ).each(function(i, el) {
         const deliveryTimeP4D = $(this).text();
-        const deliveryTime = normalizerNames.deliveryTime(deliveryTimeP4D);
+        const deliveryTime = normalizerNames.deliveryTime(
+          deliveryTimeP4D,
+          "p4d.co.uk"
+        );
         outputArray[i] = Object.assign({}, outputArray[i], {
           deliveryTime
         });
@@ -142,13 +148,16 @@ app.post("/api/p2g", (req, res) => {
               let outputArray = [];
               body.Quotes.forEach(item => {
                 const courier_name = normalizerNames.courierName(
-                  item.Service.CourierName
+                  item.Service.CourierName,
+                  "parcel2go.com"
                 );
                 const service_name = normalizerNames.serviceName(
-                  item.Service.Name
+                  item.Service.Name,
+                  "parcel2go.com"
                 );
                 const deliveryTime = normalizerNames.deliveryTime(
-                  item.Service.Classification
+                  item.Service.Classification,
+                  "parcel2go.com"
                 );
 
                 outputArray.push({
@@ -224,9 +233,18 @@ app.post("/api/parcelmonkey", (req, res) => {
       if (body) {
         let outputArray = [];
         body.forEach(item => {
-          const courier_name = normalizerNames.courierName(item.carrier);
-          const service_name = normalizerNames.serviceName(item.service);
-          const deliveryTime = normalizerNames.deliveryTime(item.service_name);
+          const courier_name = normalizerNames.courierName(
+            item.carrier,
+            "parcelmonkey.co.uk"
+          );
+          const service_name = normalizerNames.serviceName(
+            item.service,
+            "parcelmonkey.co.uk"
+          );
+          const deliveryTime = normalizerNames.deliveryTime(
+            item.service_name,
+            "parcelmonkey.co.uk"
+          );
           const price = item.total_price_gross;
 
           outputArray.push({
