@@ -18,71 +18,7 @@ class App extends Component {
       how_many_responses: 0,
       courierNames: ["p2g", "parcelmonkey", "p4d"],
       quotes: {
-        one_day: [
-          // {
-          //   price: "",
-          //   courier: "dpd",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "21.11"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "20.11"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "22.41"
-          //     }
-          //   ]
-          // },
-          // {
-          //   price: "",
-          //   courier: "ups",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "25.11"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "19.00"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "24.00"
-          //     }
-          //   ]
-          // },
-          // {
-          //   price: "",
-          //   courier: "hermes",
-          //   data: [
-          //     {
-          //       company_name: "interparcel",
-          //       id: 17,
-          //       price: "25.11"
-          //     },
-          //     {
-          //       company_name: "parcelmonkey",
-          //       id: 17,
-          //       price: "22.00"
-          //     },
-          //     {
-          //       company_name: "Pd",
-          //       id: 17,
-          //       price: "26.00"
-          //     }
-          //   ]
-          // }
-        ],
+        one_day: [],
         two_days: [],
         over_two_days: []
       }
@@ -147,83 +83,53 @@ class App extends Component {
           console.log(bodyCourierName);
           // preparation data to be instered into database
           let company_name = "";
-          const dataFromSingleCourier = new Promise((resolve, reject) => {
-            resolve(
-              bodyCourierName.map(async resSingleCourier => {
-                company_name = resSingleCourier.company_name;
-                let deliveryTime = "";
-                if (resSingleCourier.deliveryTime === "Fast") {
-                  deliveryTime = "one_day";
-                } else if (resSingleCourier.deliveryTime === "Medium") {
-                  deliveryTime = "two_days";
-                } else if (resSingleCourier.deliveryTime === "Slow") {
-                  deliveryTime = "over_two_days";
-                }
-                const currentTime = new Date().toLocaleString();
-                //insering into database results from resSingleCourier
-                try {
-                  const response = await fetch("/api/insertToDatabase", {
-                    method: "POST",
-                    body: JSON.stringify({
-                      unique_search_id: unique_search_id,
-                      company_name: resSingleCourier.company_name,
-                      courier_name: resSingleCourier.courier_name,
-                      courier_delivery_time: deliveryTime,
-                      service_name: resSingleCourier.service_name,
-                      price: resSingleCourier.price,
-                      currentTime: currentTime
-                    }),
-                    headers: {
-                      "Content-Type": "application/json"
-                    }
-                  });
-                  const bodySearch = await response.json();
-                  if (bodySearch) {
-                    return bodySearch;
-                    // resultsBodySearch.push(bodySearch);
-                  } else {
-                    console.log("no body after respond /api/insertToDatabase");
-                  }
-                } catch (error) {
-                  console.log("Server failed to return data: " + error);
+
+          bodyCourierName.forEach(resSingleCourier => {
+            company_name = resSingleCourier.company_name;
+            let deliveryTime = "";
+            if (resSingleCourier.deliveryTime === "Fast") {
+              deliveryTime = "one_day";
+            } else if (resSingleCourier.deliveryTime === "Medium") {
+              deliveryTime = "two_days";
+            } else if (resSingleCourier.deliveryTime === "Slow") {
+              deliveryTime = "over_two_days";
+            }
+            const currentTime = new Date().toLocaleString();
+            //insering into database results from resSingleCourier
+            fetch("/api/insertToDatabase", {
+              method: "POST",
+              body: JSON.stringify({
+                unique_search_id: unique_search_id,
+                company_name: resSingleCourier.company_name,
+                courier_name: resSingleCourier.courier_name,
+                courier_delivery_time: deliveryTime,
+                service_name: resSingleCourier.service_name,
+                price: resSingleCourier.price,
+                currentTime: currentTime
+              }),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(response => response.json())
+              .then(bodyCourierName => {
+                if (bodyCourierName) {
+                  return bodyCourierName;
+                  // resultsBodySearch.push(bodySearch);
+                } else {
+                  console.log("no body after respond /api/insertToDatabase");
                 }
               })
-            );
-          });
-          // let rrr = Promise.resolve(a);
-
-          // if (Promise.resolve(a)) {
-          //   console.log("object");
-          // }
-          Promise.all([dataFromSingleCourier]).then(arraySingleCourier => {
-            arraySingleCourier.forEach(eachValue => {
-              Promise.all(eachValue).then(m => {
-                // console.log(m);
+              .catch(error => {
+                console.log("Server failed to return data: " + error);
               });
-            });
           });
-
-          // a.then(val => {
-          //   console.log(val);
-          // }).then(a => {
-          //   console.log(a);
-          // });
-          // a.then(
-          //   // Log the fulfillment value
-          //   function(val) {
-          //     console.log(val);
-          //   }
-          // ).catch(
-          //   // Log the rejection reason
-          //   reason => {
-          //     console.log("Handle rejected promise (" + reason + ") here.");
-          //   }
-          // );
 
           //get a results from database
           //I might to do in previous fetch request but sometimes I getting the same
           //courier service so when I getting data back from database I use "SELECT DISTINCT"
           //to not get doubled data
+
           fetch("/api/results", {
             method: "POST",
             body: JSON.stringify({
@@ -257,8 +163,6 @@ class App extends Component {
             .catch(error => {
               console.log("Server failed to return data: " + error);
             });
-        } else {
-          console.log(`no body after respond /api/${courierName}`);
         }
       })
       .catch(error => {
@@ -316,7 +220,9 @@ class App extends Component {
 
       //New data is always as first value so it is [0]
       let bodyResult = Object.values(this.state.bodyResult)[0];
+
       let thisStateQuotesOne_day = [...this.state.quotes.one_day];
+      console.log(thisStateQuotesOne_day);
       let thisStateQuotesTwo_days = [...this.state.quotes.two_days];
       let thisStateQuotesOver_two_days = [...this.state.quotes.over_two_days];
       bodyResult.forEach(resBodyResult => {
