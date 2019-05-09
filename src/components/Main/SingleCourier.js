@@ -9,7 +9,7 @@ export const SingleCourier = props => {
       c = c + res_result_data.entries.length;
     });
     setcounter(c);
-  }, [props]);
+  });
 
   const [counter, setcounter] = useState(0);
 
