@@ -64,7 +64,6 @@ const Main = ({
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
-      console.log(data_from_all_couriers);
       setNewData(
         data_from_all_couriers[data_from_all_couriers.length - 1],
         uniqueApiKey
@@ -151,6 +150,7 @@ const Main = ({
           //example: (3) [{…}, {…}, {…}]
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
+          console.log(item);
 
           return (
             <div key={key} className="main__each-day">
