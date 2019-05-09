@@ -10,6 +10,7 @@ const pgp = require("pg-promise")();
 const path = require("path");
 const app = express();
 const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
+
 const normalizerNames = require("./serverFiles/normalizer-names.js");
 
 const db = pgp({
