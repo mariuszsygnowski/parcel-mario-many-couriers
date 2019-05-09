@@ -64,6 +64,7 @@ const Main = ({
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
+      console.log(data_from_all_couriers);
       setNewData(
         data_from_all_couriers[data_from_all_couriers.length - 1],
         uniqueApiKey

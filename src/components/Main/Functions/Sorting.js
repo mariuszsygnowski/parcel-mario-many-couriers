@@ -219,17 +219,17 @@ const Sorting = (quote, singleResult) => {
   });
 
   // a = Object.assign({}, thisStateQuotesOne_day, {counter: c})
-  const oneDayArray = thisStateQuotesOne_day.map(item => {
-    let c = 0;
-    item.data.forEach(data => {
-      // console.log(data);
-      c = c + data.entries.length;
-    });
-    // console.log(item, c);
-    // item.data.push(c);
-    return Object.assign({}, item, { counter: c });
-  });
-  console.log(oneDayArray);
+  // const oneDayArray = thisStateQuotesOne_day.map(item => {
+  //   let c = 0;
+  //   item.data.forEach(data => {
+  //     // console.log(data);
+  //     c = c + data.entries.length;
+  //   });
+  //   // console.log(item, c);
+  //   // item.data.push(c);
+  //   return Object.assign({}, item, { counter: c });
+  // });
+  // console.log(oneDayArray);
   output = {
     quotes: {
       one_day: thisStateQuotesOne_day,
