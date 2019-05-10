@@ -24,7 +24,7 @@ const Main = ({
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
-    if (data_from_all_couriers.length > 0) {
+    if (data_from_all_couriers.length === 1) {
       console.log(data_from_all_couriers[data_from_all_couriers.length - 1], {
         [data[0].company_name]: data
       });
@@ -40,6 +40,7 @@ const Main = ({
 
   const dataCourier = async () => {
     setInitialState();
+    setquotesMain(quotes);
     toggleModal();
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
