@@ -15,7 +15,8 @@ function mapStateToProps(state) {
     courier_names: state.main.courier_names,
     quotes: state.main.quotes,
     how_many_responses: state.main.how_many_responses,
-    modal: state.main.modal
+    modal: state.main.modal,
+    data: state.main.data
   };
 }
 

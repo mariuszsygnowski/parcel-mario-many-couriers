@@ -7,6 +7,7 @@ const initialState = {
     two_days: [],
     over_two_days: []
   },
+  data: [],
   modal: false
 };
 
@@ -14,6 +15,8 @@ function main(state = initialState, action) {
   switch (action.type) {
     case "ADD_DATA_FROM_SINGLE_COURIER":
       const courier_arr = action.courier_arr;
+      console.log(courier_arr);
+      state.data = courier_arr;
       const obj = { [courier_arr[0].company_name]: courier_arr };
       let newDataFromAllCouriers = [...state.data_from_all_couriers];
       newDataFromAllCouriers.push(obj);

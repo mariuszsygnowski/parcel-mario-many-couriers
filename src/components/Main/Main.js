@@ -17,21 +17,26 @@ const Main = ({
   setNewQuotes,
   modal,
   toggleModal,
-  getInitialState
+  getInitialState,
+  data
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
-      console.log(data_from_all_couriers);
+      console.log(data_from_all_couriers[data_from_all_couriers.length - 1], {
+        [data[0].company_name]: data
+      });
       setNewData(
-        data_from_all_couriers[data_from_all_couriers.length - 1],
+        {
+          [data[0].company_name]: data
+        },
         uniqueApiKey
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data_from_all_couriers]);
+  }, [data]);
 
   const dataCourier = async () => {
     setInitialState();
