@@ -21,6 +21,18 @@ const Main = ({
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
+
+  useEffect(() => {
+    if (data_from_all_couriers.length > 0) {
+      console.log(data_from_all_couriers);
+      setNewData(
+        data_from_all_couriers[data_from_all_couriers.length - 1],
+        uniqueApiKey
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data_from_all_couriers]);
+
   const dataCourier = async () => {
     setInitialState();
     toggleModal();
@@ -63,16 +75,6 @@ const Main = ({
       setNewQuotes(respond);
     }
   };
-
-  useEffect(() => {
-    if (data_from_all_couriers.length > 0) {
-      setNewData(
-        data_from_all_couriers[data_from_all_couriers.length - 1],
-        uniqueApiKey
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data_from_all_couriers]);
 
   return (
     <main className="main">
