@@ -45,10 +45,13 @@ const Main = ({
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
-      for (let courier of courier_names) {
-        const url = `/api/${courier}`;
-        await fetch_data(url);
-      }
+      await fetch_data("/api/p2g");
+      await fetch_data("/api/parcelmonkey");
+      await fetch_data("/api/p4d");
+      // for (let courier of courier_names) {
+      //   const url = `/api/${courier}`;
+      //   await fetch_data(url);
+      // }
     }
   };
   const setNewData = async (data, uniqueApiKey) => {
