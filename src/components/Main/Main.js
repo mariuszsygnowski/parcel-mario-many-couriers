@@ -24,7 +24,7 @@ const Main = ({
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
-    if (data_from_all_couriers.length === 1) {
+    if (data_from_all_couriers.length > 0) {
       console.log(data_from_all_couriers[data_from_all_couriers.length - 1], {
         [data[0].company_name]: data
       });
