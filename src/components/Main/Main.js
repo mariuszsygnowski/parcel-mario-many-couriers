@@ -25,9 +25,7 @@ const Main = ({
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
-      console.log(data_from_all_couriers[data_from_all_couriers.length - 1], {
-        [data[0].company_name]: data
-      });
+      console.log(quotesMain);
       setNewData(
         {
           [data[0].company_name]: data
@@ -40,7 +38,11 @@ const Main = ({
 
   const dataCourier = async () => {
     setInitialState();
-    setquotesMain(quotes);
+    setquotesMain({
+      one_day: [],
+      two_days: [],
+      over_two_days: []
+    });
     // toggleModal();
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
