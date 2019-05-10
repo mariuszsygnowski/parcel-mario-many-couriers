@@ -41,7 +41,7 @@ const Main = ({
   const dataCourier = async () => {
     setInitialState();
     setquotesMain(quotes);
-    toggleModal();
+    // toggleModal();
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -69,9 +69,9 @@ const Main = ({
           setquotesMain(data_from_sorted_by);
           setNewQuotes(data_from_sorted_by);
           if (how_many_responses === courier_names.length - 1) {
-            setTimeout(() => {
-              toggleModal();
-            }, 500);
+            // setTimeout(() => {
+            //   toggleModal();
+            // }, 500);
           }
         }
       }
