@@ -19,6 +19,7 @@ const Main = ({
   toggleModal,
   getInitialState
 }) => {
+  const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
   const dataCourier = async () => {
     setInitialState();
@@ -36,7 +37,7 @@ const Main = ({
     const data_from_database = await getDataFromDatabase(data, uniqueApiKey);
     if (data_from_database) {
       const single_result = Object.values(data_from_database);
-      const response_from_sorting = Sorting(quotes, single_result);
+      const response_from_sorting = Sorting(quotesMain, single_result);
       if (response_from_sorting) {
         addResponseCount();
         const data_from_sorted_by = SortingBy(
@@ -44,6 +45,7 @@ const Main = ({
           response_from_sorting.quotes
         );
         if (data_from_sorted_by) {
+          setquotesMain(data_from_sorted_by);
           setNewQuotes(data_from_sorted_by);
           if (how_many_responses === courier_names.length - 1) {
             setTimeout(() => {
@@ -56,7 +58,7 @@ const Main = ({
   };
 
   const sortByValue = async sort_by => {
-    const respond = await SortingBy(sort_by, quotes);
+    const respond = await SortingBy(sort_by, quotesMain);
     if (respond) {
       setNewQuotes(respond);
     }
@@ -139,7 +141,7 @@ const Main = ({
         Received responses {how_many_responses}/{courier_names.length}
       </span>
       <div className="main__results">
-        {Object.values(quotes).map((item, i) => {
+        {Object.values(quotesMain).map((item, i) => {
           let deliveryTime = "";
           let key = i;
 
@@ -150,7 +152,6 @@ const Main = ({
           //example: (3) [{…}, {…}, {…}]
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
-          console.log(item);
 
           return (
             <div key={key} className="main__each-day">

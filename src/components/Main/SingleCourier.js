@@ -25,6 +25,9 @@ export const SingleCourier = props => {
         <span>Service:</span>
         {props.result.data.map((res_result_data, i) => {
           {
+            /* console.log("props.result.data.", res_result_data); */
+          }
+          {
             /* console.log(res_result_data.service_name); */
           }
           //res is object this.state.quotes.one_day[2].data, this.state.quotes.two_days[2].data...

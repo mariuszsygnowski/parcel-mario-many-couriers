@@ -32,9 +32,8 @@ function main(state = initialState, action) {
       });
 
     case "SET_NEW_QUOTES":
-      const quotes = action.quotes;
       return Object.assign({}, state, {
-        quotes: quotes
+        quotes: action.quotes
       });
 
     case "SET_INITIAL_STATE":
