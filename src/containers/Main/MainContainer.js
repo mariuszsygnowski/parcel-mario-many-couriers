@@ -6,7 +6,8 @@ import {
   setNewQuotes,
   toggleModal,
   setInitialState,
-  getInitialState
+  getInitialState,
+  newQuotes
 } from "../../actions";
 
 function mapStateToProps(state) {
@@ -15,8 +16,7 @@ function mapStateToProps(state) {
     courier_names: state.main.courier_names,
     quotes: state.main.quotes,
     how_many_responses: state.main.how_many_responses,
-    modal: state.main.modal,
-    data: state.main.data
+    modal: state.main.modal
   };
 }
 
@@ -24,6 +24,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetch_data: url => dispatch(fetch_single_courier(url)),
     setNewQuotes: quotes => dispatch(setNewQuotes(quotes)),
+    newQuotes: quotes => dispatch(newQuotes(quotes)),
     addResponseCount: () => dispatch(addResponseCount()),
     toggleModal: () => dispatch(toggleModal()),
     setInitialState: () => dispatch(setInitialState()),

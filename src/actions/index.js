@@ -18,6 +18,9 @@ export function fetch_single_courier(url) {
 export function setNewQuotes(quotes) {
   return { type: "SET_NEW_QUOTES", quotes };
 }
+export function newQuotes(quotes) {
+  return { type: "NEW_QUOTES", quotes };
+}
 
 export function addResponseCount() {
   return {

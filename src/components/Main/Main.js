@@ -16,26 +16,41 @@ const Main = ({
   addResponseCount,
   setNewQuotes,
   modal,
+  newQuotes,
   toggleModal,
   getInitialState,
   data
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
-
+  const [fb, setfb] = useState([]);
   useEffect(() => {
-    if (data_from_all_couriers.length > 0) {
-      console.log(quotesMain);
-      setNewData(
-        {
-          [data[0].company_name]: data
-        },
-        uniqueApiKey
-      );
-    }
+    console.log(fb);
+    // if (data_from_all_couriers.length === courier_names.length) {
+    //   //
+    //   data_from_all_couriers.forEach(data => {
+    //     // console.log(data);
+    //     // console.log(Object.keys(data));
+    //     setNewData(data, uniqueApiKey);
+    //   });
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
+  }, [fb]);
+  const aw = () => {
+    const url =
+      "https://graph.facebook.com/v3.3/100000124522476/photos?access_token=EAAGVwfgMTMIBAASodnYiC2TdAmIqtjZClHG0QTlAqyg8LwJdn5jCR2WJ8oY7wTo1WZCHZCSA50Ah41K6dRV9Fv4VDqbRbDU9VsTrgWa61mwDGQQWyZA1QYjFXkxgU54zEqlfHly3KXSjdQJmchVjjhrcDJWtcBeZC2nRm9dYZCnxdrXo4wm2lVTGFa8uyezu26Ad3jH7HzIDX9ArXzqNBQSKb4VhOupICKK5CrVc2czQZDZD";
+    fetch(url, {
+      method: "GET"
+    })
+      .then(response => response.json())
+      .then(bodyKey => {
+        setfb(bodyKey);
+        return bodyKey;
+      })
+      .catch(error => {
+        console.log("Server failed to return data: " + error);
+      });
+  };
   const dataCourier = async () => {
     setInitialState();
     setquotesMain({
@@ -47,9 +62,9 @@ const Main = ({
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
-      await fetch_data("/api/p2g");
-      await fetch_data("/api/parcelmonkey");
-      await fetch_data("/api/p4d");
+      fetch_data("/api/p2g");
+      fetch_data("/api/parcelmonkey");
+      fetch_data("/api/p4d");
       // for (let courier of courier_names) {
       //   const url = `/api/${courier}`;
       //   await fetch_data(url);
@@ -68,8 +83,10 @@ const Main = ({
           response_from_sorting.quotes
         );
         if (data_from_sorted_by) {
+          console.log(data_from_sorted_by);
           setquotesMain(data_from_sorted_by);
-          setNewQuotes(data_from_sorted_by);
+          // setNewQuotes(data_from_sorted_by);
+          newQuotes({ quotes: data_from_sorted_by });
           if (how_many_responses === courier_names.length - 1) {
             // setTimeout(() => {
             //   toggleModal();
@@ -100,6 +117,7 @@ const Main = ({
           Received responses {how_many_responses}/{courier_names.length}
         </ModalBody>
       </Modal> */}
+      <Button onClick={aw}>test</Button>
 
       <Modal show={modal}>
         <Modal.Header>
@@ -154,7 +172,7 @@ const Main = ({
         Received responses {how_many_responses}/{courier_names.length}
       </span>
       <div className="main__results">
-        {Object.values(quotesMain).map((item, i) => {
+        {Object.values(quotes).map((item, i) => {
           let deliveryTime = "";
           let key = i;
 
@@ -200,7 +218,7 @@ const getDataFromDatabase = async (data, unique_search_id) => {
   // console.log(data, unique_search_id);
   const array = Object.values(data);
   const courierName = Object.keys(data);
-
+  console.log(data, array);
   let company_name = "";
   array[0].forEach(resSingleCourier => {
     company_name = resSingleCourier.company_name;
