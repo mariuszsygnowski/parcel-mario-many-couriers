@@ -105,7 +105,7 @@ const Main = ({
   };
 
   const sortByValue = async sort_by => {
-    const respond = await SortingBy(sort_by, quotesMain);
+    const respond = await SortingBy(sort_by, quotes);
     if (respond) {
       setNewQuotes(respond);
     }
