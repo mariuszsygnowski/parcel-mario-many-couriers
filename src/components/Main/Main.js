@@ -169,7 +169,7 @@ const Main = ({
       two_days: [],
       over_two_days: []
     });
-    // toggleModal();
+    toggleModal();
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -178,7 +178,7 @@ const Main = ({
       // fetch_data("/api/p4d");
       for (let courier of courier_names) {
         const url = `/api/${courier}`;
-        await fetch_data(url);
+        fetch_data(url);
       }
     }
   };
@@ -200,9 +200,9 @@ const Main = ({
           // setNewQuotes(data_from_sorted_by);
 
           if (how_many_responses === courier_names.length - 1) {
-            // setTimeout(() => {
-            //   toggleModal();
-            // }, 500);
+            setTimeout(() => {
+              toggleModal();
+            }, 500);
           }
           return data_from_sorted_by;
         }
