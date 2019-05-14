@@ -25,15 +25,17 @@ const Main = ({
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
-    addResponseCount();
-    // if (data_from_all_couriers.length === courier_names.length) {
-    //   console.log(data_from_all_couriers);
+    if (data_from_all_couriers.length > 0) {
+      addResponseCount();
+    }
+    if (data_from_all_couriers.length === courier_names.length) {
+      console.log(data_from_all_couriers);
 
-    //   const obj = www(data_from_all_couriers);
-    //   if (obj) {
-    //     console.log(obj);
-    //   }
-    // }
+      const obj = www(data_from_all_couriers);
+      if (obj) {
+        console.log(obj);
+      }
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data_from_all_couriers]);
@@ -171,13 +173,13 @@ const Main = ({
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
-      fetch_data("/api/p2g");
-      fetch_data("/api/parcelmonkey");
-      fetch_data("/api/p4d");
-      // for (let courier of courier_names) {
-      //   const url = `/api/${courier}`;
-      //   await fetch_data(url);
-      // }
+      // fetch_data("/api/p2g");
+      // fetch_data("/api/parcelmonkey");
+      // fetch_data("/api/p4d");
+      for (let courier of courier_names) {
+        const url = `/api/${courier}`;
+        await fetch_data(url);
+      }
     }
   };
 
