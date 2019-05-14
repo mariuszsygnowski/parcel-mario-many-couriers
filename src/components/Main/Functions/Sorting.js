@@ -1,18 +1,14 @@
 const Sorting = (quote, singleResult) => {
   //so if I new data will be overwritten in this.sate.bodyResult then
   //code below is using to push new data (and sorted data) into this.state.quotes
-  //   console.log("sad");
 
   //   this.setState({ how_many_responses: this.state.how_many_responses + 1 });
   //   //New data is always as first value so it is [0]
   //   let bodyResult = Object.values(this.state.bodyResult)[0];
   let thisStateQuotesOne_day = [...quote.one_day];
-  // console.log(thisStateQuotesOne_day);
   let thisStateQuotesTwo_days = [...quote.two_days];
   let thisStateQuotesOver_two_days = [...quote.over_two_days];
   let output = {};
-
-  console.log(singleResult);
 
   singleResult.forEach(resBodyResult => {
     if (resBodyResult.courier_delivery_time === "one_day") {
@@ -22,7 +18,6 @@ const Sorting = (quote, singleResult) => {
         return e.courier === resBodyResult.courier_name;
       });
 
-      let c = 0;
       //if exist then I just add new data
       if (dataOneDay) {
         dataOneDay.data.forEach(resDataOneDaydata => {
@@ -46,7 +41,6 @@ const Sorting = (quote, singleResult) => {
               });
             }
           } else {
-            c = c + 1;
             dataOneDay.data.push({
               service_name: resBodyResult.service_name,
               min_price_service_name: resBodyResult.price,

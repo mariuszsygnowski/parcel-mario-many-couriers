@@ -18,10 +18,6 @@ export function fetch_single_courier(url) {
 export function setNewQuotes(quotes) {
   return { type: "SET_NEW_QUOTES", quotes };
 }
-export function newQuotes(quotes) {
-  return { type: "NEW_QUOTES", quotes };
-}
-
 export function addResponseCount() {
   return {
     type: "ADD_RESPONSE_QUNNTITY"
@@ -35,11 +31,6 @@ export function toggleModal() {
 export function setInitialState() {
   return {
     type: "SET_INITIAL_STATE"
-  };
-}
-export function getInitialState() {
-  return {
-    type: "GET_INITIAL_STATE"
   };
 }
 

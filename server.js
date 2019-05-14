@@ -327,7 +327,7 @@ app.post("/api/results", function(req, res) {
     });
 });
 
-app.post("/api/resultss", function(req, res) {
+app.post("/api/all_results", function(req, res) {
   const { unique_search_id } = req.body;
   //I had a issue with my results as I received always full results with unique id
   //I added company_name=$2 to get data only with company_name

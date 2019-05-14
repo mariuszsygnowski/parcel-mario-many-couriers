@@ -21,11 +21,6 @@ function main(state = initialState, action) {
         data_from_all_couriers: newDataFromAllCouriers
       });
 
-    case "NEW_QUOTES":
-      console.log(action.quotes);
-      console.log(state);
-      return Object.assign({}, state, { quotes: action.quotes });
-
     case "ADD_RESPONSE_QUNNTITY":
       return Object.assign({}, state, {
         how_many_responses: state.how_many_responses + 1
@@ -41,9 +36,6 @@ function main(state = initialState, action) {
 
     case "SET_INITIAL_STATE":
       return Object.assign({}, state, initialState);
-
-    case "GET_INITIAL_STATE":
-      return initialState;
 
     default:
       return state;

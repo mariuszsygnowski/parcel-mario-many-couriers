@@ -16,10 +16,9 @@ const Main = ({
   addResponseCount,
   setNewQuotes,
   modal,
-  newQuotes,
+
   toggleModal,
-  getInitialState,
-  data
+  initial_state_main
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
@@ -29,146 +28,15 @@ const Main = ({
       addResponseCount();
     }
     if (data_from_all_couriers.length === courier_names.length) {
-      console.log(data_from_all_couriers);
-
-      const obj = www(data_from_all_couriers);
-      if (obj) {
-        console.log(obj);
-      }
+      set_results(data_from_all_couriers);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data_from_all_couriers]);
 
-  const merge = (current, update) => {
-    Object.keys(update).forEach(function(key) {
-      // if update[key] exist, and it's not a string or array,
-      // we go in one level deeper
-      if (
-        current.hasOwnProperty(key) &&
-        typeof current[key] === "object" &&
-        !(current[key] instanceof Array)
-      ) {
-        merge(current[key], update[key]);
-
-        // if update[key] doesn't exist in current, or it's a string
-        // or array, then assign/overwrite current[key] to update[key]
-      } else {
-        current[key] = update[key];
-      }
-    });
-    return current;
-  };
-
-  Object.assignDeep = function(target, varArgs) {
-    // .length of function is 2
-    "use strict";
-    if (target == null) {
-      // TypeError if undefined or null
-      throw new TypeError("Cannot convert undefined or null to object");
-    }
-
-    var to = Object(target);
-
-    for (var index = 1; index < arguments.length; index++) {
-      var nextSource = arguments[index];
-
-      if (nextSource != null) {
-        // Skip over if undefined or null
-        for (var nextKey in nextSource) {
-          // Avoid bugs when hasOwnProperty is shadowed
-          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-            if (
-              typeof to[nextKey] === "object" &&
-              to[nextKey] &&
-              typeof nextSource[nextKey] === "object" &&
-              nextSource[nextKey]
-            ) {
-              Object.assignDeep(to[nextKey], nextSource[nextKey]);
-            } else {
-              to[nextKey] = nextSource[nextKey];
-            }
-          }
-        }
-      }
-    }
-    return to;
-  };
-
-  const fee = async unique_search_id => {
-    return fetch("/api/resultss", {
-      method: "POST",
-      body: JSON.stringify({
-        unique_search_id: unique_search_id
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response_2 => response_2.json())
-      .then(bodyResult => {
-        if (bodyResult) {
-          const output = bodyResult.map((res, i) => {
-            const copyResPrice = res.price.slice();
-            const toNumber = Number(copyResPrice);
-            res.price = toNumber;
-            return Object.assign({}, res, { id: i });
-          });
-
-          // console.log({ [courierName]: bodyResult });
-          // setbodyResultt({ [courierName]: bodyResult });
-          //I always overirde with new data in bodyResult
-          //so in componentDidUpdate I checking if new data arrived
-          //and then push into this.state.quotes sorted data
-          return output;
-        } else {
-          console.log("no body after respond /api/results");
-        }
-      })
-      .catch(error_1 => {
-        console.log("Server failed to return data: " + error_1);
-      });
-  };
-
-  const www = async data_from_all_couriers => {
-    const aa = await data_from_all_couriers.map(async data => {
-      // console.log(data);
-      // console.log(Object.keys(data));
-      const a = await setNewData(data, uniqueApiKey);
-      if (a) {
-        return a;
-      }
-    });
-    if (aa) {
-      const wa = await Promise.all(aa);
-      console.log(wa);
-      if (wa) {
-        const rrr = await fee(uniqueApiKey);
-        let qu = { one_day: [], two_days: [], over_two_days: [] };
-        if (rrr) {
-          const sor = Sorting(qu, rrr);
-          if (sor) {
-            console.log(sor);
-            setNewQuotes(sor);
-          }
-        }
-        wa.forEach(res => {
-          // console.log((www = merge(www, res)));
-          // console.log(www);
-          // console.log(array, res);
-        });
-        return qu;
-      }
-    }
-  };
-
   const dataCourier = async () => {
     setInitialState();
-    setquotesMain({
-      one_day: [],
-      two_days: [],
-      over_two_days: []
-    });
+    setquotesMain(initial_state_main.quotes);
     toggleModal();
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
@@ -183,22 +51,49 @@ const Main = ({
     }
   };
 
+  const set_results = async data_from_all_couriers => {
+    const res_data_from_all_couriers = await data_from_all_couriers.map(
+      async data => {
+        return await setNewData(data, uniqueApiKey);
+      }
+    );
+    if (res_data_from_all_couriers) {
+      const all_responses_from_data_from_all_couriers = await Promise.all(
+        res_data_from_all_couriers
+      );
+      if (all_responses_from_data_from_all_couriers) {
+        const unsorted_data_with_all_couriers = await get_data_from_database_with_all_couriers(
+          uniqueApiKey
+        );
+
+        if (unsorted_data_with_all_couriers) {
+          const sorted_data_with_all_couriers = Sorting(
+            initial_state_main.quotes,
+            unsorted_data_with_all_couriers
+          );
+          if (sorted_data_with_all_couriers) {
+            setNewQuotes(sorted_data_with_all_couriers);
+          }
+        }
+      }
+    }
+  };
+
   const setNewData = async (data, uniqueApiKey) => {
     const data_from_database = await getDataFromDatabase(data, uniqueApiKey);
     if (data_from_database) {
       const single_result = Object.values(data_from_database);
-      console.log(single_result);
-      const response_from_sorting = Sorting(quotesMain, single_result);
+      const response_from_sorting = Sorting(
+        initial_state_main.quotes,
+        single_result
+      );
       if (response_from_sorting) {
         const data_from_sorted_by = SortingBy(
           "min_price_in_courier",
           response_from_sorting.quotes
         );
         if (data_from_sorted_by) {
-          // console.log(data_from_sorted_by);
           setquotesMain(data_from_sorted_by);
-          // setNewQuotes(data_from_sorted_by);
-
           if (how_many_responses === courier_names.length - 1) {
             setTimeout(() => {
               toggleModal();
@@ -219,18 +114,6 @@ const Main = ({
 
   return (
     <main className="main">
-      {/* <Modal
-        isOpen={modal}
-        style={{
-          top: "15px"
-        }}
-      >
-        <ModalBody>
-          <Progress value={how_many_responses} max={courier_names.length} />
-          Received responses {how_many_responses}/{courier_names.length}
-        </ModalBody>
-      </Modal> */}
-
       <Modal show={modal}>
         <Modal.Header>
           <Modal.Title>Searching...</Modal.Title>
@@ -291,7 +174,7 @@ const Main = ({
           if (item[0]) {
             deliveryTime = item[0].delivery_time;
             key = item[0].delivery_time;
-          } //item is array state.quotes.one_day, this.state.quotes.two_days...
+          } //item is array quotes.one_day, quotes.two_days...
           //example: (3) [{…}, {…}, {…}]
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
@@ -312,6 +195,39 @@ const Main = ({
   );
 };
 
+const get_data_from_database_with_all_couriers = async unique_search_id => {
+  return fetch("/api/all_results", {
+    method: "POST",
+    body: JSON.stringify({
+      unique_search_id: unique_search_id
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response_2 => response_2.json())
+    .then(bodyResult => {
+      if (bodyResult) {
+        const output = bodyResult.map((res, i) => {
+          const copyResPrice = res.price.slice();
+          const toNumber = Number(copyResPrice);
+          res.price = toNumber;
+          return Object.assign({}, res, { id: i });
+        });
+
+        //I always overirde with new data in bodyResult
+        //so in componentDidUpdate I checking if new data arrived
+        //and then push into this.state.quotes sorted data
+        return output;
+      } else {
+        console.log("no body after respond /api/results");
+      }
+    })
+    .catch(error_1 => {
+      console.log("Server failed to return data: " + error_1);
+    });
+};
+
 const getUniqueKeyId = async () => {
   return fetch("/api/key", {
     method: "GET"
@@ -326,11 +242,8 @@ const getUniqueKeyId = async () => {
 };
 
 const getDataFromDatabase = async (data, unique_search_id) => {
-  // console.log(Object.values(data));
-  // console.log(data, unique_search_id);
   const array = Object.values(data);
   const courierName = Object.keys(data);
-  // console.log(data, array);
   let company_name = "";
   array[0].forEach(resSingleCourier => {
     company_name = resSingleCourier.company_name;
@@ -362,8 +275,6 @@ const getDataFromDatabase = async (data, unique_search_id) => {
       .then(response_1 => response_1.json())
       .then(bodyCourierName_1 => {
         if (bodyCourierName_1) {
-          // return bodyCourierName_1;
-          // resultsBodySearch.push(bodySearch);
         } else {
           console.log("no body after respond /api/insertToDatabase");
         }
