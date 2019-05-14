@@ -23,34 +23,142 @@ const Main = ({
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
-  const [fb, setfb] = useState([]);
+
   useEffect(() => {
-    console.log(fb);
-    // if (data_from_all_couriers.length === courier_names.length) {
-    //   //
-    //   data_from_all_couriers.forEach(data => {
-    //     // console.log(data);
-    //     // console.log(Object.keys(data));
-    //     setNewData(data, uniqueApiKey);
-    //   });
-    // }
+    if (data_from_all_couriers.length === courier_names.length) {
+      // console.log(data_from_all_couriers);
+      //
+      const obj = www(data_from_all_couriers);
+      if (obj) {
+        console.log(obj);
+      }
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fb]);
-  const aw = () => {
-    const url =
-      "https://graph.facebook.com/v3.3/100000124522476/photos?access_token=EAAGVwfgMTMIBAASodnYiC2TdAmIqtjZClHG0QTlAqyg8LwJdn5jCR2WJ8oY7wTo1WZCHZCSA50Ah41K6dRV9Fv4VDqbRbDU9VsTrgWa61mwDGQQWyZA1QYjFXkxgU54zEqlfHly3KXSjdQJmchVjjhrcDJWtcBeZC2nRm9dYZCnxdrXo4wm2lVTGFa8uyezu26Ad3jH7HzIDX9ArXzqNBQSKb4VhOupICKK5CrVc2czQZDZD";
-    fetch(url, {
-      method: "GET"
+  }, [data_from_all_couriers]);
+
+  const merge = (current, update) => {
+    Object.keys(update).forEach(function(key) {
+      // if update[key] exist, and it's not a string or array,
+      // we go in one level deeper
+      if (
+        current.hasOwnProperty(key) &&
+        typeof current[key] === "object" &&
+        !(current[key] instanceof Array)
+      ) {
+        merge(current[key], update[key]);
+
+        // if update[key] doesn't exist in current, or it's a string
+        // or array, then assign/overwrite current[key] to update[key]
+      } else {
+        current[key] = update[key];
+      }
+    });
+    return current;
+  };
+
+  Object.assignDeep = function(target, varArgs) {
+    // .length of function is 2
+    "use strict";
+    if (target == null) {
+      // TypeError if undefined or null
+      throw new TypeError("Cannot convert undefined or null to object");
+    }
+
+    var to = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
+
+      if (nextSource != null) {
+        // Skip over if undefined or null
+        for (var nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            if (
+              typeof to[nextKey] === "object" &&
+              to[nextKey] &&
+              typeof nextSource[nextKey] === "object" &&
+              nextSource[nextKey]
+            ) {
+              Object.assignDeep(to[nextKey], nextSource[nextKey]);
+            } else {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+    }
+    return to;
+  };
+
+  const fee = async unique_search_id => {
+    return fetch("/api/resultss", {
+      method: "POST",
+      body: JSON.stringify({
+        unique_search_id: unique_search_id
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
-      .then(response => response.json())
-      .then(bodyKey => {
-        setfb(bodyKey);
-        return bodyKey;
+      .then(response_2 => response_2.json())
+      .then(bodyResult => {
+        if (bodyResult) {
+          const output = bodyResult.map((res, i) => {
+            const copyResPrice = res.price.slice();
+            const toNumber = Number(copyResPrice);
+            res.price = toNumber;
+            return Object.assign({}, res, { id: i });
+          });
+
+          // console.log({ [courierName]: bodyResult });
+          // setbodyResultt({ [courierName]: bodyResult });
+          //I always overirde with new data in bodyResult
+          //so in componentDidUpdate I checking if new data arrived
+          //and then push into this.state.quotes sorted data
+          return output;
+        } else {
+          console.log("no body after respond /api/results");
+        }
       })
-      .catch(error => {
-        console.log("Server failed to return data: " + error);
+      .catch(error_1 => {
+        console.log("Server failed to return data: " + error_1);
       });
   };
+
+  const www = async data_from_all_couriers => {
+    const aa = await data_from_all_couriers.map(async data => {
+      // console.log(data);
+      // console.log(Object.keys(data));
+      const a = await setNewData(data, uniqueApiKey);
+      if (a) {
+        return a;
+      }
+    });
+    if (aa) {
+      const wa = await Promise.all(aa);
+      console.log(wa);
+      if (wa) {
+        const rrr = await fee(uniqueApiKey);
+        let qu = { one_day: [], two_days: [], over_two_days: [] };
+        if (rrr) {
+          const sor = Sorting(qu, rrr);
+          if (sor) {
+            console.log(sor);
+            setNewQuotes(sor);
+          }
+        }
+        wa.forEach(res => {
+          // console.log((www = merge(www, res)));
+          // console.log(www);
+          // console.log(array, res);
+        });
+        return qu;
+      }
+    }
+  };
+
   const dataCourier = async () => {
     setInitialState();
     setquotesMain({
@@ -71,10 +179,12 @@ const Main = ({
       // }
     }
   };
+
   const setNewData = async (data, uniqueApiKey) => {
     const data_from_database = await getDataFromDatabase(data, uniqueApiKey);
     if (data_from_database) {
       const single_result = Object.values(data_from_database);
+      console.log(single_result);
       const response_from_sorting = Sorting(quotesMain, single_result);
       if (response_from_sorting) {
         addResponseCount();
@@ -83,15 +193,16 @@ const Main = ({
           response_from_sorting.quotes
         );
         if (data_from_sorted_by) {
-          console.log(data_from_sorted_by);
+          // console.log(data_from_sorted_by);
           setquotesMain(data_from_sorted_by);
           // setNewQuotes(data_from_sorted_by);
-          newQuotes({ quotes: data_from_sorted_by });
+
           if (how_many_responses === courier_names.length - 1) {
             // setTimeout(() => {
             //   toggleModal();
             // }, 500);
           }
+          return data_from_sorted_by;
         }
       }
     }
@@ -117,7 +228,6 @@ const Main = ({
           Received responses {how_many_responses}/{courier_names.length}
         </ModalBody>
       </Modal> */}
-      <Button onClick={aw}>test</Button>
 
       <Modal show={modal}>
         <Modal.Header>
@@ -218,7 +328,7 @@ const getDataFromDatabase = async (data, unique_search_id) => {
   // console.log(data, unique_search_id);
   const array = Object.values(data);
   const courierName = Object.keys(data);
-  console.log(data, array);
+  // console.log(data, array);
   let company_name = "";
   array[0].forEach(resSingleCourier => {
     company_name = resSingleCourier.company_name;

@@ -22,7 +22,9 @@ function main(state = initialState, action) {
       });
 
     case "NEW_QUOTES":
-      return Object.assign({}, state, action.quotes);
+      console.log(action.quotes);
+      console.log(state);
+      return Object.assign({}, state, { quotes: action.quotes });
 
     case "ADD_RESPONSE_QUNNTITY":
       return Object.assign({}, state, {
@@ -35,9 +37,7 @@ function main(state = initialState, action) {
       });
 
     case "SET_NEW_QUOTES":
-      return Object.assign({}, state, {
-        quotes: action.quotes
-      });
+      return Object.assign({}, state, action.quotes);
 
     case "SET_INITIAL_STATE":
       return Object.assign({}, state, initialState);

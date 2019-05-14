@@ -12,7 +12,9 @@ const Sorting = (quote, singleResult) => {
   let thisStateQuotesOver_two_days = [...quote.over_two_days];
   let output = {};
 
-  singleResult[0].forEach(resBodyResult => {
+  console.log(singleResult);
+
+  singleResult.forEach(resBodyResult => {
     if (resBodyResult.courier_delivery_time === "one_day") {
       //looking if courier name exist in array this.state.quotes.one_day
 
@@ -21,7 +23,6 @@ const Sorting = (quote, singleResult) => {
       });
 
       let c = 0;
-
       //if exist then I just add new data
       if (dataOneDay) {
         dataOneDay.data.forEach(resDataOneDaydata => {

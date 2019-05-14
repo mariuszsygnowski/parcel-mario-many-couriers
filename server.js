@@ -327,6 +327,25 @@ app.post("/api/results", function(req, res) {
     });
 });
 
+app.post("/api/resultss", function(req, res) {
+  const { unique_search_id } = req.body;
+  //I had a issue with my results as I received always full results with unique id
+  //I added company_name=$2 to get data only with company_name
+  //I used DISTINCT as data from parcelmonkey have duplicated entries
+  db.any(
+    `SELECT DISTINCT company_name,
+    courier_name,
+    courier_delivery_time,
+    service_name,
+    price FROM results WHERE unique_search_id=$1 ORDER BY price ASC`,
+    [unique_search_id]
+  )
+    .then(response => res.json(response))
+    .catch(error => {
+      res.json({ error: error.message });
+    });
+});
+
 app.get("/", function(req, res) {
   res.render("index");
 });
