@@ -4,7 +4,7 @@ import {
   fetch_single_courier,
   addResponseCount,
   setNewQuotes,
-  toggleModal,
+  setModal,
   setInitialState
 } from "../../actions";
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => {
     fetch_data: url => dispatch(fetch_single_courier(url)),
     setNewQuotes: quotes => dispatch(setNewQuotes(quotes)),
     addResponseCount: () => dispatch(addResponseCount()),
-    toggleModal: () => dispatch(toggleModal()),
+    setModal: value => dispatch(setModal(value)),
     setInitialState: () => dispatch(setInitialState())
   };
 };

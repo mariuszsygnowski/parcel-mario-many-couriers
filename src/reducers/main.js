@@ -26,9 +26,9 @@ function main(state = initialState, action) {
         how_many_responses: state.how_many_responses + 1
       });
 
-    case "TOGGLE_MODAL":
+    case "SET_MODAL":
       return Object.assign({}, state, {
-        modal: !state.modal
+        modal: action.true_or_false
       });
 
     case "SET_NEW_QUOTES":

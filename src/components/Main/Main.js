@@ -16,8 +16,7 @@ const Main = ({
   addResponseCount,
   setNewQuotes,
   modal,
-
-  toggleModal,
+  setModal,
   initial_state_main
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
@@ -37,7 +36,7 @@ const Main = ({
   const dataCourier = async () => {
     setInitialState();
     setquotesMain(initial_state_main.quotes);
-    toggleModal();
+    setModal(true);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -96,7 +95,7 @@ const Main = ({
           setquotesMain(data_from_sorted_by);
           if (how_many_responses === courier_names.length - 1) {
             setTimeout(() => {
-              toggleModal();
+              setModal(false);
             }, 500);
           }
           return data_from_sorted_by;

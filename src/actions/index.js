@@ -23,9 +23,10 @@ export function addResponseCount() {
     type: "ADD_RESPONSE_QUNNTITY"
   };
 }
-export function toggleModal() {
+export function setModal(value) {
   return {
-    type: "TOGGLE_MODAL"
+    type: "SET_MODAL",
+    true_or_false: value
   };
 }
 export function setInitialState() {
