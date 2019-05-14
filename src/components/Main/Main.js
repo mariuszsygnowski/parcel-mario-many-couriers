@@ -25,14 +25,15 @@ const Main = ({
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
-    if (data_from_all_couriers.length === courier_names.length) {
-      // console.log(data_from_all_couriers);
-      //
-      const obj = www(data_from_all_couriers);
-      if (obj) {
-        console.log(obj);
-      }
-    }
+    addResponseCount();
+    // if (data_from_all_couriers.length === courier_names.length) {
+    //   console.log(data_from_all_couriers);
+
+    //   const obj = www(data_from_all_couriers);
+    //   if (obj) {
+    //     console.log(obj);
+    //   }
+    // }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data_from_all_couriers]);
@@ -187,7 +188,6 @@ const Main = ({
       console.log(single_result);
       const response_from_sorting = Sorting(quotesMain, single_result);
       if (response_from_sorting) {
-        addResponseCount();
         const data_from_sorted_by = SortingBy(
           "min_price_in_courier",
           response_from_sorting.quotes
