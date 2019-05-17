@@ -24,32 +24,32 @@ const ParcelValues = ({
 }) => {
   const dimensionsArray = [
     {
-      inputType: "number",
       setValue: value => setWeight(Number(value)),
       val: parcel_weight,
+      inputType: "number",
       placeholder: "Weight in kg",
       labelName: "Weight"
     },
     {
-      inputType: "number",
       setValue: value => setWidth(Number(value)),
       val: parcel_width,
-      placeholder: "Weight in kg",
-      labelName: "Weight"
+      inputType: "number",
+      placeholder: "Width in cm",
+      labelName: "Width"
     },
     {
-      inputType: "number",
       setValue: value => setHeight(Number(value)),
       val: parcel_height,
-      placeholder: "Weight in kg",
-      labelName: "Weight"
+      inputType: "number",
+      placeholder: "Height in cm",
+      labelName: "Height"
     },
     {
-      inputType: "number",
       setValue: value => setLength(Number(value)),
       val: parcel_length,
-      placeholder: "Weight in kg",
-      labelName: "Weight"
+      inputType: "number",
+      placeholder: "Length in cm",
+      labelName: "Length"
     }
   ];
   return (
@@ -91,6 +91,7 @@ const ParcelValues = ({
         {dimensionsArray.map(item => {
           return (
             <InputForm
+              key={item.labelName}
               inputType={item.inputType}
               setValue={item.setValue}
               val={item.val}
