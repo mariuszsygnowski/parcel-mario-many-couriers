@@ -22,6 +22,36 @@ const ParcelValues = ({
   setLength,
   parcel_length
 }) => {
+  const dimensionsArray = [
+    {
+      inputType: "number",
+      setValue: value => setWeight(Number(value)),
+      val: parcel_weight,
+      placeholder: "Weight in kg",
+      labelName: "Weight"
+    },
+    {
+      inputType: "number",
+      setValue: value => setWidth(Number(value)),
+      val: parcel_width,
+      placeholder: "Weight in kg",
+      labelName: "Weight"
+    },
+    {
+      inputType: "number",
+      setValue: value => setHeight(Number(value)),
+      val: parcel_height,
+      placeholder: "Weight in kg",
+      labelName: "Weight"
+    },
+    {
+      inputType: "number",
+      setValue: value => setLength(Number(value)),
+      val: parcel_length,
+      placeholder: "Weight in kg",
+      labelName: "Weight"
+    }
+  ];
   return (
     <form>
       <div>
@@ -33,6 +63,7 @@ const ParcelValues = ({
         />
         <InputForm
           // nameClass={this.state.displayOffOn}
+          inputType={"text"}
           setValue={value => setPostcodeFrom(value)}
           val={postcode_from}
           placeholder={"Postcode / Zip. Default is RM19 1ZY"}
@@ -49,6 +80,7 @@ const ParcelValues = ({
 
         <InputForm
           // nameClass={this.state.displayOffOn}
+          inputType={"text"}
           setValue={value => setPostcodeTo(value)}
           val={postcode_to}
           placeholder={"Postcode / Zip. Default is EC1R 3DD"}
@@ -56,37 +88,17 @@ const ParcelValues = ({
         />
       </div>
       <div>
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setWeight(Number(value))}
-          val={parcel_weight}
-          placeholder={"Weight in kg"}
-          labelName="Weight"
-        />
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setWidth(Number(value))}
-          val={parcel_width}
-          placeholder={"Width in cm"}
-          labelName="Width"
-        />
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setHeight(Number(value))}
-          val={parcel_height}
-          placeholder={"Height in cm"}
-          labelName="Height"
-        />
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setLength(Number(value))}
-          val={parcel_length}
-          placeholder={"Length in cm"}
-          labelName="Length"
-        />
-      </div>
-      <div>
-        <button>Submit</button>
+        {dimensionsArray.map(item => {
+          return (
+            <InputForm
+              inputType={item.inputType}
+              setValue={item.setValue}
+              val={item.val}
+              placeholder={item.placeholder}
+              labelName={item.labelName}
+            />
+          );
+        })}
       </div>
     </form>
   );

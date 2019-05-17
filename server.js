@@ -51,7 +51,13 @@ app.post("/api/p4d", (req, res) => {
   let $;
   let outputArray = [];
 
-  const url = `http://www.p4d.co.uk/go/domestic/${country_from}/${country_to}/${weight},${width},${height},${length}`;
+  let destination = "domestic";
+  //if country from are not GB then in url should be in place destination: "import"
+  if (country_from !== "GB") {
+    destination = "import";
+  }
+
+  const url = `http://www.p4d.co.uk/go/${destination}/${country_from}/${country_to}/${weight},${width},${height},${length}`;
   superagent
     .get(url)
     .query()

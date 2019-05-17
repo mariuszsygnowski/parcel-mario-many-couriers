@@ -70,9 +70,7 @@ const Main = ({
         const unsorted_data_with_all_couriers = await get_data_from_database_with_all_couriers(
           uniqueApiKey
         );
-
         if (unsorted_data_with_all_couriers) {
-          console.log(unsorted_data_with_all_couriers);
           const sorted_data_with_all_couriers = Sorting(
             initial_state_main.quotes,
             unsorted_data_with_all_couriers

@@ -1,12 +1,12 @@
 const initialState = {
   postcode_from: "RM191ZY",
   postcode_to: "EC1R3DD",
-  country_from: "GB",
-  country_to: "GB",
-  weight: 10,
-  width: 11,
-  height: 11,
-  length: 11
+  country_from: "",
+  country_to: "",
+  weight: 0,
+  width: 0,
+  height: 0,
+  length: 0
 };
 
 function boxValues(state = initialState, action) {
