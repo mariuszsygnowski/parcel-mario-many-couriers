@@ -3,10 +3,10 @@ const initialState = {
   postcode_to: "EC1R3DD",
   country_from: "GB",
   country_to: "GB",
-  weight: 0,
-  width: 0,
-  height: 0,
-  length: 0
+  weight: 1,
+  width: 10,
+  height: 10,
+  length: 10
 };
 
 function boxValues(state = initialState, action) {
