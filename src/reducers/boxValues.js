@@ -1,8 +1,8 @@
 const initialState = {
   postcode_from: "RM191ZY",
   postcode_to: "EC1R3DD",
-  country_from: "",
-  country_to: "",
+  country_from: "GB",
+  country_to: "GB",
   weight: 0,
   width: 0,
   height: 0,
