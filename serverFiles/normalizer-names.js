@@ -25,6 +25,9 @@ module.exports = {
     ) {
       output = "UPS";
     }
+    if (courier_name === "Express Worldwide Import") {
+      output = "Express Worldwide Import";
+    }
     if (
       courier_name === "DHL Express" ||
       courier_name === "DHL Express PRE NOON" ||
@@ -73,6 +76,9 @@ module.exports = {
     if (courier_name === "PalletForce") {
       output = "PalletForce";
     }
+    if (courier_name === "Parcel Monkey") {
+      output = "Parcel Monkey";
+    }
     if (
       courier_name === "DHL" ||
       courier_name === "DHL Parcel UK" ||
@@ -120,11 +126,17 @@ module.exports = {
       deliveryTime === "1-2 days drop off service" ||
       deliveryTime === "Medium" ||
       deliveryTime === "Parcelforce Large" ||
+      deliveryTime === "Import Express" ||
       deliveryTime === "2 working days"
     ) {
       output = "Medium";
     }
-    if (deliveryTime === "Slow") {
+    if (
+      deliveryTime === "Slow" ||
+      deliveryTime === "3 working days" ||
+      deliveryTime === "Import Economy" ||
+      deliveryTime === "Contact Us"
+    ) {
       output = "Slow";
     }
     if (output === "") {
@@ -351,18 +363,10 @@ module.exports = {
     if (serviceName === "ukparcels_UKMailDomestic_Saturday") {
       output = "DHL UK Saturday delivery";
     }
-    if (serviceName === "") {
-      output = "";
+    if (serviceName === "Express Worldwide Import") {
+      output = "Express Worldwide Import";
     }
-    if (serviceName === "") {
-      output = "";
-    }
-    if (serviceName === "") {
-      output = "";
-    }
-    if (serviceName === "") {
-      output = "";
-    }
+
     if (output === "") {
       console.log("new serviceName: ", serviceName, courier);
       output = serviceName;

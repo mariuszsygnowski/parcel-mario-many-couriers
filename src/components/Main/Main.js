@@ -43,7 +43,6 @@ const Main = ({
     setInitialState();
     setquotesMain(initial_state_main.quotes);
     setModal(true);
-    console.log(box_values);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -73,6 +72,7 @@ const Main = ({
         );
 
         if (unsorted_data_with_all_couriers) {
+          console.log(unsorted_data_with_all_couriers);
           const sorted_data_with_all_couriers = Sorting(
             initial_state_main.quotes,
             unsorted_data_with_all_couriers
@@ -105,7 +105,6 @@ const Main = ({
         );
         if (data_from_sorted_by) {
           setquotesMain(data_from_sorted_by);
-
           return data_from_sorted_by;
         }
       }
