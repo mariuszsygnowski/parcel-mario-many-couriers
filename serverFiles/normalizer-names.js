@@ -35,6 +35,7 @@ module.exports = {
     }
     if (output === "") {
       console.log("new courier_nameP4D: ", courier_name);
+      output = courier_name;
     }
 
     return output;
@@ -81,6 +82,7 @@ module.exports = {
     }
     if (output === "") {
       console.log("new courier_name: ", courier_name, courier);
+      output = courier_name;
     }
 
     return output;
@@ -127,6 +129,7 @@ module.exports = {
     }
     if (output === "") {
       console.log("new deliveryTime: ", deliveryTime, courier);
+      output = deliveryTime;
     }
     return output;
   },
@@ -362,6 +365,7 @@ module.exports = {
     }
     if (output === "") {
       console.log("new serviceName: ", serviceName, courier);
+      output = serviceName;
     }
     return output;
   }
