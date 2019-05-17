@@ -27,14 +27,14 @@ const ParcelValues = ({
       <div>
         <InputCountry
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setCountryFrom(value)}
-          value={country_from}
+          setValue={value => setCountryFrom(value)}
+          val={country_from}
           labelName="Country from"
         />
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setPostcodeFrom(value)}
-          value={postcode_from}
+          setValue={value => setPostcodeFrom(value)}
+          val={postcode_from}
           placeholder={"Postcode / Zip. Default is RM19 1ZY"}
           labelName=""
         />
@@ -42,15 +42,15 @@ const ParcelValues = ({
       <div>
         <InputCountry
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setCountryTo(value)}
-          value={country_to}
+          setValue={value => setCountryTo(value)}
+          val={country_to}
           labelName="Country to"
         />
 
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setPostcodeTo(value)}
-          value={postcode_to}
+          setValue={value => setPostcodeTo(value)}
+          val={postcode_to}
           placeholder={"Postcode / Zip. Default is EC1R 3DD"}
           labelName=""
         />
@@ -58,29 +58,29 @@ const ParcelValues = ({
       <div>
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setWeight(value)}
-          value={parcel_weight}
+          setValue={value => setWeight(Number(value))}
+          val={parcel_weight}
           placeholder={"Weight in kg"}
           labelName="Weight"
         />
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setWidth(value)}
-          value={parcel_width}
+          setValue={value => setWidth(Number(value))}
+          val={parcel_width}
           placeholder={"Width in cm"}
           labelName="Width"
         />
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setHeight(value)}
-          value={parcel_height}
+          setValue={value => setHeight(Number(value))}
+          val={parcel_height}
           placeholder={"Height in cm"}
           labelName="Height"
         />
         <InputForm
           // nameClass={this.state.displayOffOn}
-          sendValue={value => setLength(value)}
-          value={parcel_length}
+          setValue={value => setLength(Number(value))}
+          val={parcel_length}
           placeholder={"Length in cm"}
           labelName="Length"
         />

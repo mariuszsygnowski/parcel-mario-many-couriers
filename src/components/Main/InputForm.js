@@ -8,9 +8,8 @@ const InputForm = props => {
       <label>
         {props.labelName}
         <input
-          type="text"
-          value={props.value}
-          onChange={event => props.sendValue(event.target.value)}
+          value={props.val}
+          onChange={event => props.setValue(event.target.value)}
           placeholder={props.placeholder}
         />
       </label>

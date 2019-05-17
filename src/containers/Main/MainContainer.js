@@ -15,13 +15,15 @@ function mapStateToProps(state) {
     quotes: state.main.quotes,
     how_many_responses: state.main.how_many_responses,
     modal: state.main.modal,
-    initial_state_main: state.main
+    initial_state_main: state.main,
+    box_values: state.boxValues
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetch_data: url => dispatch(fetch_single_courier(url)),
+    fetch_data: (url, box_values) =>
+      dispatch(fetch_single_courier(url, box_values)),
     setNewQuotes: quotes => dispatch(setNewQuotes(quotes)),
     addResponseCount: () => dispatch(addResponseCount()),
     setModal: value => dispatch(setModal(value)),

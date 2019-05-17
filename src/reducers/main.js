@@ -1,6 +1,6 @@
 const initialState = {
   data_from_all_couriers: [],
-  courier_names: ["p2g", "parcelmonkey", "p4d"],
+  courier_names: ["p2g", "p4d", "parcelmonkey"],
   how_many_responses: 0,
   quotes: {
     one_day: [],
@@ -13,7 +13,13 @@ const initialState = {
 function main(state = initialState, action) {
   switch (action.type) {
     case "ADD_DATA_FROM_SINGLE_COURIER":
-      const courier_arr = action.courier_arr;
+      let courier_arr = [];
+      if (action.courier_arr.length === 0) {
+        courier_arr = [{ company_name: "no results" }];
+      } else {
+        courier_arr = action.courier_arr;
+      }
+
       const obj = { [courier_arr[0].company_name]: courier_arr };
       let newDataFromAllCouriers = [...state.data_from_all_couriers];
       newDataFromAllCouriers.push(obj);

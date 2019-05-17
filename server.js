@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
 
 const normalizerNames = require("./serverFiles/normalizer-names.js");
+const isoCodes = require("./serverFiles/isoCodes.js");
 
 const db = pgp({
   host: process.env.DB_HOST,
@@ -29,6 +30,16 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.post("/api/p4d", (req, res) => {
+  const {
+    postcode_from,
+    postcode_to,
+    country_from,
+    country_to,
+    weight,
+    width,
+    height,
+    length
+  } = req.body;
   // (async () => {
   //   try {
   //     const res = await superagent.post('/api/pet');
@@ -40,7 +51,7 @@ app.post("/api/p4d", (req, res) => {
   let $;
   let outputArray = [];
 
-  const url = "http://www.p4d.co.uk/go/domestic/GB/GB/10,10,10,10";
+  const url = `http://www.p4d.co.uk/go/domestic/${country_from}/${country_to}/${weight},${width},${height},${length}`;
   superagent
     .get(url)
     .query()
@@ -102,6 +113,23 @@ app.post("/api/p4d", (req, res) => {
 });
 
 app.post("/api/p2g", (req, res) => {
+  const {
+    postcode_from,
+    postcode_to,
+    country_from,
+    country_to,
+    weight,
+    width,
+    height,
+    length
+  } = req.body;
+
+  // const da = isoCodes.find(e => {
+  //   return e.name === "Albania";
+  // });
+  const new_country_from = isoCodes.iso3ToIso2(country_from);
+  const new_country_to = isoCodes.iso3ToIso2(country_to);
+
   //now everything is hard coded but later will be passed all data
   fetch("https://www.parcel2go.com/auth/connect/token", {
     method: "POST",
@@ -116,22 +144,23 @@ app.post("/api/p2g", (req, res) => {
     .then(response => response.json())
     .then(body => {
       if (body) {
-        // res.json(body);
         fetch("https://www.parcel2go.com/api/quotes", {
           body: JSON.stringify({
             CollectionAddress: {
-              Country: "GBR"
+              Country: new_country_from,
+              Postcode: postcode_from
             },
             DeliveryAddress: {
-              Country: "GBR"
+              Country: new_country_to,
+              Postcode: postcode_to
             },
             Parcels: [
               {
                 Value: 0,
-                Weight: 10,
-                Length: 10,
-                Width: 10,
-                Height: 10
+                Weight: weight,
+                Length: length,
+                Width: width,
+                Height: height
               }
             ]
           }),
@@ -187,6 +216,16 @@ app.post("/api/p2g", (req, res) => {
     });
 });
 app.post("/api/parcelmonkey", (req, res) => {
+  const {
+    postcode_from,
+    postcode_to,
+    country_from,
+    country_to,
+    weight,
+    width,
+    height,
+    length
+  } = req.body;
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const url = "https://api.parcelmonkey.co.uk/GetQuote";
 
@@ -198,14 +237,14 @@ app.post("/api/parcelmonkey", (req, res) => {
       token: process.env.PARCELMONKEY_TOKEN
     },
     body: JSON.stringify({
-      origin: "GB",
-      destination: "GB",
+      origin: country_from,
+      destination: country_to,
       boxes: [
         {
-          length: 10,
-          width: 10,
-          height: 10,
-          weight: 10
+          weight,
+          width,
+          height,
+          length
         }
       ],
       goods_value: 0,

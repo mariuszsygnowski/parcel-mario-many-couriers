@@ -17,7 +17,8 @@ const Main = ({
   setNewQuotes,
   modal,
   setModal,
-  initial_state_main
+  initial_state_main,
+  box_values
 }) => {
   const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
@@ -29,6 +30,11 @@ const Main = ({
     if (data_from_all_couriers.length === courier_names.length) {
       set_results(data_from_all_couriers);
     }
+    // console.log(data_from_all_couriers);
+
+    if (data_from_all_couriers.length === 0) {
+      // console.log(data_from_all_couriers);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data_from_all_couriers]);
@@ -37,6 +43,7 @@ const Main = ({
     setInitialState();
     setquotesMain(initial_state_main.quotes);
     setModal(true);
+    console.log(box_values);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -45,7 +52,7 @@ const Main = ({
       // fetch_data("/api/p4d");
       for (let courier of courier_names) {
         const url = `/api/${courier}`;
-        fetch_data(url);
+        fetch_data(url, box_values);
       }
     }
   };
@@ -72,6 +79,11 @@ const Main = ({
           );
           if (sorted_data_with_all_couriers) {
             setNewQuotes(sorted_data_with_all_couriers);
+            if (how_many_responses === courier_names.length - 1) {
+              setTimeout(() => {
+                setModal(false);
+              }, 500);
+            }
           }
         }
       }
@@ -93,11 +105,7 @@ const Main = ({
         );
         if (data_from_sorted_by) {
           setquotesMain(data_from_sorted_by);
-          if (how_many_responses === courier_names.length - 1) {
-            setTimeout(() => {
-              setModal(false);
-            }, 500);
-          }
+
           return data_from_sorted_by;
         }
       }

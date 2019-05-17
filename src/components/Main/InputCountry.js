@@ -7,7 +7,7 @@ const InputCountry = props => {
     >
       <label>{props.labelName}</label>
       <select
-        onChange={event => props.sendValue(event.target.value)}
+        onChange={event => props.setValue(event.target.value)}
         defaultValue="GB"
       >
         <option value="AF">Afghanistan</option>

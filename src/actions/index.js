@@ -1,7 +1,11 @@
-export function fetch_single_courier(url) {
+export function fetch_single_courier(url, box_values) {
   return function(dispatch, getState) {
     fetch(url, {
-      method: "POST"
+      method: "POST",
+      body: JSON.stringify(box_values),
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
       .then(data => data.json())
       .then(courier_arr => {

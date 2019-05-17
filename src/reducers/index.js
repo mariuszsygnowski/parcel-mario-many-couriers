@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import boxValues from "./boxValues";
 import main from "./main";
+import boxValues from "./boxValues";
 
 export default combineReducers({
   boxValues,

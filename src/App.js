@@ -5,7 +5,7 @@ import MainContainer from "./containers/Main/MainContainer";
 import HeaderContainer from "./containers/Header/HeaderContainer";
 import FooterContainer from "./containers/Footer/FooterContainer";
 
-export default function App() {
+const App = () => {
   return (
     <div className="parcel_mario">
       {/* <HeaderContainer /> */}
@@ -13,4 +13,5 @@ export default function App() {
       {/* <FooterContainer /> */}
     </div>
   );
-}
+};
+export default App;

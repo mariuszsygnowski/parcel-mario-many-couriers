@@ -3,10 +3,10 @@ const initialState = {
   postcode_to: "EC1R3DD",
   country_from: "GB",
   country_to: "GB",
-  weight: 21,
-  width: 22,
-  height: 34,
-  length: 10
+  weight: 10,
+  width: 11,
+  height: 11,
+  length: 11
 };
 
 function boxValues(state = initialState, action) {
@@ -22,14 +22,11 @@ function boxValues(state = initialState, action) {
     case "SET_WEIGHT":
       return Object.assign({}, state, { weight: action.value });
     case "SET_WIDTH":
-      return Object.assign({}, state, { width: action.width });
+      return Object.assign({}, state, { width: action.value });
     case "SET_HEIGHT":
-      return Object.assign({}, state, { height: action.height });
+      return Object.assign({}, state, { height: action.value });
     case "SET_LENGTH":
-      return Object.assign({}, state, { length: action.length });
-
-    case "GET_DEFAULT":
-      return initialState;
+      return Object.assign({}, state, { length: action.value });
     case "SET_DEFAULT":
       return Object.assign({}, state, initialState);
     default:
