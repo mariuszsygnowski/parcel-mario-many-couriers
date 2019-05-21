@@ -1,6 +1,20 @@
  @import "./styles/reset.scss";
  //  @import "./styles/modal.css";
  //  @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+ @media screen and (-webkit-min-device-pixel-ratio:0) {
+     input[type="email"]:hover,
+     input[type="number"]:hover,
+     input[type="search"]:hover,
+     input[type="text"]:hover,
+     input[type="tel"]:hover,
+     input[type="url"]:hover,
+     input[type="password"]:hover,
+     textarea:hover,
+     select:hover {
+         font-size: initial;
+     }
+ }
+ 
  .parcel_mario {
      //  background-color: #FFFFFF;
  }
