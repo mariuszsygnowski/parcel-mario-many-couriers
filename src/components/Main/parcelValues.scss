@@ -21,7 +21,7 @@ $padding: 1rem;
             align-self: center;
             font-size: 1.2rem;
         }
-        &__select {
+        select {
             align-self: center;
             border-radius: 0px;
             padding-right: 1.5rem;
@@ -51,6 +51,7 @@ $padding: 1rem;
             padding-left: $padding;
             outline: none;
             border: none;
+            border-radius: 0px;
             // padding: 1rem;
         }
     }
