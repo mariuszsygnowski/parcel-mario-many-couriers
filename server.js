@@ -111,7 +111,8 @@ app.post("/api/p4d", (req, res) => {
           "p4d.co.uk"
         );
         outputArray[i] = Object.assign({}, outputArray[i], {
-          deliveryTime
+          deliveryTime,
+          url
         });
       });
       res.json(outputArray);
@@ -298,7 +299,8 @@ app.post("/api/parcelmonkey", (req, res) => {
             courier_name: courier_name,
             service_name: service_name,
             price: price,
-            deliveryTime: deliveryTime
+            deliveryTime: deliveryTime,
+            url: "https://www.parcelmonkey.co.uk/"
           });
         });
         res.json(outputArray);

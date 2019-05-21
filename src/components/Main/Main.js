@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
+import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
 import Sorting from "./Functions/Sorting";
 import SortingBy from "./Functions/SortingBy";
 import "./main.scss";
@@ -132,9 +133,10 @@ const Main = ({
           Received responses: {how_many_responses}/{courier_names.length}
         </Modal.Body>
       </Modal>
+      <WelcomeScreenContainer />
 
       <ParcelValuesContainer />
-      <div className="main__buttons">
+      {/* <div className="main__buttons">
         <Button variant="outline-success" block onClick={dataCourier}>
           search Button
         </Button>
@@ -194,7 +196,7 @@ const Main = ({
             </div>
           );
         })}
-      </div>
+      </div> */}
     </main>
   );
 };

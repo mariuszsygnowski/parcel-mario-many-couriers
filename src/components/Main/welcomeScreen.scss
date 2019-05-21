@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Catamaran:900&display=swap');
+$font-size: 2.9rem;
+$motto-padding-right-and-left: 2.7rem;
+.welcomeScreen {
+    padding-top: 8rem;
+    padding-bottom: 1rem;
+    &__logo {
+        text-align: center;
+        font-size: $font-size;
+        span {
+            background-color: white;
+            font-size: $font-size;
+            font-weight: 900;
+            font-family: 'Catamaran', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: -1px;
+        }
+        span:nth-child(1) {
+            color: red;
+        }
+        span:nth-child(2) {
+            color: blue;
+        }
+        span:nth-child(3) {
+            color: cornflowerblue;
+        }
+        span:nth-child(4) {
+            color: forestgreen
+        }
+    }
+    &__motto {
+        text-align: center;
+        padding: 0.5rem $motto-padding-right-and-left 0 $motto-padding-right-and-left;
+        font-family: Arial, Helvetica, Sans, Sans-Serif, Sans Serif;
+        font-size: 1.2rem;
+    }
+}

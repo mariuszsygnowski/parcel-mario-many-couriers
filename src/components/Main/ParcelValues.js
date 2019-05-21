@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputForm from "./InputForm";
 import InputCountry from "./InputCountry";
+import "./parcelValues.scss";
 import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 
 const ParcelValues = ({
@@ -24,6 +25,7 @@ const ParcelValues = ({
 }) => {
   const dimensionsArray = [
     {
+      className: "parcelValues__dimensions-weight",
       setValue: value => setWeight(Number(value)),
       val: parcel_weight,
       inputType: "number",
@@ -31,6 +33,7 @@ const ParcelValues = ({
       labelName: "Weight"
     },
     {
+      className: "parcelValues__dimensions-width",
       setValue: value => setWidth(Number(value)),
       val: parcel_width,
       inputType: "number",
@@ -38,6 +41,7 @@ const ParcelValues = ({
       labelName: "Width"
     },
     {
+      className: "parcelValues__dimensions-height",
       setValue: value => setHeight(Number(value)),
       val: parcel_height,
       inputType: "number",
@@ -45,6 +49,7 @@ const ParcelValues = ({
       labelName: "Height"
     },
     {
+      className: "parcelValues__dimensions-length",
       setValue: value => setLength(Number(value)),
       val: parcel_length,
       inputType: "number",
@@ -53,45 +58,49 @@ const ParcelValues = ({
     }
   ];
   return (
-    <form>
-      <div>
-        <InputCountry
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setCountryFrom(value)}
-          val={country_from}
-          labelName="Country from"
-        />
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          inputType={"text"}
-          setValue={value => setPostcodeFrom(value)}
-          val={postcode_from}
-          placeholder={"Postcode / Zip. Default is RM19 1ZY"}
-          labelName=""
-        />
-      </div>
-      <div>
-        <InputCountry
-          // nameClass={this.state.displayOffOn}
-          setValue={value => setCountryTo(value)}
-          val={country_to}
-          labelName="Country to"
-        />
+    <form className="parcelValues">
+      <div className="parcelValues__countries">
+        <div className="parcelValues__countryFromAndTo">
+          <InputCountry
+            className="parcelValues__countryFromAndTo-selectCountry"
+            setValue={value => setCountryFrom(value)}
+            val={country_from}
+            labelName="From:"
+          />
+          <InputForm
+            className="parcelValues__countryFromAndTo-inputPostcode"
+            title="Please enter a Zip Code"
+            inputType={"text"}
+            setValue={value => setPostcodeFrom(value)}
+            val={postcode_from}
+            placeholder={"Optional postcode"}
+            labelName="from"
+          />
+        </div>
+        <div className="parcelValues__countryFromAndTo">
+          <InputCountry
+            className="parcelValues__countryFromAndTo-selectCountry"
+            setValue={value => setCountryTo(value)}
+            val={country_to}
+            labelName="To:"
+          />
 
-        <InputForm
-          // nameClass={this.state.displayOffOn}
-          inputType={"text"}
-          setValue={value => setPostcodeTo(value)}
-          val={postcode_to}
-          placeholder={"Postcode / Zip. Default is EC1R 3DD"}
-          labelName=""
-        />
+          <InputForm
+            className="parcelValues__countryFromAndTo-inputPostcode"
+            inputType={"text"}
+            setValue={value => setPostcodeTo(value)}
+            val={postcode_to}
+            placeholder={"Optional postcode"}
+            labelName="to"
+          />
+        </div>
       </div>
-      <div>
+      <div className="parcelValues__dimensions">
         {dimensionsArray.map(item => {
           return (
             <InputForm
               key={item.labelName}
+              className={item.className}
               inputType={item.inputType}
               setValue={item.setValue}
               val={item.val}

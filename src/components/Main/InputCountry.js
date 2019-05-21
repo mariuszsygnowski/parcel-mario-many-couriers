@@ -1,15 +1,16 @@
 import React from "react";
+// import "./inputCountry.scss";
 
 const InputCountry = props => {
   return (
-    <div
-    // className={this.props.nameClass}
-    >
-      <label>{props.labelName}</label>
+    <div className={props.className}>
+      <label className={`${props.className}__label`}>{props.labelName}</label>
       <select
+        className={`${props.className}__select`}
         onChange={event => props.setValue(event.target.value)}
         defaultValue="GB"
       >
+        <option value="GB">United Kingdom</option>
         <option value="AF">Afghanistan</option>
         <option value="AX">Åland Islands</option>
         <option value="AL">Albania</option>
