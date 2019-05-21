@@ -1,4 +1,4 @@
-$padding: 1rem;
+$padding: 0.6rem;
 $gridGap: 0.5rem;
 $borderRadius: 5px;
 .parcelValues {
@@ -27,7 +27,7 @@ $borderRadius: 5px;
         select {
             align-self: center;
             border-radius: 0px;
-            padding-right: 1.5rem;
+            padding-right: 1.0rem;
             cursor: pointer;
             background-color: #ffffff;
             ///* Removes the default <select> styling */
@@ -81,7 +81,7 @@ $borderRadius: 5px;
                 align-items: center;
                 background-color: rgb(204, 204, 204);
                 padding: 0 0.5rem;
-                font-size: 0.5rem;
+                font-size: 0.7rem;
             }
         }
         &-width {
