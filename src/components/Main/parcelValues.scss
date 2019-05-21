@@ -67,6 +67,7 @@ $borderRadius: 5px;
             grid-template-columns: repeat(2, minmax(0.1rem, 1fr)) min-content;
             label {
                 justify-self: right;
+                align-self: center;
                 padding-right: $gridGap;
             }
             input {
@@ -76,11 +77,11 @@ $borderRadius: 5px;
                 padding-left: $gridGap;
             }
             p {
+                display: grid;
+                align-items: center;
                 background-color: rgb(204, 204, 204);
                 padding: 0 0.5rem;
                 font-size: 0.5rem;
-                display: grid;
-                align-items: center;
             }
         }
         &-width {
