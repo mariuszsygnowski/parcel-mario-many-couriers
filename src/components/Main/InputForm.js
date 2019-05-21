@@ -21,7 +21,7 @@ const InputForm = props => {
         onChange={event => setinputValue(event.target.value)}
         placeholder={props.placeholder}
       />
-      <p>kg</p>
+      <p>{props.units}</p>
     </div>
   );
 };

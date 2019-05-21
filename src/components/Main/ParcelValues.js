@@ -30,7 +30,8 @@ const ParcelValues = ({
       val: parcel_weight,
       inputType: "number",
       placeholder: "Weight in kg",
-      labelName: "Weight"
+      labelName: "Weight:",
+      units: "kg"
     },
     {
       className: "parcelValues__dimensions-width",
@@ -38,7 +39,8 @@ const ParcelValues = ({
       val: parcel_width,
       inputType: "number",
       placeholder: "Width in cm",
-      labelName: "Width"
+      labelName: "Width",
+      units: "cm"
     },
     {
       className: "parcelValues__dimensions-height",
@@ -46,7 +48,8 @@ const ParcelValues = ({
       val: parcel_height,
       inputType: "number",
       placeholder: "Height in cm",
-      labelName: "Height"
+      labelName: "Height",
+      units: "cm"
     },
     {
       className: "parcelValues__dimensions-length",
@@ -54,7 +57,8 @@ const ParcelValues = ({
       val: parcel_length,
       inputType: "number",
       placeholder: "Length in cm",
-      labelName: "Length"
+      labelName: "Length",
+      units: "cm"
     }
   ];
   return (
@@ -106,6 +110,7 @@ const ParcelValues = ({
               val={item.val}
               placeholder={item.placeholder}
               labelName={item.labelName}
+              units={item.units}
             />
           );
         })}

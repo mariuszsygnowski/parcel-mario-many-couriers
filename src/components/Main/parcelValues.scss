@@ -1,21 +1,24 @@
 $padding: 1rem;
+$gridGap: 0.5rem;
+$borderRadius: 5px;
 .parcelValues {
+    display: grid;
+    grid-gap: $gridGap;
     background-color: #00c3ff;
     padding: $padding;
-    border-radius: 5px;
+    border-radius: $borderRadius;
     &__countries {
         display: grid;
-        grid-gap: 0.5rem;
+        grid-gap: $gridGap;
     }
     &__countryFromAndTo {
         display: grid;
         grid-template-columns: 6fr 4fr;
-        // grid-gap: 0.5rem;
     }
     &__countryFromAndTo-selectCountry {
         display: grid;
-        grid-template-columns: 3rem minmax(1rem, 1fr) auto;
-        grid-gap: 0.5rem;
+        grid-template-columns: 3rem minmax($padding, 1fr) auto;
+        grid-gap: $gridGap;
         &__label {
             justify-self: right;
             align-self: center;
@@ -64,9 +67,19 @@ $padding: 1rem;
             grid-template-columns: repeat(2, minmax(0.1rem, 1fr)) min-content;
             label {
                 justify-self: right;
+                padding-right: $gridGap;
+            }
+            input {
+                outline: none;
+                border: none;
+                padding-left: $gridGap;
             }
             p {
-                background-color: gray;
+                background-color: rgb(204, 204, 204);
+                padding: 0 0.5rem;
+                font-size: 0.5rem;
+                display: grid;
+                align-items: center;
             }
         }
         &-width {
