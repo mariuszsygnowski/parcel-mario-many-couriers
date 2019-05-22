@@ -1,4 +1,4 @@
-import ParcelValues from "../../components/Main/ParcelValues";
+import ParcelValues from "../../components/Main/ParcelValues.js";
 import { connect } from "react-redux";
 import {
   setPostcodeFrom,
@@ -34,8 +34,6 @@ const mapDispatchToProps = dispatch => {
     setWidth: value => dispatch(setWidth(value)),
     setHeight: value => dispatch(setHeight(value)),
     setLength: value => dispatch(setLength(value))
-
-    // getInitialState: () => dispatch(getInitialState())
   };
 };
 

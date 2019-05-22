@@ -5,10 +5,11 @@ import {
   addResponseCount,
   setNewQuotes,
   setModal,
-  setInitialState
+  setInitialState,
+  dataCourier
 } from "../../actions";
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     data_from_all_couriers: state.main.data_from_all_couriers,
     courier_names: state.main.courier_names,
@@ -18,7 +19,7 @@ function mapStateToProps(state) {
     initial_state_main: state.main,
     box_values: state.boxValues
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -27,7 +28,8 @@ const mapDispatchToProps = dispatch => {
     setNewQuotes: quotes => dispatch(setNewQuotes(quotes)),
     addResponseCount: () => dispatch(addResponseCount()),
     setModal: value => dispatch(setModal(value)),
-    setInitialState: () => dispatch(setInitialState())
+    setInitialState: () => dispatch(setInitialState()),
+    awaa: () => dispatch(dataCourier())
   };
 };
 

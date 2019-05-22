@@ -8,6 +8,9 @@ import { Modal, ProgressBar, Button } from "react-bootstrap";
 import { SingleCourier } from "./SingleCourier";
 
 const Main = ({
+  props,
+  pro,
+  awaa,
   setInitialState,
   fetch_data,
   data_from_all_couriers,
@@ -135,7 +138,7 @@ const Main = ({
       </Modal>
       <WelcomeScreenContainer />
 
-      <ParcelValuesContainer />
+      <ParcelValuesContainer dataCourier={dataCourier} />
       {/* <div className="main__buttons">
         <Button variant="outline-success" block onClick={dataCourier}>
           search Button
@@ -171,7 +174,7 @@ const Main = ({
       </div>
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
-      </span>
+      </span> */}
       <div className="main__results">
         {Object.values(quotes).map((item, i) => {
           let deliveryTime = "";
@@ -196,7 +199,7 @@ const Main = ({
             </div>
           );
         })}
-      </div> */}
+      </div>
     </main>
   );
 };

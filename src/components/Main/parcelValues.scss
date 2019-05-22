@@ -1,6 +1,7 @@
-$padding: 0.6rem;
-$gridGap: 0.5rem;
+$padding: 0.5rem;
+$gridGap: 0.6rem;
 $borderRadius: 5px;
+$fontSize: 1.2rem;
 .parcelValues {
     display: grid;
     grid-gap: $gridGap;
@@ -22,12 +23,13 @@ $borderRadius: 5px;
         &__label {
             justify-self: right;
             align-self: center;
-            font-size: 1.2rem;
+            font-size: $fontSize;
         }
         select {
+            font-size: $fontSize;
             align-self: center;
             border-radius: 0px;
-            padding-right: 1.1rem;
+            padding-right: 0.75rem;
             cursor: pointer;
             background-color: #ffffff;
             ///* Removes the default <select> styling */
@@ -35,11 +37,15 @@ $borderRadius: 5px;
             -moz-appearance: none;
             appearance: none;
             /* Positions background arrow image */
-            background-image: url('https://img.icons8.com/ios/50/000000/sorting-arrows.png');
+            background-image: url('../../images/icons8-sort-24.png');
             background-repeat: no-repeat;
-            background-size: contain;
+            background-size: 0.8rem 1.2rem;
             background-position: right;
-            border: inset $padding transparent;
+            border-top: inset $padding+0.8rem transparent;
+            border-bottom: inset $padding+0.8rem transparent;
+            border-right: inset 0 transparent;
+            border-left: inset 0 transparent;
+            padding-left: $padding;
         }
     }
     &__countryFromAndTo-inputPostcode {
@@ -50,7 +56,7 @@ $borderRadius: 5px;
             display: none;
         }
         input {
-            // padding: 1rem 0.5rem;
+            font-size: $fontSize;
             padding-left: $padding;
             outline: none;
             border: none;
@@ -64,13 +70,15 @@ $borderRadius: 5px;
         grid-template-columns: 70%;
         &-weight {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0.1rem, 1fr)) min-content;
+            grid-template-columns: minmax(0.1rem, 1fr) minmax($padding, 3rem) min-content;
             label {
+                font-size: $fontSize;
                 justify-self: right;
                 align-self: center;
                 padding-right: $gridGap;
             }
             input {
+                font-size: $fontSize;
                 outline: none;
                 border: none;
                 border-radius: 0px;

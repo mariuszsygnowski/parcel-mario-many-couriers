@@ -19,6 +19,9 @@ export function fetch_single_courier(url, box_values) {
   };
 }
 
+export function dataCourier() {
+  return { type: "AWA" };
+}
 export function setNewQuotes(quotes) {
   return { type: "SET_NEW_QUOTES", quotes };
 }

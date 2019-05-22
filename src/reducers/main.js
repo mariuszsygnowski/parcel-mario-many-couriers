@@ -33,6 +33,10 @@ function main(state = initialState, action) {
         how_many_responses: state.how_many_responses + 1
       });
 
+    case "AWA":
+      // console.log(action.a);
+      return Object.assign({}, state);
+
     case "SET_MODAL":
       return Object.assign({}, state, {
         modal: action.true_or_false
