@@ -1,5 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
-// import { Button, Badge } from "reactstrap";
+import React, { useState, useEffect } from "react";
 import ServiceName from "./ServiceName";
 
 export const SingleCourier = props => {

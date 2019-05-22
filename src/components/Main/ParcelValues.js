@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import InputForm from "./InputForm";
 import InputCountry from "./InputCountry";
 import "./parcelValues.scss";
-import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 
 const ParcelValues = props => {
   const dimensionsArray = [
@@ -101,7 +100,11 @@ const ParcelValues = props => {
           );
         })}
       </div>
-      <button type="submit" onClick={runDataCourier}>
+      <button
+        className="parcelValues__button-quote"
+        type="submit"
+        onClick={runDataCourier}
+      >
         QUOTE
       </button>
     </form>

@@ -1,7 +1,7 @@
 $padding: 0.5rem;
 $gridGap: 0.6rem;
 $borderRadius: 5px;
-$fontSize: 1.2rem;
+$fontSize: 1.3rem;
 .parcelValues {
     display: grid;
     grid-gap: $gridGap;
@@ -102,5 +102,11 @@ $fontSize: 1.2rem;
         &-length {
             display: none;
         }
+    }
+    &__button-quote {
+        font-size: $fontSize;
+        background-color: #04e204;
+        border: none;
+        border-radius: $borderRadius;
     }
 }
