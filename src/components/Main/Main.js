@@ -4,13 +4,10 @@ import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer
 import Sorting from "./Functions/Sorting";
 import SortingBy from "./Functions/SortingBy";
 import "./main.scss";
-import { Modal, ProgressBar, Button } from "react-bootstrap";
+import { Modal, ProgressBar } from "react-bootstrap";
 import { SingleCourier } from "./SingleCourier";
 
 const Main = ({
-  props,
-  pro,
-  awaa,
   setInitialState,
   fetch_data,
   data_from_all_couriers,
@@ -24,7 +21,7 @@ const Main = ({
   initial_state_main,
   box_values
 }) => {
-  const [quotesMain, setquotesMain] = useState(quotes);
+  // const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
 
   useEffect(() => {
@@ -45,7 +42,6 @@ const Main = ({
 
   const dataCourier = async () => {
     setInitialState();
-    setquotesMain(initial_state_main.quotes);
     setModal(true);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
@@ -106,19 +102,19 @@ const Main = ({
           response_from_sorting.quotes
         );
         if (data_from_sorted_by) {
-          setquotesMain(data_from_sorted_by);
+          // setquotesMain(data_from_sorted_by);
           return data_from_sorted_by;
         }
       }
     }
   };
 
-  const sortByValue = async sort_by => {
-    const respond = await SortingBy(sort_by, quotes);
-    if (respond) {
-      setNewQuotes(respond);
-    }
-  };
+  // const sortByValue = async sort_by => {
+  //   const respond = await SortingBy(sort_by, quotes);
+  //   if (respond) {
+  //     setNewQuotes(respond);
+  //   }
+  // };
 
   return (
     <main className="main">

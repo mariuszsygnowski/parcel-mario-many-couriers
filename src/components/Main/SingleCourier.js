@@ -23,9 +23,11 @@ export const SingleCourier = props => {
       >
         <span>Service:</span>
         {props.result.data.map((res_result_data, i) => {
+          // eslint-disable-next-line
           {
             /* console.log("props.result.data.", res_result_data); */
           }
+          // eslint-disable-next-line
           {
             /* console.log(res_result_data.service_name); */
           }
