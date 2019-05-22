@@ -102,7 +102,7 @@ const ParcelValues = props => {
         })}
       </div>
       <button type="submit" onClick={runDataCourier}>
-        GO
+        QUOTE
       </button>
     </form>
   );
