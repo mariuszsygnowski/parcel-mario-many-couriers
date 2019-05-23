@@ -197,7 +197,7 @@ const Main = ({
           console.log(item.length);
           return (
             <details key={key} className="main__results__each-day">
-              <summary>
+              <summary className="main__results__each-day__summary">
                 {deliveryTime}({item.length})
               </summary>
               <div className="main__results__each-day__resutls">

@@ -7,10 +7,9 @@
         // &:first-of-type {
         //     list-style-type: none;
         // }
-        display: grid;
-        justify-content: left;
-        grid-template-columns: auto auto;
-        align-items: center;
+        // grid-template-columns: auto auto;
+        // align-items: center;
+        font-size: 1.2rem;
         &:hover {
             cursor: pointer;
         }

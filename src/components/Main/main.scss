@@ -9,9 +9,10 @@
             border: 1px solid lightgray;
             display: grid !important;
             grid-gap: 10.3rem;
-            summary {
+            &__summary {
                 // background-color: rgb(33, 241, 33);
                 font-weight: 900;
+                font-size: 1.5rem;
                 text-align: center;
                 &:hover {
                     cursor: pointer;
