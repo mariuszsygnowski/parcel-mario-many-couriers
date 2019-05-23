@@ -1,0 +1,25 @@
+.serviceName {
+    background-color: lightcyan;
+    &__summary {
+        // &::-webkit-details-marker {
+        //     display: none;
+        // }
+        // &:first-of-type {
+        //     list-style-type: none;
+        // }
+        display: grid;
+        justify-content: left;
+        grid-template-columns: auto auto;
+        align-items: center;
+        &:hover {
+            cursor: pointer;
+        }
+        &:focus {
+            border: 0;
+            outline: none;
+        }
+    }
+    &__submenu {
+        padding-left: 1rem;
+    }
+}

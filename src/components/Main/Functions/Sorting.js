@@ -57,7 +57,7 @@ const Sorting = (quote, singleResult) => {
       } else {
         //if not then I create object plus add first entry into data
         thisStateQuotesOne_day.push({
-          delivery_time: "One day couriers:",
+          delivery_time: "One day couriers",
           min_price_in_courier: resBodyResult.price,
           courier: resBodyResult.courier_name,
 
@@ -127,7 +127,7 @@ const Sorting = (quote, singleResult) => {
       } else {
         //if not then I create object plus add first entry into data
         thisStateQuotesTwo_days.push({
-          delivery_time: "Two days couriers:",
+          delivery_time: "Two days couriers",
           min_price_in_courier: resBodyResult.price,
           courier: resBodyResult.courier_name,
           data: [
@@ -191,7 +191,7 @@ const Sorting = (quote, singleResult) => {
         } else {
           //if not then I create object plus add first entry into data
           thisStateQuotesOver_two_days.push({
-            delivery_time: "More than two days couriers:",
+            delivery_time: "More than two days couriers",
             min_price_in_courier: resBodyResult.price,
             courier: resBodyResult.courier_name,
             data: [

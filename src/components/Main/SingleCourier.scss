@@ -1,12 +1,17 @@
 .singleCourier {
     display: grid;
+    // grid-gap: 1rem;
     // grid-template-columns: minmax(7rem, max-content) 1fr;
-    border: 1px solid lightblue;
-    &__summary {
+    border: 2px solid lightblue;
+    &__label {
         display: grid;
         grid-template-columns: max-content max-content;
         justify-content: center;
         grid-gap: 0.5rem;
+        p {
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
         // &::-webkit-details-marker {
         //     display: none;
         // }
@@ -20,5 +25,9 @@
         //     border: 0;
         //     outline: none;
         // }
+    }
+    &__details {
+        display: grid;
+        grid-gap: 0.5rem;
     }
 }

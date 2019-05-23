@@ -15,7 +15,7 @@ export const SingleCourier = props => {
 
   return (
     <div className="singleCourier">
-      <div className="singleCourier__summary">
+      <div className="singleCourier__label">
         <p>
           {props.result.courier} ({counter})
         </p>

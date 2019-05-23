@@ -194,16 +194,20 @@ const Main = ({
           //example: (3) [{…}, {…}, {…}]
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
-
+          console.log(item.length);
           return (
-            <div key={key} className="main__results__each-day">
-              <span>{deliveryTime}</span>
-              {item.map(result => {
-                //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
-                //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-                return <SingleCourier key={result.courier} result={result} />;
-              })}
-            </div>
+            <details key={key} className="main__results__each-day">
+              <summary>
+                {deliveryTime}({item.length})
+              </summary>
+              <div className="main__results__each-day__resutls">
+                {item.map(result => {
+                  //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
+                  //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
+                  return <SingleCourier key={result.courier} result={result} />;
+                })}
+              </div>
+            </details>
           );
         })}
       </div>
