@@ -103,6 +103,7 @@ const ParcelValues = props => {
 
       <div className="parcelValues__values">
         <button
+          type="button"
           onClick={changeClassNames}
           className="parcelValues__values__button"
         >

@@ -1,24 +1,74 @@
 .serviceName {
-    background-color: lightcyan;
-    &__summary {
-        // &::-webkit-details-marker {
-        //     display: none;
-        // }
-        // &:first-of-type {
-        //     list-style-type: none;
-        // }
-        // grid-template-columns: auto auto;
-        // align-items: center;
-        font-size: 1.2rem;
-        &:hover {
-            cursor: pointer;
+    // background-color: lightcyan;
+    &__details {
+        border: 1px solid #ccc;
+        &__summary::-webkit-details-marker {
+            display: none;
         }
-        &:focus {
-            border: 0;
+        &__summary::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41OSAxNi4zNGw0LjU4LTQuNTktNC41OC00LjU5TDEwIDUuNzVsNiA2LTYgNnoiLz48L3N2Zz4=") no-repeat 50% 50% / 1em 1em;
+            width: 1.5em;
+            height: 1.5em;
+            transition: transform 0.1s linear;
+        }
+        &__summary {
+            width: auto;
+            padding: 20px;
+            padding-left: 35px;
+        }
+        &__summary:hover {
+            color: #007bff;
+        }
+        &__summary:focus {
             outline: none;
         }
     }
+    &__details[open]>summary:before {
+        transform: rotate(90deg);
+    }
+    &__details[open]>summary {
+        color: #007bff;
+    }
+    &__details[open]>summary~* {
+        animation: open 1s ease;
+    }
+    @keyframes open {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    // &__summary {
+    //     // &::-webkit-details-marker {
+    //     //     display: none;
+    //     // }
+    //     // &:first-of-type {
+    //     //     list-style-type: none;
+    //     // }
+    //     // grid-template-columns: auto auto;
+    //     // align-items: center;
+    //     font-size: 1.2rem;
+    //     &:hover {
+    //         cursor: pointer;
+    //     }
+    //     &:focus {
+    //         border: 0;
+    //         outline: none;
+    //     }
+    // }
     &__submenu {
-        padding-left: 1rem;
+        padding-left: 2rem;
+        &__buttons {
+            padding-bottom: 0.2rem;
+            &__button {
+                background-color: white;
+                border-radius: 10px;
+            }
+        }
     }
 }

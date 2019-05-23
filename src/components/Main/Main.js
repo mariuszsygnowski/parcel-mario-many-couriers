@@ -78,6 +78,7 @@ const Main = ({
           uniqueApiKey
         );
         if (unsorted_data_with_all_couriers) {
+          console.log(unsorted_data_with_all_couriers);
           const sorted_data_with_all_couriers = Sorting(
             initial_state_main.quotes,
             unsorted_data_with_all_couriers
@@ -194,7 +195,6 @@ const Main = ({
           //example: (3) [{…}, {…}, {…}]
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
-          console.log(item.length);
           return (
             <details key={key} className="main__results__each-day">
               <summary className="main__results__each-day__summary">

@@ -2,7 +2,9 @@
     display: grid;
     // grid-gap: 1rem;
     // grid-template-columns: minmax(7rem, max-content) 1fr;
-    border: 2px solid lightblue;
+    // border-top: 1px solid black;
+    // border-bottom: 2px solid black;
+    padding-bottom: 10px;
     &__label {
         display: grid;
         grid-template-columns: max-content max-content;

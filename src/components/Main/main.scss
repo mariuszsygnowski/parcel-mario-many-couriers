@@ -4,27 +4,69 @@
     &__results {
         display: grid;
         grid-gap: 1rem;
+        padding-top: 1rem;
         &__each-day {
-            padding: 0.5rem;
-            border: 1px solid lightgray;
-            display: grid !important;
-            grid-gap: 10.3rem;
+            border-bottom: 1px solid #ccc;
             &__summary {
-                // background-color: rgb(33, 241, 33);
-                font-weight: 900;
-                font-size: 1.5rem;
-                text-align: center;
-                &:hover {
-                    cursor: pointer;
-                }
-                &:focus {
-                    border: 0;
-                    outline: none;
-                }
+                padding: 20px;
+                padding-left: 25px;
+            }
+            &__summary:hover {
+                color: #007bff;
+            }
+            &__summary:focus {
+                outline: none;
+            }
+            &__summary::-webkit-details-marker {
+                display: none;
+            }
+            &__summary:before {
+                content: "";
+                position: absolute;
+                left: 10px;
+                background: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41OSAxNi4zNGw0LjU4LTQuNTktNC41OC00LjU5TDEwIDUuNzVsNiA2LTYgNnoiLz48L3N2Zz4=") no-repeat 50% 50% / 1em 1em;
+                width: 1.5em;
+                height: 1.5em;
+                transition: transform 0.1s linear;
             }
             &__resutls {
                 display: grid;
                 grid-gap: 1rem;
+                padding: 7px;
+            }
+        }
+        &__each-day[open]>summary:before {
+            transform: rotate(90deg);
+        }
+        &__each-day[open]>summary {
+            color: #007bff;
+        }
+        &__each-day[open]>summary~* {
+            animation: open 1s ease;
+        }
+        @keyframes open {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        &__each-day {
+            // padding: 0.5rem;
+            // border: 1px solid lightgray;
+            &__summary {
+                // background-color: rgb(33, 241, 33);
+                // font-weight: 900;
+                // font-size: 1.5rem;
+                // text-align: center;
+                // &:hover {
+                //     cursor: pointer;
+                // }
+                // &:focus {
+                //     border: 0;
+                //     outline: none;
+                // }
             }
         }
     }

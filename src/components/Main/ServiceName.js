@@ -5,24 +5,29 @@ import "./ServiceName.scss";
 
 const ServiceName = props => {
   return (
-    <details className="serviceName">
-      <summary className="serviceName__summary">
-        {props.res_result_data.service_name} (
-        {props.res_result_data.entries.length}) from: £
-        {props.res_result_data.min_price_service_name.toFixed(2)}
-      </summary>
-      <div className="serviceName__submenu">
-        {props.res_result_data.entries.map(res => {
-          return (
-            <div key={res.id}>
-              <button>
-                {res.company_name} from: £{res.price.toFixed(2)}
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </details>
+    <div className="serviceName">
+      <details className="serviceName__details">
+        <summary className="serviceName__details__summary">
+          {props.res_result_data.service_name} (
+          {props.res_result_data.entries.length}) from: £
+          {props.res_result_data.min_price_service_name.toFixed(2)}
+        </summary>
+        <div className="serviceName__details__submenu">
+          {props.res_result_data.entries.map(res => {
+            return (
+              <div
+                key={res.id}
+                className="serviceName__details__submenu__buttons"
+              >
+                <button className="serviceName__details__submenu__buttons__button">
+                  {res.company_name} from: £{res.price.toFixed(2)}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </details>
+    </div>
   );
 };
 

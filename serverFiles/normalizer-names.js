@@ -124,7 +124,9 @@ module.exports = {
     if (
       deliveryTime === "Parcelforce 48" ||
       deliveryTime === "1-2 days drop off service" ||
+      deliveryTime === "1-2 working days" ||
       deliveryTime === "Medium" ||
+      deliveryTime === "DPD Pickup Express" ||
       deliveryTime === "Parcelforce Large" ||
       deliveryTime === "Import Express" ||
       deliveryTime === "2 working days"
@@ -133,8 +135,16 @@ module.exports = {
     }
     if (
       deliveryTime === "Slow" ||
+      deliveryTime === "DPD Pickup Classic" ||
+      deliveryTime === "DPD Classic" ||
+      deliveryTime === "Drop at post office" ||
+      deliveryTime === "Drop at depot" ||
+      deliveryTime === "Priority International" ||
+      deliveryTime === "Europe By Road" ||
       deliveryTime === "3 working days" ||
+      deliveryTime === "2-3 working days" ||
       deliveryTime === "Import Economy" ||
+      deliveryTime === "3-5 working days" ||
       deliveryTime === "Contact Us"
     ) {
       output = "Slow";
