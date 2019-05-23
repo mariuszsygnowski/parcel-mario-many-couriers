@@ -65,42 +65,49 @@ $fontSize: 1.3rem;
             // padding: 1rem;
         }
     }
-    &__dimensions {
+    &__values {
         display: grid;
         justify-content: right;
-        grid-template-columns: 70%;
-        &-weight {
+        grid-template-columns: 6fr 4fr;
+        label {
+            font-size: $fontSize;
+            justify-self: right;
+            align-self: center;
+            padding-right: $gridGap;
+        }
+        input {
+            font-size: $fontSize;
+            text-align: center;
+            outline: none;
+            border: none;
+            border-radius: 0px;
+            padding-left: $gridGap;
+        }
+        p {
             display: grid;
-            grid-template-columns: minmax(0.1rem, 1fr) minmax($padding, 3rem) min-content;
-            label {
-                font-size: $fontSize;
-                justify-self: right;
-                align-self: center;
-                padding-right: $gridGap;
-            }
-            input {
-                font-size: $fontSize;
-                outline: none;
-                border: none;
-                border-radius: 0px;
-                padding-left: $gridGap;
-            }
-            p {
-                display: grid;
-                align-items: center;
-                background-color: rgb(204, 204, 204);
-                padding: 0 0.5rem;
-                font-size: 0.7rem;
-            }
+            text-align: center;
+            align-items: center;
+            background-color: rgb(204, 204, 204);
+            padding: 0 0.5rem;
+            font-size: 0.9rem;
         }
-        &-width {
-            display: none;
+        &__button {
+            justify-self: center;
+            height: min-content;
+            width: auto;
+            background-color: inherit;
+            border: 0;
         }
-        &-height {
-            display: none;
+        &__button:focus {
+            outline: none !important;
         }
-        &-length {
-            display: none;
+        &__dimensions {
+            display: grid;
+            grid-gap: 0.2rem;
+        }
+        &__dimensions-inputForm {
+            display: grid;
+            grid-template-columns: minmax(0.1rem, 1fr) minmax($padding, 5rem) 2.2rem;
         }
     }
     &__button-quote {
@@ -108,5 +115,11 @@ $fontSize: 1.3rem;
         background-color: #04e204;
         border: none;
         border-radius: $borderRadius;
+    }
+    .displayNone {
+        display: none;
+    }
+    .displayGrid {
+        display: grid;
     }
 }

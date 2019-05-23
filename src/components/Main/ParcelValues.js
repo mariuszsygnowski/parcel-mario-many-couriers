@@ -1,13 +1,28 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from "react";
+import cx from "classnames";
+
 import InputForm from "./InputForm";
 import InputCountry from "./InputCountry";
 import "./parcelValues.scss";
 
 const ParcelValues = props => {
+  const [isOpen, setisOpen] = useState(false);
+  const navListClasses = cx("displayNone", {
+    displayGrid: isOpen
+  });
+  const changeClassNames = event => {
+    event.preventDefault();
+    if (isOpen === true) {
+      event.target.innerHTML = "Is your parcel longer than 1m?";
+    } else {
+      event.target.innerHTML = "Click here to close";
+    }
+    setisOpen(!isOpen);
+  };
   const dimensionsArray = [
     {
-      className: "parcelValues__dimensions-weight",
+      className: "parcelValues__values__dimensions-inputForm ",
       setValue: value => props.setWeight(Number(value)),
       val: props.parcel_weight,
       inputType: "number",
@@ -16,7 +31,7 @@ const ParcelValues = props => {
       units: "kg"
     },
     {
-      className: "parcelValues__dimensions-width",
+      className: `parcelValues__values__dimensions-inputForm ${navListClasses}`,
       setValue: value => props.setWidth(Number(value)),
       val: props.parcel_width,
       inputType: "number",
@@ -25,7 +40,7 @@ const ParcelValues = props => {
       units: "cm"
     },
     {
-      className: "parcelValues__dimensions-height",
+      className: `parcelValues__values__dimensions-inputForm ${navListClasses}`,
       setValue: value => props.setHeight(Number(value)),
       val: props.parcel_height,
       inputType: "number",
@@ -34,7 +49,7 @@ const ParcelValues = props => {
       units: "cm"
     },
     {
-      className: "parcelValues__dimensions-length",
+      className: `parcelValues__values__dimensions-inputForm ${navListClasses}`,
       setValue: value => props.setLength(Number(value)),
       val: props.parcel_length,
       inputType: "number",
@@ -85,22 +100,32 @@ const ParcelValues = props => {
           />
         </div>
       </div>
-      <div className="parcelValues__dimensions">
-        {dimensionsArray.map(item => {
-          return (
-            <InputForm
-              key={item.labelName}
-              className={item.className}
-              inputType={item.inputType}
-              setValue={item.setValue}
-              val={item.val}
-              placeholder={item.placeholder}
-              labelName={item.labelName}
-              units={item.units}
-            />
-          );
-        })}
+
+      <div className="parcelValues__values">
+        <button
+          onClick={changeClassNames}
+          className="parcelValues__values__button"
+        >
+          Is your parcel longer than 1m?
+        </button>
+        <div className="parcelValues__values__dimensions">
+          {dimensionsArray.map(item => {
+            return (
+              <InputForm
+                key={item.labelName}
+                className={item.className}
+                inputType={item.inputType}
+                setValue={item.setValue}
+                val={item.val}
+                placeholder={item.placeholder}
+                labelName={item.labelName}
+                units={item.units}
+              />
+            );
+          })}
+        </div>
       </div>
+
       <button
         className="parcelValues__button-quote"
         type="submit"
