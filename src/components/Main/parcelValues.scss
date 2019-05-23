@@ -67,15 +67,17 @@ $fontSize: 1.3rem;
     }
     &__values {
         display: grid;
-        justify-content: right;
-        grid-template-columns: 6fr 4fr;
+        grid-template-columns: minmax(min-content, 1fr) max-content;
+        grid-gap: 0.5rem;
         label {
             font-size: $fontSize;
             justify-self: right;
-            align-self: center;
+            // align-self: center;
             padding-right: $gridGap;
+            height: 2rem;
         }
         input {
+            height: 2rem;
             font-size: $fontSize;
             text-align: center;
             outline: none;
@@ -84,6 +86,7 @@ $fontSize: 1.3rem;
             padding-left: $gridGap;
         }
         p {
+            height: 2rem;
             display: grid;
             text-align: center;
             align-items: center;
@@ -93,17 +96,23 @@ $fontSize: 1.3rem;
         }
         &__button {
             justify-self: center;
+            align-self: center;
             height: min-content;
-            width: auto;
-            background-color: inherit;
+            // width: min-content;
+            background-color: #03E205;
+            border-radius: $borderRadius*2;
             border: 0;
         }
         &__button:focus {
             outline: none !important;
         }
+        &__button:hover {
+            background-color: #00ff88;
+        }
         &__dimensions {
             display: grid;
             grid-gap: 0.2rem;
+            align-self: left;
         }
         &__dimensions-inputForm {
             display: grid;
@@ -112,8 +121,14 @@ $fontSize: 1.3rem;
     }
     &__button-quote {
         font-size: $fontSize;
-        background-color: #04e204;
+        background-color: #03E205;
         border: none;
-        border-radius: $borderRadius;
+        border-radius: $borderRadius*2;
+    }
+    &__button-quote:focus {
+        outline: none !important;
+    }
+    &__button-quote:hover {
+        background-color: #00ff88;
     }
 }

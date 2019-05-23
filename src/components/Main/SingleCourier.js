@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ServiceName from "./ServiceName";
+import "./SingleCourier.scss";
 
 export const SingleCourier = props => {
   useEffect(() => {
@@ -13,15 +14,14 @@ export const SingleCourier = props => {
   const [counter, setcounter] = useState(0);
 
   return (
-    <details className="singleCourier">
-      <summary>
-        {props.result.courier} ({counter}) from: £
-        {props.result.min_price_in_courier.toFixed(2)}
-      </summary>
-      <div
-      // className={state.className}
-      >
-        <span>Service:</span>
+    <div className="singleCourier">
+      <div className="singleCourier__summary">
+        <p>
+          {props.result.courier} ({counter})
+        </p>
+        <p>from: £{props.result.min_price_in_courier.toFixed(2)}</p>
+      </div>
+      <div className="singleCourier__details">
         {props.result.data.map((res_result_data, i) => {
           // eslint-disable-next-line
           {
@@ -42,6 +42,6 @@ export const SingleCourier = props => {
           );
         })}
       </div>
-    </details>
+    </div>
   );
 };

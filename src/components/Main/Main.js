@@ -89,14 +89,10 @@ const Main = ({
                 setModal(false);
               }, 500);
             }
-            Object.values(sorted_data_with_all_couriers).forEach(data => {
-              Object.values(data).forEach(quote => {
-                console.log(quote);
-                if (quote.length > 0) {
-                  setisOpen(true);
-                }
-              });
-            });
+            //if received any respond then navListClasses will change
+            if (unsorted_data_with_all_couriers.length !== 0) {
+              setisOpen(true);
+            }
           }
         }
       }
