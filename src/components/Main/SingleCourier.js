@@ -13,7 +13,7 @@ export const SingleCourier = props => {
   const [counter, setcounter] = useState(0);
 
   return (
-    <details>
+    <details className="singleCourier">
       <summary>
         {props.result.courier} ({counter}) from: £
         {props.result.min_price_in_courier.toFixed(2)}

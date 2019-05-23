@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import cx from "classnames";
+
 import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
 import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
 import Sorting from "./Functions/Sorting";
@@ -23,6 +25,10 @@ const Main = ({
 }) => {
   // const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
+  const [isOpen, setisOpen] = useState(false);
+  const navListClasses = cx("displayNone", {
+    displayGrid: isOpen
+  });
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
@@ -43,6 +49,7 @@ const Main = ({
   const dataCourier = async () => {
     setInitialState();
     setModal(true);
+    setisOpen(false);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -82,6 +89,14 @@ const Main = ({
                 setModal(false);
               }, 500);
             }
+            Object.values(sorted_data_with_all_couriers).forEach(data => {
+              Object.values(data).forEach(quote => {
+                console.log(quote);
+                if (quote.length > 0) {
+                  setisOpen(true);
+                }
+              });
+            });
           }
         }
       }
@@ -171,7 +186,7 @@ const Main = ({
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
       </span> */}
-      <div className="main__results">
+      <div className={`main__results ${navListClasses}`}>
         {Object.values(quotes).map((item, i) => {
           let deliveryTime = "";
           let key = i;
@@ -185,7 +200,7 @@ const Main = ({
           //item[1] is array with data
 
           return (
-            <div key={key} className="main__each-day">
+            <div key={key} className="main__results__each-day">
               <span>{deliveryTime}</span>
               {item.map(result => {
                 //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
