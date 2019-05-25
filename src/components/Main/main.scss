@@ -3,6 +3,10 @@
     margin: 0 2.5rem;
     padding: 0 2rem;
     &__results {
+        .slick-next:before,
+        .slick-prev:before {
+            color: green;
+        }
         &__details {
             padding: 0 2rem;
             // &__results {

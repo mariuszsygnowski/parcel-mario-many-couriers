@@ -8,9 +8,9 @@ import SortingBy from "./Functions/SortingBy";
 import Slider from "react-slick";
 // import { Modal, ProgressBar } from "react-bootstrap";
 import { SingleCourier } from "./SingleCourier";
-import "./main.scss";
 import "slick-carousel/slick/slick.scss";
 import "slick-carousel/slick/slick-theme.scss";
+import "./main.scss";
 
 const Main = ({
   setInitialState,
