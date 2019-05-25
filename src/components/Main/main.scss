@@ -1,12 +1,13 @@
 // @import '../../styles/modal.scss'
 .main {
-    margin: 0 2.5rem;
-    padding: 0 2rem;
+    padding: 0 0.5rem;
     &__results {
-        .slick-next:before,
-        .slick-prev:before {
-            color: green;
-        }
+        margin: 0 auto;
+        padding: 0 2rem;
+        // .slick-next:before,
+        // .slick-prev:before {
+        //     color: black;
+        // }
         &__details {
             padding: 0 2rem;
             // &__results {

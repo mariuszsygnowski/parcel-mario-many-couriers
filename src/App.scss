@@ -3,7 +3,16 @@
     .displayNone {
         display: none;
     }
+    .visibilityHidden {
+        visibility: hidden;
+    }
+    .unhide {
+        visibility: visible;
+    }
     .displayGrid {
         display: grid;
+    }
+    .displayBlock {
+        display: block;
     }
 }

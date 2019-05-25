@@ -5,11 +5,11 @@ import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
 import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
 import Sorting from "./Functions/Sorting";
 import SortingBy from "./Functions/SortingBy";
+import ItemsCarousel from "react-items-carousel";
 import Slider from "react-slick";
-// import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal, ProgressBar } from "react-bootstrap";
 import { SingleCourier } from "./SingleCourier";
-import "slick-carousel/slick/slick.scss";
-import "slick-carousel/slick/slick-theme.scss";
+
 import "./main.scss";
 
 const Main = ({
@@ -28,9 +28,28 @@ const Main = ({
 }) => {
   // const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
-  const [isOpen, setisOpen] = useState(false);
+  const [isOpenNavListClasses, setisOpenNavListClasses] = useState(false);
+  const [isOpenresutlsClasses, setisOpenresutlsClasses] = useState(false);
+  const [activeItemIndex, setactiveItemIndex] = useState(0);
+  const [activeItemIndex1, setactiveItemIndex1] = useState(0);
+  const changeActiveItem = activeItemIndex => {
+    setactiveItemIndex(activeItemIndex);
+  };
+  const changeActiveItem1 = activeItemIndex => {
+    setactiveItemIndex1(activeItemIndex);
+  };
+  const [
+    isOpenvisibilityHiddenClasses,
+    setisOpenvisibilityHiddenClasses
+  ] = useState(false);
+  const visibilityHiddenClasses = cx("visibilityHidden", {
+    unhide: isOpenvisibilityHiddenClasses
+  });
   const navListClasses = cx("displayNone", {
-    displayGrid: isOpen
+    displayBlock: isOpenNavListClasses
+  });
+  const resutlsClasses = cx("displayNone", {
+    displayBlock: isOpenresutlsClasses
   });
 
   useEffect(() => {
@@ -52,7 +71,7 @@ const Main = ({
   const dataCourier = async () => {
     setInitialState();
     setModal(true);
-    setisOpen(false);
+    setisOpenNavListClasses(false);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -95,7 +114,7 @@ const Main = ({
             }
             //if received any respond then navListClasses will change
             if (unsorted_data_with_all_couriers.length !== 0) {
-              // setisOpen(true);
+              setisOpenNavListClasses(true);
             }
           }
         }
@@ -124,57 +143,23 @@ const Main = ({
     }
   };
 
-  const sortByValue = async sort_by => {
-    const respond = await SortingBy(sort_by, quotes);
-    if (respond) {
-      setNewQuotes(respond);
-    }
-  };
+  // const sortByValue = async sort_by => {
+  //   const respond = await SortingBy(sort_by, quotes);
+  //   if (respond) {
+  //     setNewQuotes(respond);
+  //   }
+  // };
 
-  const settings = {
-    focusOnSelect: true,
-    // className: "center",
-    // centerMode: true,
-    dots: false,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       focusOnSelect: true,
-    //       slidesToShow: 3,
-    //       slidesToScroll: 3
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 600,
-    //     settings: {
-    //       focusOnSelect: true,
-    //       slidesToShow: 2,
-    //       slidesToScroll: 2,
-    //       initialSlide: 2
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 480,
-    //     settings: {
-    //       focusOnSelect: true,
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1
-    //     }
-    //   }
-    // ]
-  };
-
-  const ccc = () => {
-    setisOpen(!isOpen);
+  const openDeliveryTime = () => {
+    setisOpenresutlsClasses(true);
+    setTimeout(() => {
+      setisOpenvisibilityHiddenClasses(true);
+    }, 250);
   };
 
   return (
     <main className="main">
-      {/* <Modal show={modal}>
+      <Modal show={modal}>
         <Modal.Header>
           <Modal.Title>Searching...</Modal.Title>
         </Modal.Header>
@@ -187,7 +172,7 @@ const Main = ({
           />
           Received responses: {how_many_responses}/{courier_names.length}
         </Modal.Body>
-      </Modal> */}
+      </Modal>
       <WelcomeScreenContainer />
 
       <ParcelValuesContainer dataCourier={dataCourier} />
@@ -227,37 +212,88 @@ const Main = ({
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
       </span> */}
-      <Slider {...settings} className={`main__results `}>
-        {Object.values(quotes).map((item, i) => {
-          let deliveryTime = "";
-          let key = i;
+      <div className={`main__results `}>
+        <ItemsCarousel
+          // Placeholder configurations
+          // enablePlaceholder
+          // numberOfPlaceholderItems={1}
+          // minimumPlaceholderTime={1000}
+          // placeholderItem={
+          //   <div style={{ height: 200, background: "#900" }}>Placeholder</div>
+          // }
+          // Carousel configurations
+          numberOfCards={1}
+          gutter={12}
+          showSlither={true}
+          firstAndLastGutter={false}
+          freeScrolling={false}
+          // Active item configurations
+          requestToChangeActive={changeActiveItem}
+          activeItemIndex={activeItemIndex}
+          activePosition={"left"}
+          chevronWidth={24}
+          rightChevron={<button>{">"}</button>}
+          leftChevron={<button>{"<"}</button>}
+          outsideChevron={true}
+        >
+          {Object.values(quotes).map((item, i) => {
+            let deliveryTime = "";
+            let key = i;
 
-          if (item[0]) {
-            deliveryTime = item[0].delivery_time;
-            key = item[0].delivery_time;
-          } //item is array quotes.one_day, quotes.two_days...
-          //example: (3) [{…}, {…}, {…}]
-          //item[0] is "one_day" or "two_days"...
-          //item[1] is array with data
-          return (
-            <div key={key} className={`main__results__details`}>
-              <div className="" onClick={ccc}>
-                {deliveryTime}({item.length})
+            if (item[0]) {
+              deliveryTime = item[0].delivery_time;
+              key = item[0].delivery_time;
+            } //item is array quotes.one_day, quotes.two_days...
+            //example: (3) [{…}, {…}, {…}]
+            //item[0] is "one_day" or "two_days"...
+            //item[1] is array with data
+            return (
+              <div key={key} className={`main__results__details `}>
+                <div className="" onClick={openDeliveryTime}>
+                  {deliveryTime}({item.length})
+                </div>
+                <div
+                  className={`main__results__details__resutls ${visibilityHiddenClasses} ${resutlsClasses}`}
+                >
+                  <ItemsCarousel
+                    // Placeholder configurations
+                    // enablePlaceholder
+                    // numberOfPlaceholderItems={1}
+                    // minimumPlaceholderTime={1000}
+                    // placeholderItem={
+                    //   <div style={{ height: 200, background: "#900" }}>
+                    //     Placeholder
+                    //   </div>
+                    // }
+                    // Carousel configurations
+                    numberOfCards={3}
+                    gutter={12}
+                    showSlither={true}
+                    firstAndLastGutter={true}
+                    freeScrolling={false}
+                    // Active item configurations
+                    requestToChangeActive={changeActiveItem1}
+                    activeItemIndex={activeItemIndex1}
+                    activePosition={"center"}
+                    chevronWidth={24}
+                    rightChevron={<button>{">"}</button>}
+                    leftChevron={<button>{"<"}</button>}
+                    outsideChevron={true}
+                  >
+                    {item.map(result => {
+                      //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
+                      //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
+                      return (
+                        <SingleCourier key={result.courier} result={result} />
+                      );
+                    })}
+                  </ItemsCarousel>
+                </div>
               </div>
-              <Slider
-                {...settings}
-                className={`main__results__details__resutls ${navListClasses}`}
-              >
-                {item.map(result => {
-                  //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
-                  //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-                  return <SingleCourier key={result.courier} result={result} />;
-                })}
-              </Slider>
-            </div>
-          );
-        })}
-      </Slider>
+            );
+          })}
+        </ItemsCarousel>
+      </div>
     </main>
   );
 };
