@@ -6,12 +6,12 @@ import "./ServiceName.scss";
 const ServiceName = props => {
   return (
     <div className="serviceName">
-      <details className="serviceName__details">
-        <summary className="serviceName__details__summary">
+      <div className="serviceName__details">
+        <div className="serviceName__details__summary">
           {props.res_result_data.service_name} (
           {props.res_result_data.entries.length}) from: £
           {props.res_result_data.min_price_service_name.toFixed(2)}
-        </summary>
+        </div>
         <div className="serviceName__details__submenu">
           {props.res_result_data.entries.map(res => {
             return (
@@ -26,7 +26,7 @@ const ServiceName = props => {
             );
           })}
         </div>
-      </details>
+      </div>
     </div>
   );
 };

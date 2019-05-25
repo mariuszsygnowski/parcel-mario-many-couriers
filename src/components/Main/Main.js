@@ -5,9 +5,12 @@ import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
 import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
 import Sorting from "./Functions/Sorting";
 import SortingBy from "./Functions/SortingBy";
-import "./main.scss";
-import { Modal, ProgressBar } from "react-bootstrap";
+import Slider from "react-slick";
+// import { Modal, ProgressBar } from "react-bootstrap";
 import { SingleCourier } from "./SingleCourier";
+import "./main.scss";
+import "slick-carousel/slick/slick.scss";
+import "slick-carousel/slick/slick-theme.scss";
 
 const Main = ({
   setInitialState,
@@ -92,7 +95,7 @@ const Main = ({
             }
             //if received any respond then navListClasses will change
             if (unsorted_data_with_all_couriers.length !== 0) {
-              setisOpen(true);
+              // setisOpen(true);
             }
           }
         }
@@ -128,9 +131,50 @@ const Main = ({
   //   }
   // };
 
+  const settings = {
+    focusOnSelect: true,
+    // className: "center",
+    // centerMode: true,
+    dots: false,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       focusOnSelect: true,
+    //       slidesToShow: 3,
+    //       slidesToScroll: 3
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 600,
+    //     settings: {
+    //       focusOnSelect: true,
+    //       slidesToShow: 2,
+    //       slidesToScroll: 2,
+    //       initialSlide: 2
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 480,
+    //     settings: {
+    //       focusOnSelect: true,
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1
+    //     }
+    //   }
+    // ]
+  };
+
+  const ccc = () => {
+    setisOpen(!isOpen);
+  };
+
   return (
     <main className="main">
-      <Modal show={modal}>
+      {/* <Modal show={modal}>
         <Modal.Header>
           <Modal.Title>Searching...</Modal.Title>
         </Modal.Header>
@@ -143,7 +187,7 @@ const Main = ({
           />
           Received responses: {how_many_responses}/{courier_names.length}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
       <WelcomeScreenContainer />
 
       <ParcelValuesContainer dataCourier={dataCourier} />
@@ -183,7 +227,7 @@ const Main = ({
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
       </span> */}
-      <div className={`main__results ${navListClasses}`}>
+      <Slider {...settings} className={`main__results `}>
         {Object.values(quotes).map((item, i) => {
           let deliveryTime = "";
           let key = i;
@@ -196,21 +240,24 @@ const Main = ({
           //item[0] is "one_day" or "two_days"...
           //item[1] is array with data
           return (
-            <details key={key} className="main__results__each-day">
-              <summary className="main__results__each-day__summary">
+            <div key={key} className={`main__results__details`}>
+              <div className="" onClick={ccc}>
                 {deliveryTime}({item.length})
-              </summary>
-              <div className="main__results__each-day__resutls">
+              </div>
+              <Slider
+                {...settings}
+                className={`main__results__details__resutls ${navListClasses}`}
+              >
                 {item.map(result => {
                   //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
                   //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
                   return <SingleCourier key={result.courier} result={result} />;
                 })}
-              </div>
-            </details>
+              </Slider>
+            </div>
           );
         })}
-      </div>
+      </Slider>
     </main>
   );
 };

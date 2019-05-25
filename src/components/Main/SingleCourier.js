@@ -21,7 +21,7 @@ export const SingleCourier = props => {
         </p>
         <p>from: £{props.result.min_price_in_courier.toFixed(2)}</p>
       </div>
-      <div className="singleCourier__details">
+      <div className="singleCourier__details displayNone">
         {props.result.data.map((res_result_data, i) => {
           // eslint-disable-next-line
           {
