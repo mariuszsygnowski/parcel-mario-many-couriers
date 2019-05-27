@@ -1,4 +1,5 @@
 $bcgColor: rgb(100, 189, 219);
+$font-size: 1.2rem;
 @mixin eachCarousel() {
     padding: 1rem 2.5rem;
     background-color: white;
@@ -21,15 +22,25 @@ $bcgColor: rgb(100, 189, 219);
         // grid-auto-rows: repeat(3, 100%);
         &__days {
             @include eachCarousel();
+            &__title {
+                font-size: $font-size;
+            }
         }
         &__couriers {
             @include eachCarousel();
+            &__label {
+                p {
+                    font-size: $font-size;
+                }
+            }
         }
         &__buttons {
             @include eachCarousel();
             // border: 1px solid black;
             &__label {
-                // display: grid;
+                p {
+                    font-size: $font-size;
+                }
             }
             &__details {
                 //     height: 100%;
