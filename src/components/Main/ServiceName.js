@@ -1,7 +1,4 @@
-// eslint-disable-next-line
 import React from "react";
-import "./ServiceName.scss";
-// import { Button, Badge } from "reactstrap";
 
 const ServiceName = props => {
   return (
@@ -13,23 +10,15 @@ const ServiceName = props => {
         </p>
         <p>from: £{props.res_result_data.min_price_service_name.toFixed(2)}</p>
       </div>
-      <div
-      // className={`${props.className}__details__submenu`}
-      >
+      <div className={`${props.className}__buttons`}>
         {props.res_result_data.entries.map(res => {
           return (
-            <div
+            <button
+              className={`${props.className}__buttons__buton`}
               key={res.id}
-              // className={`${props.className}__details__submenu__buttons`}
             >
-              <button
-              // className={`${
-              //   props.className
-              // }__details__submenu__buttons__button`}
-              >
-                {res.company_name} from: £{res.price.toFixed(2)}
-              </button>
-            </div>
+              {res.company_name} from: £{res.price.toFixed(2)}
+            </button>
           );
         })}
       </div>

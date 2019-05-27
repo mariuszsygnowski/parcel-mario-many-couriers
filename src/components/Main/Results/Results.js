@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import cx from "classnames";
 import "./resutls.scss";
+import arrow from "../../../images/arrow-right.svg";
 import ItemsCarousel from "react-items-carousel";
 import { SingleCourier } from "../SingleCourier";
 import ServiceName from "../ServiceName";
@@ -57,6 +58,7 @@ const Days = props => {
   useEffect(() => {
     props.responseFromAllDays(Object.values(props.quotes)[0]);
     setactiveItemIndex(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.quotes]);
 
   const [isOpen, setisOpen] = useState(false);
@@ -74,9 +76,11 @@ const Days = props => {
       requestToChangeActive={changeActiveItem}
       activeItemIndex={activeItemIndex}
       activePosition={"left"}
-      chevronWidth={24}
-      rightChevron={<button>{">"}</button>}
-      leftChevron={<button>{"<"}</button>}
+      chevronWidth={36}
+      rightChevron={<img src={arrow} alt="" />}
+      leftChevron={
+        <img style={{ transform: "rotate(180deg)" }} src={arrow} alt="" />
+      }
       outsideChevron={false}
     >
       {Object.values(props.quotes).map((item, i) => {
@@ -117,9 +121,9 @@ const Couriers = props => {
   };
 
   useEffect(() => {
-    console.log(props.dataFromCurrentSelectedDeliveryTime);
     props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[0]);
     setactiveItemIndex(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataFromCurrentSelectedDeliveryTime]);
 
   return (
@@ -132,9 +136,11 @@ const Couriers = props => {
       requestToChangeActive={changeActiveItem}
       activeItemIndex={activeItemIndex}
       activePosition={"left"}
-      chevronWidth={24}
-      rightChevron={<button>{">"}</button>}
-      leftChevron={<button>{"<"}</button>}
+      chevronWidth={36}
+      rightChevron={<img src={arrow} alt="" />}
+      leftChevron={
+        <img style={{ transform: "rotate(180deg)" }} src={arrow} alt="" />
+      }
       outsideChevron={false}
     >
       {props.dataFromCurrentSelectedDeliveryTime.map((result, i) => {
@@ -171,9 +177,11 @@ const Buttons = props => {
       requestToChangeActive={changeActiveItem}
       activeItemIndex={activeItemIndex}
       activePosition={"left"}
-      chevronWidth={24}
-      rightChevron={<button>{">"}</button>}
-      leftChevron={<button>{"<"}</button>}
+      chevronWidth={36}
+      rightChevron={<img src={arrow} alt="" />}
+      leftChevron={
+        <img style={{ transform: "rotate(180deg)" }} src={arrow} alt="" />
+      }
       outsideChevron={false}
     >
       {props.dataFromAllCouriers.map(item => {

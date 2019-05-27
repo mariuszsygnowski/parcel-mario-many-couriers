@@ -10,7 +10,14 @@ $font-size: 1.2rem;
     }
 }
 
+$h: 30px;
 .results {
+    // button {
+    //     border-radius: 50%;
+    //     height: $h;
+    //     width: $h;
+    //     font-size: 16px;
+    // }
     margin-top: 1rem;
     padding: 1rem;
     background: $bcgColor;
@@ -37,16 +44,27 @@ $font-size: 1.2rem;
         &__buttons {
             @include eachCarousel();
             // border: 1px solid black;
+            display: grid;
+            grid-template-rows: min-content 1fr;
+            grid-gap: 0.3rem;
             &__label {
                 p {
                     font-size: $font-size;
                 }
             }
-            &__details {
-                //     height: 100%;
-                //     &__submenu {
-                //         height: 100%;
-                //     }
+            &__buttons {
+                display: grid;
+                grid-template-columns: auto;
+                grid-auto-rows: min-content;
+                align-content: center;
+                justify-content: center;
+                grid-gap: 0.2rem;
+                button {
+                    // border-radius: 15px;
+                    // height: auto;
+                    // width: auto;
+                    // font-size: 1rem;
+                }
             }
         }
     }

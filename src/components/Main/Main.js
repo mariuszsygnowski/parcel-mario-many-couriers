@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import cx from "classnames";
+import React, { useState, useEffect } from "react";
+// import cx from "classnames";
 
 import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
 import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
@@ -90,7 +90,6 @@ const Main = ({
           uniqueApiKey
         );
         if (unsorted_data_with_all_couriers) {
-          console.log(unsorted_data_with_all_couriers);
           const sorted_data_with_all_couriers = Sorting(
             initial_state_main.quotes,
             unsorted_data_with_all_couriers

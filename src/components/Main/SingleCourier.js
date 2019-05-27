@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import ServiceName from "./ServiceName";
-import "./SingleCourier.scss";
 
 export const SingleCourier = props => {
   useEffect(() => {
@@ -13,16 +11,16 @@ export const SingleCourier = props => {
 
   const [counter, setcounter] = useState(0);
 
-  const [widt, setHeight] = useState(0);
-  const [a, setWid] = useState(0);
-  // const reff = useRef(null);
+  // const [widt, setHeight] = useState(0);
+  // const [a, setWid] = useState(0);
+  // // const reff = useRef(null);
   const re = useRef(null);
 
-  useEffect(() => {
-    // setHeight(reff.current.clientWidth);
-    setWid(re.current.clientWidth);
-    // console.log(widt, a);
-  });
+  // useEffect(() => {
+  //   // setHeight(reff.current.clientWidth);
+  //   setWid(re.current.clientWidth);
+  //   // console.log(widt, a);
+  // });
   // useEffect(() => {
   //   if (a !== 0) {
   //     props.fun(a, props.result.courier, props.k);
