@@ -2,17 +2,24 @@
 .main {
     padding: 0 0.5rem;
     &__results {
-        margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
         // .slick-next:before,
         // .slick-prev:before {
-        //     color: black;
+        border: 1px solid black;
         // }
+        width: auto;
         &__details {
-            padding: 0 2rem;
-            // &__results {
-            //     padding: 0 10.5rem;
-            // }
+            border: 1px solid black;
+            padding: 0 3.5rem;
+            // width: 20rem;
+            &__results {
+                padding: 0 2.5rem;
+                width: 30rem;
+            }
+            &__title {
+                display: grid;
+                // width: max-content;
+            }
         }
         // display: grid;
         // grid-gap: 1rem;

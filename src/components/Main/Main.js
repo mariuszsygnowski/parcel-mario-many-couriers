@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import cx from "classnames";
 
 import ParcelValuesContainer from "../../containers/Main/ParcelValuesContainer";
 import WelcomeScreenContainer from "../../containers/Main/WelcomeScreenContainer";
+import Results from "./Results/Results";
 import Sorting from "./Functions/Sorting";
 import SortingBy from "./Functions/SortingBy";
-import ItemsCarousel from "react-items-carousel";
-import Slider from "react-slick";
 import { Modal, ProgressBar } from "react-bootstrap";
-import { SingleCourier } from "./SingleCourier";
 
 import "./main.scss";
 
@@ -28,29 +26,21 @@ const Main = ({
 }) => {
   // const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
-  const [isOpenNavListClasses, setisOpenNavListClasses] = useState(false);
-  const [isOpenresutlsClasses, setisOpenresutlsClasses] = useState(false);
-  const [activeItemIndex, setactiveItemIndex] = useState(0);
-  const [activeItemIndex1, setactiveItemIndex1] = useState(0);
-  const changeActiveItem = activeItemIndex => {
-    setactiveItemIndex(activeItemIndex);
-  };
-  const changeActiveItem1 = activeItemIndex => {
-    setactiveItemIndex1(activeItemIndex);
-  };
-  const [
-    isOpenvisibilityHiddenClasses,
-    setisOpenvisibilityHiddenClasses
-  ] = useState(false);
-  const visibilityHiddenClasses = cx("visibilityHidden", {
-    unhide: isOpenvisibilityHiddenClasses
-  });
-  const navListClasses = cx("displayNone", {
-    displayBlock: isOpenNavListClasses
-  });
-  const resutlsClasses = cx("displayNone", {
-    displayBlock: isOpenresutlsClasses
-  });
+  const [didReceivedNewData, setdidReceivedNewData] = useState(false);
+
+  // const changeResultsToOffOrOn = activeItemIndex => {
+  //   setactiveItemIndex1(activeItemIndex);
+  // };
+  // const [
+  //   isOpenvisibilityHiddenClasses,
+  //   setisOpenvisibilityHiddenClasses
+  // ] = useState(false);
+  // const visibilityHiddenClasses = cx("visibilityHidden", {
+  //   unhide: isOpenvisibilityHiddenClasses
+  // });
+  // const changeResultsToOffOrOn = cx("displayNone", {
+  //   displayBlock: didReceivedNewData
+  // });
 
   useEffect(() => {
     if (data_from_all_couriers.length > 0) {
@@ -71,7 +61,7 @@ const Main = ({
   const dataCourier = async () => {
     setInitialState();
     setModal(true);
-    setisOpenNavListClasses(false);
+    setdidReceivedNewData(false);
     const uniqueKey = await getUniqueKeyId();
     if (uniqueKey) {
       setuniqueApiKey(uniqueKey);
@@ -112,9 +102,10 @@ const Main = ({
                 setModal(false);
               }, 500);
             }
-            //if received any respond then navListClasses will change
+            //if received any respond then changeResultsToOffOrOn will change
             if (unsorted_data_with_all_couriers.length !== 0) {
-              setisOpenNavListClasses(true);
+              setdidReceivedNewData(true);
+              setTimeout(() => {}, 2000);
             }
           }
         }
@@ -150,12 +141,49 @@ const Main = ({
   //   }
   // };
 
-  const openDeliveryTime = () => {
-    setisOpenresutlsClasses(true);
-    setTimeout(() => {
-      setisOpenvisibilityHiddenClasses(true);
-    }, 250);
-  };
+  // const [windowWidthtDimensions, setWindowWidthDimensions] = useState(
+  //   window.innerWidth
+  // );
+  // const [mod, setmod] = useState((window.innerWidth / 100 / 2).toFixed());
+
+  // useEffect(() => {
+  //   function handleWidthResize() {
+  //     setWindowWidthDimensions(window.innerWidth);
+  //     setmod((window.innerWidth / 100 / 2).toFixed());
+  //   }
+
+  //   window.addEventListener("resize", handleWidthResize);
+  // }, []);
+
+  // const www = e => {
+  //   console.log("sd");
+  // };
+
+  // const [widt, setHeight] = useState(0);
+  // const ref = useRef(null);
+
+  // useEffect(() => {
+  //   setHeight(ref.current.clientWidth);
+  // });
+  // const [arr, setarr] = useState([]);
+  // const fun = (e, w, k) => {
+  //   // if (arr[arr.length-1].k)
+  //   let a = arr;
+  //   if (arr.length > 0) {
+  //     if (
+  //       arr[arr.length - 1].k === "More than two days couriers" &&
+  //       k === "One day couriers"
+  //     ) {
+  //       console.log("object");
+  //       a = [];
+  //     }
+  //   }
+  //   console.log(a);
+  //   a.push({ e, w, k });
+  //   setarr(a);
+  //   console.log(arr);
+  //   // === "More than two days couriers"
+  // };
 
   return (
     <main className="main">
@@ -211,89 +239,9 @@ const Main = ({
       </div>
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
+        ${navListClasses}
       </span> */}
-      <div className={`main__results `}>
-        <ItemsCarousel
-          // Placeholder configurations
-          // enablePlaceholder
-          // numberOfPlaceholderItems={1}
-          // minimumPlaceholderTime={1000}
-          // placeholderItem={
-          //   <div style={{ height: 200, background: "#900" }}>Placeholder</div>
-          // }
-          // Carousel configurations
-          numberOfCards={1}
-          gutter={12}
-          showSlither={true}
-          firstAndLastGutter={false}
-          freeScrolling={false}
-          // Active item configurations
-          requestToChangeActive={changeActiveItem}
-          activeItemIndex={activeItemIndex}
-          activePosition={"left"}
-          chevronWidth={24}
-          rightChevron={<button>{">"}</button>}
-          leftChevron={<button>{"<"}</button>}
-          outsideChevron={true}
-        >
-          {Object.values(quotes).map((item, i) => {
-            let deliveryTime = "";
-            let key = i;
-
-            if (item[0]) {
-              deliveryTime = item[0].delivery_time;
-              key = item[0].delivery_time;
-            } //item is array quotes.one_day, quotes.two_days...
-            //example: (3) [{…}, {…}, {…}]
-            //item[0] is "one_day" or "two_days"...
-            //item[1] is array with data
-            return (
-              <div key={key} className={`main__results__details `}>
-                <div className="" onClick={openDeliveryTime}>
-                  {deliveryTime}({item.length})
-                </div>
-                <div
-                  className={`main__results__details__resutls ${visibilityHiddenClasses} ${resutlsClasses}`}
-                >
-                  <ItemsCarousel
-                    // Placeholder configurations
-                    // enablePlaceholder
-                    // numberOfPlaceholderItems={1}
-                    // minimumPlaceholderTime={1000}
-                    // placeholderItem={
-                    //   <div style={{ height: 200, background: "#900" }}>
-                    //     Placeholder
-                    //   </div>
-                    // }
-                    // Carousel configurations
-                    numberOfCards={3}
-                    gutter={12}
-                    showSlither={true}
-                    firstAndLastGutter={true}
-                    freeScrolling={false}
-                    // Active item configurations
-                    requestToChangeActive={changeActiveItem1}
-                    activeItemIndex={activeItemIndex1}
-                    activePosition={"center"}
-                    chevronWidth={24}
-                    rightChevron={<button>{">"}</button>}
-                    leftChevron={<button>{"<"}</button>}
-                    outsideChevron={true}
-                  >
-                    {item.map(result => {
-                      //result is object this.state.quotes.one_day[index], this.state.quotes.two_days[index]...
-                      //example: {id: 1, price: "20.11", courier: "DPD", data: Array(3)}.
-                      return (
-                        <SingleCourier key={result.courier} result={result} />
-                      );
-                    })}
-                  </ItemsCarousel>
-                </div>
-              </div>
-            );
-          })}
-        </ItemsCarousel>
-      </div>
+      {didReceivedNewData ? <Results quotes={quotes} /> : null}
     </main>
   );
 };

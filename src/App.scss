@@ -1,18 +1,18 @@
-//  @import "./styles/reset.scss";
-.parcel_mario {
-    .displayNone {
-        display: none;
-    }
-    .visibilityHidden {
-        visibility: hidden;
-    }
-    .unhide {
-        visibility: visible;
-    }
-    .displayGrid {
-        display: grid;
-    }
-    .displayBlock {
-        display: block;
-    }
-}
+ @import "./styles/reset.scss";
+ .parcel_mario {
+     .displayNone {
+         display: none;
+     }
+     .visibilityHidden {
+         visibility: hidden;
+     }
+     .unhide {
+         visibility: visible;
+     }
+     .displayGrid {
+         display: grid;
+     }
+     .displayBlock {
+         display: block;
+     }
+ }

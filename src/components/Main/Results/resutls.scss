@@ -1,0 +1,42 @@
+$bcgColor: rgb(100, 189, 219);
+@mixin eachCarousel() {
+    padding: 1rem 2.5rem;
+    background-color: white;
+    height: 100%;
+    text-align: center;
+    &:hover {
+        background-color: rgb(241, 241, 228);
+    }
+}
+
+.results {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: $bcgColor;
+    &__wrapper {
+        // background-color: $bcgColor;
+        display: grid;
+        grid-gap: 1rem;
+        grid-auto-columns: minmax(100%, 1fr);
+        // grid-auto-rows: repeat(3, 100%);
+        &__days {
+            @include eachCarousel();
+        }
+        &__couriers {
+            @include eachCarousel();
+        }
+        &__buttons {
+            @include eachCarousel();
+            // border: 1px solid black;
+            &__label {
+                // display: grid;
+            }
+            &__details {
+                //     height: 100%;
+                //     &__submenu {
+                //         height: 100%;
+                //     }
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+// courier_names: ["p2g", "p4d", "parcelmonkey"],
 const initialState = {
   data_from_all_couriers: [],
   courier_names: ["p2g", "p4d", "parcelmonkey"],
