@@ -72,9 +72,9 @@ const Days = props => {
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    if (width < 450) {
+    if (width < 650) {
       setNumberOfCards(1);
-    } else if (width >= 450 && width < 1050) {
+    } else if (width >= 650 && width < 1050) {
       setNumberOfCards(2);
     } else if (width >= 1050) {
       setNumberOfCards(3);
@@ -176,9 +176,9 @@ const Couriers = props => {
     window.addEventListener("resize", handleResize);
     if (width < 350) {
       setNumberOfCards(1);
-    } else if (width >= 350 && width < 700) {
+    } else if (width >= 350 && width < 600) {
       setNumberOfCards(2);
-    } else if (width >= 700 && width < 900) {
+    } else if (width >= 600 && width < 900) {
       setNumberOfCards(3);
     } else if (width >= 900) {
       setNumberOfCards(4);
@@ -242,9 +242,9 @@ const Buttons = props => {
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-    if (width < 550) {
+    if (width < 650) {
       setNumberOfCards(1);
-    } else if (width >= 550 && width < 1150) {
+    } else if (width >= 650 && width < 1150) {
       setNumberOfCards(2);
     } else if (width >= 1150) {
       setNumberOfCards(3);

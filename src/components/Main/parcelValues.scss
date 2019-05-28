@@ -1,11 +1,11 @@
 @import "../../styles/base/_colours.scss";
+@import "../../styles/base/_boxes.scss";
 $padding: 0.5rem;
 $gridGap: 0.6rem;
-$borderRadius: 5px;
 $fontSize: 1.3rem;
 // $boxBackgroundColor: #073045;
 @mixin buttonValues {
-    border-radius: $borderRadius*2;
+    border-radius: $borderRadius;
     background-color: $buttonColor;
     color: $boxBackgroundColor;
     font-weight: 500;

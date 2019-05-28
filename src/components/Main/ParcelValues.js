@@ -6,7 +6,7 @@ import InputForm from "./InputForm";
 import InputCountry from "./InputCountry";
 import "./parcelValues.scss";
 
-const ParcelValues = (props, parcel_weight) => {
+const ParcelValues = props => {
   const [isOpen, setisOpen] = useState(false);
   const navListClasses = cx("displayNone", {
     displayGrid: isOpen
