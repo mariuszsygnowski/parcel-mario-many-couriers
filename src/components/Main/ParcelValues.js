@@ -6,7 +6,7 @@ import InputForm from "./InputForm";
 import InputCountry from "./InputCountry";
 import "./parcelValues.scss";
 
-const ParcelValues = props => {
+const ParcelValues = (props, parcel_weight) => {
   const [isOpen, setisOpen] = useState(false);
   const navListClasses = cx("displayNone", {
     displayGrid: isOpen
@@ -62,6 +62,7 @@ const ParcelValues = props => {
     event.preventDefault();
     props.dataCourier();
   };
+
   return (
     <form className="parcelValues">
       <div className="parcelValues__countries">

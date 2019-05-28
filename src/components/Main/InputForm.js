@@ -6,6 +6,11 @@ const InputForm = props => {
   // });
   const [inputValue, setinputValue] = useState(props.val);
 
+  const handleChange = e => {
+    props.setValue(e);
+    setinputValue(e);
+  };
+
   useEffect(() => {
     if (props.labelName === "from" || props.labelName === "to") {
       setinputValue("");
@@ -18,7 +23,7 @@ const InputForm = props => {
       <input
         type={props.inputType}
         value={inputValue}
-        onChange={event => setinputValue(event.target.value)}
+        onChange={event => handleChange(event.target.value)}
         placeholder={props.placeholder}
       />
       <p>{props.units}</p>
