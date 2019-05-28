@@ -1,11 +1,21 @@
+@import "../../styles/base/_colours.scss";
 $padding: 0.5rem;
 $gridGap: 0.6rem;
 $borderRadius: 5px;
 $fontSize: 1.3rem;
+// $boxBackgroundColor: #073045;
+@mixin buttonValues {
+    border-radius: $borderRadius*2;
+    background-color: $buttonColor;
+    color: $boxBackgroundColor;
+    font-weight: 500;
+}
+
 .parcelValues {
     display: grid;
     grid-gap: $gridGap;
-    background-color: #00c3ff;
+    background-color: $boxBackgroundColor;
+    color: white;
     padding: $padding*2;
     border-radius: $borderRadius;
     &__countries {
@@ -90,24 +100,23 @@ $fontSize: 1.3rem;
             display: grid;
             text-align: center;
             align-items: center;
-            background-color: rgb(204, 204, 204);
+            background-color: rgb(129, 120, 120);
             padding: 0 0.5rem;
             font-size: 0.9rem;
         }
         &__button {
             justify-self: center;
             align-self: center;
-            height: min-content;
+            // min-height: 2.2rem;
             // width: min-content;
-            background-color: #03E205;
-            border-radius: $borderRadius*2;
             border: 0;
+            @include buttonValues
         }
         &__button:focus {
             outline: none !important;
         }
         &__button:hover {
-            background-color: #00ff88;
+            background-color: $buttonColorHover;
         }
         &__dimensions {
             display: grid;
@@ -121,14 +130,14 @@ $fontSize: 1.3rem;
     }
     &__button-quote {
         font-size: $fontSize;
-        background-color: #03E205;
         border: none;
-        border-radius: $borderRadius*2;
+        height: 2.2rem;
+        @include buttonValues
     }
     &__button-quote:focus {
         outline: none !important;
     }
     &__button-quote:hover {
-        background-color: #00ff88;
+        background-color: $buttonColorHover;
     }
 }

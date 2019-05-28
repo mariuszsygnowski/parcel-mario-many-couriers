@@ -1,7 +1,7 @@
 // courier_names: ["p2g", "p4d", "parcelmonkey"],
 const initialState = {
   data_from_all_couriers: [],
-  courier_names: ["p2g", "p4d", "parcelmonkey"],
+  courier_names: ["p2g"],
   how_many_responses: 0,
   quotes: {
     one_day: [],

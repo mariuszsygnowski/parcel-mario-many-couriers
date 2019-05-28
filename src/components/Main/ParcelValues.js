@@ -14,7 +14,7 @@ const ParcelValues = props => {
   const changeClassNames = event => {
     event.preventDefault();
     if (isOpen === true) {
-      event.target.innerHTML = "Is your parcel longer than 1m?";
+      event.target.innerHTML = "LONGER THAN 1M?";
     } else {
       event.target.innerHTML = "Click here to close";
     }
@@ -107,7 +107,7 @@ const ParcelValues = props => {
           onClick={changeClassNames}
           className="parcelValues__values__button"
         >
-          Is your parcel longer than 1m?
+          LONGER THAN 1M?
         </button>
         <div className="parcelValues__values__dimensions">
           {dimensionsArray.map(item => {

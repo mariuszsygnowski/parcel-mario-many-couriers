@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, createRef, Fragment } from "react";
 import cx from "classnames";
 import "./resutls.scss";
 import arrow from "../../../images/arrow-right.svg";
 import ItemsCarousel from "react-items-carousel";
 import { SingleCourier } from "../SingleCourier";
 import ServiceName from "../ServiceName";
+import importedStyles from "../../../styles/base/_colours.scss";
 
 const Results = props => {
   const [
@@ -45,30 +46,60 @@ export default Results;
 
 const Days = props => {
   const [activeItemIndex, setactiveItemIndex] = useState(0);
+  const getElements = i => {
+    const allElementsDays = document.getElementsByClassName(
+      "results__wrapper__days"
+    );
+    for (let index = 0; index < allElementsDays.length; index++) {
+      if (index === i) {
+        allElementsDays[i].style.backgroundColor = importedStyles.buttonColor;
+      } else {
+        allElementsDays[index].style.backgroundColor = "";
+      }
+    }
+  };
   const changeActiveItem = activeItemIndex => {
     setactiveItemIndex(activeItemIndex);
     props.responseFromAllDays(Object.values(props.quotes)[activeItemIndex]);
+    getElements(activeItemIndex);
   };
 
-  const handleClick = e => {
-    changeActiveItem(e);
-    setisOpen(true);
+  const handleClick = i => {
+    getElements(i);
+    changeActiveItem(i);
+  };
+  const [numberOfCards, setNumberOfCards] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    if (width < 450) {
+      setNumberOfCards(1);
+    } else if (width >= 450 && width < 850) {
+      setNumberOfCards(2);
+    } else if (width >= 850) {
+      setNumberOfCards(3);
+    }
+  }, [width]);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
   };
 
   useEffect(() => {
     props.responseFromAllDays(Object.values(props.quotes)[0]);
     setactiveItemIndex(0);
+    const allElementsDays = document.getElementsByClassName(
+      "results__wrapper__days"
+    );
+    allElementsDays[0].style.backgroundColor = importedStyles.buttonColor;
+    // allElementsDaysHover[0].style.backgroundColor =
+    //   importedStyles.buttonColorHover;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.quotes]);
 
-  const [isOpen, setisOpen] = useState(false);
-
-  const navListClasses = cx("bgc-none", {
-    "bgc-red": isOpen
-  });
   return (
     <ItemsCarousel
-      numberOfCards={1}
+      numberOfCards={numberOfCards}
       gutter={2}
       showSlither={false}
       firstAndLastGutter={false}
@@ -98,7 +129,7 @@ const Days = props => {
         return (
           <div
             key={key}
-            className={`results__wrapper__days ${navListClasses}`}
+            className={`results__wrapper__days`}
             onClick={() => handleClick(i)}
           >
             <div className={`results__wrapper__days__title `}>
@@ -113,22 +144,65 @@ const Days = props => {
 
 const Couriers = props => {
   const [activeItemIndex, setactiveItemIndex] = useState(0);
+  const getElements = i => {
+    const allElementsCouriers = document.getElementsByClassName(
+      "results__wrapper__couriers"
+    );
+    for (let index = 0; index < allElementsCouriers.length; index++) {
+      if (index === i) {
+        allElementsCouriers[i].style.backgroundColor =
+          importedStyles.buttonColor;
+      } else {
+        allElementsCouriers[index].style.backgroundColor = "";
+      }
+    }
+  };
   const changeActiveItem = activeItemIndex => {
     setactiveItemIndex(activeItemIndex);
     props.responseFromAllCouriers(
       props.dataFromCurrentSelectedDeliveryTime[activeItemIndex]
     );
+    getElements(activeItemIndex);
+  };
+
+  const handleClick = i => {
+    getElements(i);
+    changeActiveItem(i);
+  };
+
+  const [numberOfCards, setNumberOfCards] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    if (width < 350) {
+      setNumberOfCards(1);
+    } else if (width >= 350 && width < 600) {
+      setNumberOfCards(2);
+    } else if (width >= 600 && width < 900) {
+      setNumberOfCards(3);
+    } else if (width >= 900) {
+      setNumberOfCards(4);
+    }
+  }, [width]);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
   };
 
   useEffect(() => {
     props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[0]);
     setactiveItemIndex(0);
+    const allElementsCouriers = document.getElementsByClassName(
+      "results__wrapper__couriers"
+    );
+    allElementsCouriers[0].style.backgroundColor = importedStyles.buttonColor;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataFromCurrentSelectedDeliveryTime]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <ItemsCarousel
-      numberOfCards={1}
+      numberOfCards={numberOfCards}
       gutter={2}
       showSlither={false}
       firstAndLastGutter={false}
@@ -151,7 +225,7 @@ const Couriers = props => {
             className={`results__wrapper__couriers`}
             key={result.courier}
             result={result}
-            click={() => changeActiveItem(i)}
+            click={() => handleClick(i)}
           />
         );
       })}
@@ -164,12 +238,28 @@ const Buttons = props => {
   const changeActiveItem = activeItemIndex => {
     setactiveItemIndex(activeItemIndex);
   };
+  const [numberOfCards, setNumberOfCards] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    if (width < 550) {
+      setNumberOfCards(1);
+    } else if (width >= 550 && width < 1150) {
+      setNumberOfCards(2);
+    } else if (width >= 1150) {
+      setNumberOfCards(3);
+    }
+  }, [width]);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
   useEffect(() => {
     setactiveItemIndex(0);
   }, [props]);
   return (
     <ItemsCarousel
-      numberOfCards={1}
+      numberOfCards={numberOfCards}
       gutter={2}
       showSlither={false}
       firstAndLastGutter={false}
