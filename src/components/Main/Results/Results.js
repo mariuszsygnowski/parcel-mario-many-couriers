@@ -87,7 +87,7 @@ const Days = props => {
 
   useEffect(() => {
     props.responseFromAllDays(Object.values(props.quotes)[0]);
-    setactiveItemIndex(0);
+    changeActiveItem(0);
     const allElementsDays = document.getElementsByClassName(
       "results__wrapper__days"
     );
@@ -150,7 +150,7 @@ const Couriers = props => {
     );
     for (let index = 0; index < allElementsCouriers.length; index++) {
       if (index === i) {
-        allElementsCouriers[i].style.backgroundColor =
+        allElementsCouriers[index].style.backgroundColor =
           importedStyles.buttonColor;
       } else {
         allElementsCouriers[index].style.backgroundColor = "";
@@ -166,8 +166,8 @@ const Couriers = props => {
   };
 
   const handleClick = i => {
-    getElements(i);
     changeActiveItem(i);
+    getElements(i);
   };
 
   const [numberOfCards, setNumberOfCards] = useState(0);
@@ -191,7 +191,7 @@ const Couriers = props => {
 
   useEffect(() => {
     props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[0]);
-    setactiveItemIndex(0);
+    changeActiveItem(0);
     const allElementsCouriers = document.getElementsByClassName(
       "results__wrapper__couriers"
     );
