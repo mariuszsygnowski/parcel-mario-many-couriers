@@ -1,63 +1,30 @@
-// @import '../../styles/modal.scss'
+// @import '../../styles/modal.css';
 .main {
     padding: 0 0.5rem;
-    &__results {
-        padding: 0 1.5rem;
-        // .slick-next:before,
-        // .slick-prev:before {
-        border: 1px solid black;
-        // }
-        width: auto;
-        &__details {
-            border: 1px solid black;
-            padding: 0 3.5rem;
-            // width: 20rem;
-            &__results {
-                padding: 0 2.5rem;
-                width: 30rem;
-            }
-            &__title {
-                display: grid;
-                // width: max-content;
-            }
+    &__modal {
+        &__title {
+            font-size: 2.5rem;
         }
-        // display: grid;
-        // grid-gap: 1rem;
-        // padding-top: 1rem;
-        // &__each-day {
-        //     // padding: 0.5rem;
-        //     // border: 1px solid lightgray;
-        //     &__summary {
-        //         // background-color: rgb(33, 241, 33);
-        //         // font-weight: 900;
-        //         // font-size: 1.5rem;
-        //         // text-align: center;
-        //         // &:hover {
-        //         //     cursor: pointer;
-        //         // }
-        //         // &:focus {
-        //         //     border: 0;
-        //         //     outline: none;
-        //         // }
-        //     }
-        // }
+        &__progressBar {
+            font-size: 1.5rem;
+        }
     }
 }
 
 @media (min-width: 400px) {
     html {
-        font-size: 11px;
+        font-size: 12px;
     }
 }
 
 @media (min-width: 500px) {
     html {
-        font-size: 12px;
+        font-size: 13px;
     }
 }
 
 @media (min-width: 600px) {
     html {
-        font-size: 13px;
+        font-size: 14px;
     }
 }

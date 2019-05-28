@@ -24,7 +24,6 @@ const Main = ({
   initial_state_main,
   box_values
 }) => {
-  // const [quotesMain, setquotesMain] = useState(quotes);
   const [uniqueApiKey, setuniqueApiKey] = useState();
   const [didReceivedNewData, setdidReceivedNewData] = useState(false);
 
@@ -188,7 +187,9 @@ const Main = ({
     <main className="main">
       <Modal show={modal}>
         <Modal.Header>
-          <Modal.Title>Searching...</Modal.Title>
+          <Modal.Title className={"main__modal__title"}>
+            Searching...
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ProgressBar
@@ -197,7 +198,9 @@ const Main = ({
             max={courier_names.length}
             now={how_many_responses}
           />
-          Received responses: {how_many_responses}/{courier_names.length}
+          <p className={"main__modal__progressBar"}>
+            Received responses: {how_many_responses}/{courier_names.length}
+          </p>
         </Modal.Body>
       </Modal>
       <WelcomeScreenContainer />
