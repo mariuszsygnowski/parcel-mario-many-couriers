@@ -74,9 +74,9 @@ const Days = props => {
     window.addEventListener("resize", handleResize);
     if (width < 450) {
       setNumberOfCards(1);
-    } else if (width >= 450 && width < 850) {
+    } else if (width >= 450 && width < 1050) {
       setNumberOfCards(2);
-    } else if (width >= 850) {
+    } else if (width >= 1050) {
       setNumberOfCards(3);
     }
   }, [width]);
@@ -176,9 +176,9 @@ const Couriers = props => {
     window.addEventListener("resize", handleResize);
     if (width < 350) {
       setNumberOfCards(1);
-    } else if (width >= 350 && width < 600) {
+    } else if (width >= 350 && width < 700) {
       setNumberOfCards(2);
-    } else if (width >= 600 && width < 900) {
+    } else if (width >= 700 && width < 900) {
       setNumberOfCards(3);
     } else if (width >= 900) {
       setNumberOfCards(4);
