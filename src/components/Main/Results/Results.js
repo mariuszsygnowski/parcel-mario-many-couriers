@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createRef, Fragment } from "react";
+import React, { useState, useEffect, useRef, createRef } from "react";
 import cx from "classnames";
 import "./resutls.scss";
 import arrow from "../../../images/arrow-right.svg";
