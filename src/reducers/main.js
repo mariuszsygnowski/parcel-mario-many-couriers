@@ -14,6 +14,7 @@ const initialState = {
 function main(state = initialState, action) {
   switch (action.type) {
     case "ADD_DATA_FROM_SINGLE_COURIER":
+      // console.log(action.courier);
       let courier_arr = [];
       if (action.courier_arr.length === 0) {
         courier_arr = [{ company_name: "no results" }];

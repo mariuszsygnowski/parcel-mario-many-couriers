@@ -132,12 +132,12 @@ const Main = ({
     }
   };
 
-  // const sortByValue = async sort_by => {
-  //   const respond = await SortingBy(sort_by, quotes);
-  //   if (respond) {
-  //     setNewQuotes(respond);
-  //   }
-  // };
+  const sortByValue = async sort_by => {
+    const respond = await SortingBy(sort_by, quotes);
+    if (respond) {
+      setNewQuotes(respond);
+    }
+  };
 
   // const [windowWidthtDimensions, setWindowWidthDimensions] = useState(
   //   window.innerWidth
@@ -207,43 +207,16 @@ const Main = ({
 
       <ParcelValuesContainer dataCourier={dataCourier} />
       {/* <div className="main__buttons">
-        <Button variant="outline-success" block onClick={dataCourier}>
-          search Button
-        </Button>
-        <Button
-          variant="outline-success"
-          block
-          onClick={() => sortByValue("min_price_in_courier")}
-        >
-          sort by price low to high
-        </Button>
-        <Button
-          variant="outline-success"
-          block
-          onClick={() => sortByValue("-min_price_in_courier")}
-        >
-          sort by price high to low
-        </Button>
-        <Button
-          variant="outline-success"
-          block
-          onClick={() => sortByValue("courier")}
-        >
-          sort by name a-z
-        </Button>
-        <Button
-          variant="outline-success"
-          block
-          onClick={() => sortByValue("-courier")}
-        >
-          sort by name z-a
-        </Button>
+       
+     
       </div>
       <span className="main__responses">
         Received responses {how_many_responses}/{courier_names.length}
         ${navListClasses}
       </span> */}
-      {didReceivedNewData ? <Results quotes={quotes} /> : null}
+      {didReceivedNewData ? (
+        <Results quotes={quotes} sortByValue={sortByValue} />
+      ) : null}
     </main>
   );
 };

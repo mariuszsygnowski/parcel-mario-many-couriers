@@ -9,6 +9,7 @@ export function fetch_single_courier(url, box_values) {
     })
       .then(data => data.json())
       .then(courier_arr => {
+        console.log(courier_arr);
         dispatch({
           type: "ADD_DATA_FROM_SINGLE_COURIER",
           courier_arr
