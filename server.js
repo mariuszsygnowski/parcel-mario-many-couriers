@@ -277,6 +277,7 @@ app.post("/api/parcelmonkey", (req, res) => {
   })
     .then(response => response.json())
     .then(body => {
+      // res.json(body);
       if (body) {
         let outputArray = [];
         body.forEach(item => {

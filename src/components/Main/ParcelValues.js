@@ -13,7 +13,7 @@ const ParcelValues = props => {
   });
   const changeClassNames = event => {
     event.preventDefault();
-    if (isOpen === true) {
+    if (isOpen) {
       event.target.innerHTML = "LONGER THAN 1M?";
     } else {
       event.target.innerHTML = "Click here to close";
