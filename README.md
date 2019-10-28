@@ -21,8 +21,8 @@ When I was running my company, I sent parcels to various countries around the wo
 
 ## What technologies it uses?
 
-- (will have) HTML5 - BEM class names
-- (will have) CSS3 (SCSS)
+- HTML5 - BEM class names
+- CSS3 (SCSS)
 - Java Script
 - React - use as much as is possible only Vanilla Java Script
 - Node

@@ -1,6 +1,7 @@
 @import "../../../styles/base/_colours.scss";
 @import "../../../styles/base/_boxes.scss";
 $font-size: 1.2rem;
+$results-grid-gap: 1rem;
 @mixin eachCarousel() {
     padding: 1rem 2.5rem;
     background-color: white;
@@ -17,32 +18,43 @@ $font-size: 1.2rem;
     border-radius: $borderRadius;
     &__wrapper {
         display: grid;
-        grid-gap: 1rem;
+        grid-gap: $results-grid-gap;
         grid-auto-columns: minmax(100%, 1fr);
         &__sortingButtons {
             &__title {
                 background-color: white;
+                p {
+                    transform: scale(1.2, 1.2);
+                    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                }
             }
             &__buttons {
+                display: grid;
+                grid-template-columns: repeat(4, auto);
+                flex-direction: column;
+                grid-gap: 3rem;
+                padding-top: $results-grid-gap;
                 &__button {
                     // @include eachCarousel();
+                    justify-self: center;
                     background-color: #96D9FF;
-                    margin-bottom: 20px;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    border: 10px solid #0065A6;
+                    // width: 50px;
+                    // height: 50px;
+                    // border-radius: 50%;
+                    // border: 10px solid #0065A6;
                     outline: none;
                     transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
                     font-size: $font-size - 0.2rem;
                     // padding: 0.2rem 0;
-                    margin-top: 0.5rem;
+                    &:hover {
+                        background-color: $buttonColorHover;
+                        // transform: scale(1.2, 1.2);
+                        transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                    }
                 }
-            }
-            &:hover {
-                // background-color: $buttonColorHover !important;
-                transform: scale(1.2, 1.2);
-                transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                &__title {
+                    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                }
             }
         }
         &__days {
