@@ -9,6 +9,10 @@ $font-size: 1.2rem;
     border-radius: $borderRadius;
 }
 
+.buttonColor {
+    background-color: $buttonColor;
+}
+
 .results {
     margin-top: 1rem;
     margin-bottom: 10rem;
@@ -21,28 +25,40 @@ $font-size: 1.2rem;
         grid-auto-columns: minmax(100%, 1fr);
         &__sortingButtons {
             &__title {
-                background-color: white;
+                border-radius: $borderRadius;
+                background-color: $buttonColor;
+                color: $boxBackgroundColor;
+                font-weight: 500;
+                width: max-content;
             }
             &__buttons {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                justify-items: center;
+                align-items: center;
+
                 &__button {
-                    // @include eachCarousel();
-                    background-color: #96D9FF;
-                    margin-bottom: 20px;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    border: 10px solid #0065A6;
-                    outline: none;
-                    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
-                    font-size: $font-size - 0.2rem;
+                    @include eachCarousel();
+                    width: 90%;
+                    padding: 0.5rem;
+                    // white-space: initial;
+                    // background-color: #96D9FF;
+                    // // margin-bottom: 20px;
+                    // width: 150px;
+                    // height: 150px;
+                    // border-radius: 50%;
+                    // border: 10px solid #0065A6;
+                    // outline: none;
+                    // transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                    // font-size: $font-size - 0.2rem;
                     // padding: 0.2rem 0;
-                    margin-top: 0.5rem;
+                    // margin-top: 0.5rem;
+                    &:hover {
+                        background-color: $buttonColorHover !important;
+                        transform: scale(1.2, 1.2);
+                        transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                    }
                 }
-            }
-            &:hover {
-                // background-color: $buttonColorHover !important;
-                transform: scale(1.2, 1.2);
-                transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
             }
         }
         &__days {
@@ -82,12 +98,6 @@ $font-size: 1.2rem;
                 align-content: center;
                 justify-content: center;
                 grid-gap: 0.2rem;
-                button {
-                    // border-radius: 15px;
-                    // height: auto;
-                    // width: auto;
-                    // font-size: 1rem;
-                }
             }
         }
     }

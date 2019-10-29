@@ -1,3 +1,4 @@
+create database p2g
 CREATE TABLE results (
     id serial PRIMARY KEY,
     unique_search_id NUMERIC NOT NULL,

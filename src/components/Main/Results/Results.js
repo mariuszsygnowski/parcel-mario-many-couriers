@@ -108,50 +108,29 @@ const SortingButtons = props => {
       description: "sort by name z-a"
     }
   ];
-  const [isOpen, setisOpen] = useState(false);
-  const navListClasses = cx("displayNone", {
-    displayGrid: isOpen
-  });
-  const onMOver = event => {
-    setisOpen(true);
-    console.log(event.target);
-    event.target.innerHTML = "Click here to close";
-  };
-  const onMOut = event => {
-    setisOpen(false);
-    event.target.innerHTML = "Click here to open";
-  };
-  const handleClick = event => {
-    event.stopPropagation();
 
-    if (isOpen) {
-      event.target.innerHTML = "Click here to open";
-    } else {
-      event.target.innerHTML = "Click here to close";
-    }
-    setisOpen(!isOpen);
-  };
+  useEffect(() => {
+    getElementsButtons(0)
+  }, []);
+
   return (
     <div
       className={`results__wrapper__sortingButtons`}
       // onMouseOver={event => onMOver(event)}
       // onMouseOut={event => onMOut(event)}
     >
-      <p
-        onClick={event => handleClick(event)}
-        className={`results__wrapper__sortingButtons__title`}
-      >
-        Click here to open
-      </p>
       <div
-        className={`results__wrapper__sortingButtons__buttons ${navListClasses}`}
+        className={`results__wrapper__sortingButtons__buttons displayGrid`}
       >
-        {buttonsValuesArray.map(item => {
+        {buttonsValuesArray.map((item, i) => {
           return (
             <div
               className={`results__wrapper__sortingButtons__buttons__button`}
               key={item.textSortBy}
-              onClick={() => props.sortByValue(item.textSortBy)}
+              onClick={() => {
+                props.sortByValue(item.textSortBy)
+                getElementsButtons(i)
+              }}
             >
               {item.description}
             </div>
@@ -161,6 +140,19 @@ const SortingButtons = props => {
     </div>
   );
 };
+
+const getElementsButtons = (i) => {
+  const allElementsButtons = document.getElementsByClassName(
+    "results__wrapper__sortingButtons__buttons__button"
+    );
+    for (let index = 0; index < allElementsButtons.length; index++) {
+      if (index === i) {
+        allElementsButtons[i].style.backgroundColor = importedStyles.buttonColor;
+      } else {
+        allElementsButtons[index].style.backgroundColor = "";
+      }
+    }
+}
 
 const Days = props => {
   const [activeItemIndex, setactiveItemIndex] = useState(0);
