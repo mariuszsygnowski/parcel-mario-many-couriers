@@ -15,27 +15,27 @@
         "cheerio": "^1.0.0-rc.3",
         "classnames": "^2.2.6",
         "dotenv": "^7.0.0",
-        "express": "^4.16.4",
+        "express": "^4.17.1",
         "jquery": "^3.4.0",
         "node-fetch": "^2.3.0",
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.13.0",
         "path": "^0.12.7",
-        "pg-promise": "^8.6.4",
-        "react": "^16.8.6",
-        "react-bootstrap": "^1.0.0-beta.8",
-        "react-dom": "^16.8.6",
-        "react-items-carousel": "^2.3.6",
-        "react-redux": "^7.0.2",
-        "react-responsive-carousel": "^3.1.49",
+        "pg-promise": "^8.7.5",
+        "react": "^16.11.0",
+        "react-bootstrap": "^1.0.0-beta.14",
+        "react-dom": "^16.11.0",
+        "react-items-carousel": "^2.8.0",
+        "react-redux": "^7.1.1",
+        "react-responsive-carousel": "^3.1.51",
         "react-scripts": "3.0.0",
         "react-slick": "^0.24.0",
-        "react-table": "^6.10.0",
-        "reactstrap": "^8.0.0",
-        "redux": "^4.0.1",
+        "react-table": "^6.10.3",
+        "reactstrap": "^8.1.1",
+        "redux": "^4.0.4",
         "redux-thunk": "^2.3.0",
         "slick-carousel": "^1.8.1",
-        "superagent": "^5.0.2",
-        "typescript": "^3.4.5"
+        "superagent": "^5.1.0",
+        "typescript": "^3.6.4"
     },
     "engines": {
         "node": "10.15.2",
@@ -54,6 +54,7 @@
         "not op_mini all"
     ],
     "devDependencies": {
-        "concurrently": "^4.1.0"
+        "concurrently": "^4.1.2",
+        "nodemon": "^1.19.4"
     }
 }
