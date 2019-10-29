@@ -41,22 +41,11 @@ $font-size: 1.2rem;
                     @include eachCarousel();
                     width: 90%;
                     padding: 0.5rem;
-                    // white-space: initial;
-                    // background-color: #96D9FF;
-                    // // margin-bottom: 20px;
-                    // width: 150px;
-                    // height: 150px;
-                    // border-radius: 50%;
-                    // border: 10px solid #0065A6;
-                    // outline: none;
-                    // transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
-                    // font-size: $font-size - 0.2rem;
-                    // padding: 0.2rem 0;
-                    // margin-top: 0.5rem;
+
                     &:hover {
                         background-color: $buttonColorHover !important;
-                        transform: scale(1.2, 1.2);
-                        transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                        // transform: scale(1.2, 1.2);
+                        // transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
                     }
                 }
             }
