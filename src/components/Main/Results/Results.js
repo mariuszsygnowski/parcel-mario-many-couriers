@@ -93,21 +93,37 @@ const SortingButtons = props => {
   const buttonsValuesArray = [
     {
       textSortBy: "min_price_in_courier",
-      description: "sort by price low to high"
+      description: "price low to high"
     },
     {
       textSortBy: "-min_price_in_courier",
-      description: "sort by price high to low"
+      description: "price high to low"
     },
     {
       textSortBy: "courier",
-      description: "sort by name a-z"
+      description: "name a-z"
     },
     {
       textSortBy: "-courier",
-      description: "sort by name z-a"
+      description: "name z-a"
     }
   ];
+  const [isOpen, setisOpen] = useState(false);
+
+  const navListClasses = cx("displayNone", {
+    displayGrid: isOpen
+  });
+
+  const handleClick = event => {
+    event.stopPropagation();
+
+    if (isOpen) {
+      event.target.innerHTML = "Sort by...";
+    } else {
+      event.target.innerHTML = "Sort by... (click to close)";
+    }
+    setisOpen(!isOpen);
+  };
 
   useEffect(() => {
     getElementsButtons(0)
@@ -119,8 +135,17 @@ const SortingButtons = props => {
       // onMouseOver={event => onMOver(event)}
       // onMouseOut={event => onMOut(event)}
     >
+      <div className={`results__wrapper__sortingButtons__title`}>
+
+      <button
+        onClick={event => handleClick(event)}
+        className={`results__wrapper__sortingButtons__title__button`}
+      >
+        Sort by...
+      </button>
+      </div>
       <div
-        className={`results__wrapper__sortingButtons__buttons displayGrid`}
+        className={`results__wrapper__sortingButtons__buttons ${navListClasses}`}
       >
         {buttonsValuesArray.map((item, i) => {
           return (

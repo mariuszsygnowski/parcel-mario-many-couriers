@@ -24,12 +24,29 @@ $font-size: 1.2rem;
         grid-gap: 1rem;
         grid-auto-columns: minmax(100%, 1fr);
         &__sortingButtons {
+            display: grid;
+            grid-gap: 1rem;
             &__title {
-                border-radius: $borderRadius;
-                background-color: $buttonColor;
-                color: $boxBackgroundColor;
-                font-weight: 500;
-                width: max-content;
+                display: grid;
+                justify-content: right;
+                // font-weight: 500;
+
+                &__button {
+                    border-radius: $borderRadius;
+                    background-color: $buttonColor;
+                    color: $boxBackgroundColor;
+                    font-weight: 500;
+                    border: 0;
+                    width: max-content;
+                    &:focus {
+                        outline: none;
+                    }
+                    &:hover {
+                        background-color: $buttonColorHover !important;
+                        // transform: scale(1.2, 1.2);
+                        // transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+                    }
+                }
             }
             &__buttons {
                 display: grid;
