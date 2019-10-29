@@ -307,7 +307,7 @@ const Couriers = props => {
     );
     allElementsCouriers[0].style.backgroundColor = importedStyles.buttonColor;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.dataFromCurrentSelectedDeliveryTime]);
+  }, [props]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
