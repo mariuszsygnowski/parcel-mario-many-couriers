@@ -29,6 +29,7 @@
         "react-responsive-carousel": "^3.1.49",
         "react-scripts": "3.0.0",
         "react-slick": "^0.24.0",
+        "react-table": "^6.10.0",
         "reactstrap": "^8.0.0",
         "redux": "^4.0.1",
         "redux-thunk": "^2.3.0",
@@ -53,7 +54,6 @@
         "not op_mini all"
     ],
     "devDependencies": {
-        "concurrently": "^4.1.0",
-        "nodemon": "^1.19.4"
+        "concurrently": "^4.1.0"
     }
 }
