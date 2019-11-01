@@ -47,6 +47,8 @@ export const Days = props => {
     getElements(i);
     changeActiveItem(i);
     props.setNewSortingOrDays();
+    const allElementsDays = document.getElementsByClassName('results__wrapper__days');
+    allElementsDays[i].style.backgroundColor = importedStyles.buttonColor;
   };
 
   useEffect(() => {
