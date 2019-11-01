@@ -3,29 +3,13 @@ import arrow from '../../../images/arrow-right.svg';
 import ItemsCarousel from 'react-items-carousel';
 import {SingleCourier} from '../SingleCourier';
 import importedStyles from '../../../styles/base/_colours.scss';
+
 export const Couriers = props => {
-  const [activeItemIndex, setactiveItemIndex] = useState(0);
-  const getElements = i => {
-    const allElementsCouriers = document.getElementsByClassName('results__wrapper__couriers');
-    for (let index = 0; index < allElementsCouriers.length; index++) {
-      if (index === i) {
-        allElementsCouriers[index].style.backgroundColor = importedStyles.buttonColor;
-      } else {
-        allElementsCouriers[index].style.backgroundColor = '';
-      }
-    }
-  };
-  const changeActiveItem = activeItemIndex => {
-    setactiveItemIndex(activeItemIndex);
-    props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[activeItemIndex]);
-    getElements(activeItemIndex);
-  };
-  const handleClick = i => {
-    changeActiveItem(i);
-    getElements(i);
-  };
   const [numberOfCards, setNumberOfCards] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [newSelection, setNewSelection] = useState(false);
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     if (width < 350) {
@@ -37,17 +21,56 @@ export const Couriers = props => {
     } else if (width >= 900) {
       setNumberOfCards(4);
     }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [width]);
+
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
-  useEffect(() => {
-    props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[0]);
-    changeActiveItem(0);
+
+  const getElements = i => {
     const allElementsCouriers = document.getElementsByClassName('results__wrapper__couriers');
-    allElementsCouriers[0].style.backgroundColor = importedStyles.buttonColor;
+    for (let index = 0; index < allElementsCouriers.length; index++) {
+      if (index === i) {
+        allElementsCouriers[index].style.backgroundColor = importedStyles.buttonColor;
+      } else {
+        allElementsCouriers[index].style.backgroundColor = '';
+      }
+    }
+  };
+
+  const changeActiveItem = activeItemIndex => {
+    setActiveItemIndex(activeItemIndex);
+    props.responseFromAllCouriers(props.dataFromCurrentSelectedDeliveryTime[activeItemIndex]);
+    getElements(activeItemIndex);
+  };
+
+  useEffect(() => {
+    setNewSelection(prev => {
+      //for every new props I checking if props.isNewSorting is changed
+      //if user make a new selection (new sorting or selected new day)
+      //then first element will be selected
+      if (prev === props.isNewSorting) {
+        changeActiveItem(activeItemIndex);
+        const allElementsCouriers = document.getElementsByClassName('results__wrapper__couriers');
+        allElementsCouriers[activeItemIndex].style.backgroundColor = importedStyles.buttonColor;
+      } else {
+        changeActiveItem(0);
+        const allElementsCouriers = document.getElementsByClassName('results__wrapper__couriers');
+        allElementsCouriers[0].style.backgroundColor = importedStyles.buttonColor;
+      }
+      return props.isNewSorting;
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.dataFromCurrentSelectedDeliveryTime]);
+  }, [props]);
+
+  const handleClick = i => {
+    changeActiveItem(i);
+    getElements(i);
+  };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return (

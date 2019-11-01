@@ -2,13 +2,12 @@ import React, {useState, useEffect} from 'react';
 import arrow from '../../../images/arrow-right.svg';
 import ItemsCarousel from 'react-items-carousel';
 import ServiceName from '../ServiceName';
+
 export const Buttons = props => {
-  const [activeItemIndex, setactiveItemIndex] = useState(0);
-  const changeActiveItem = activeItemIndex => {
-    setactiveItemIndex(activeItemIndex);
-  };
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [numberOfCards, setNumberOfCards] = useState(0);
   const [width, setWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     if (width < 650) {
@@ -18,13 +17,22 @@ export const Buttons = props => {
     } else if (width >= 1150) {
       setNumberOfCards(3);
     }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [width]);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
+
+  const changeActiveItem = activeItemIndex => {
+    setActiveItemIndex(activeItemIndex);
+  };
+
   useEffect(() => {
-    setactiveItemIndex(0);
+    setActiveItemIndex(0);
   }, [props]);
+
   return (
     <ItemsCarousel
       numberOfCards={numberOfCards}

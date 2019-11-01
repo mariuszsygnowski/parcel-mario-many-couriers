@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import './resutls.scss';
-import importedStyles from '../../../styles/base/_colours.scss';
+import React, {useState, useEffect} from 'react';
+import './results.scss';
 import {SortingButtons} from './SortingButtons';
 import {Days} from './Days';
 import {Couriers} from './Couriers';
@@ -9,6 +8,7 @@ import {Buttons} from './Buttons';
 const Results = props => {
   const [dataFromCurrentSelectedDeliveryTime, setDataFromCurrentSelectedDeliveryTime] = useState([]);
   const [dataFromAllCouriers, setDataFromAllCouriers] = useState([]);
+  const [isNewSorting, setIsNewSorting] = useState(false);
 
   const responseFromAllDays = receivedData => {
     setDataFromCurrentSelectedDeliveryTime(receivedData);
@@ -17,21 +17,26 @@ const Results = props => {
     setDataFromAllCouriers(receivedData.data);
   };
 
-  const setNewData = () => {
-    setDataFromCurrentSelectedDeliveryTime([]);
+  const setNewSortingOrDays = () => {
+    setIsNewSorting(!isNewSorting);
   };
 
   return (
     <div className={`results`}>
       <div className={`results__wrapper`}>
-        <SortingButtons sortByValue={props.sortByValue} setNewData={setNewData} />
+        <SortingButtons sortByValue={props.sortByValue} setNewSortingOrDays={setNewSortingOrDays} />
 
-        <Days quotes={props.quotes} responseFromAllDays={responseFromAllDays} />
+        <Days
+          quotes={props.quotes}
+          responseFromAllDays={responseFromAllDays}
+          setNewSortingOrDays={setNewSortingOrDays}
+        />
 
         {dataFromCurrentSelectedDeliveryTime.length > 0 ? (
           <Couriers
             dataFromCurrentSelectedDeliveryTime={dataFromCurrentSelectedDeliveryTime}
             responseFromAllCouriers={responseFromAllCouriers}
+            isNewSorting={isNewSorting}
           />
         ) : null}
         {dataFromAllCouriers.length > 0 ? <Buttons dataFromAllCouriers={dataFromAllCouriers} /> : null}
@@ -41,14 +46,3 @@ const Results = props => {
 };
 
 export default Results;
-
-export const getElementsButtons = i => {
-  const allElementsButtons = document.getElementsByClassName('results__wrapper__sortingButtons__buttons__button');
-  for (let index = 0; index < allElementsButtons.length; index++) {
-    if (index === i) {
-      allElementsButtons[i].style.backgroundColor = importedStyles.buttonColor;
-    } else {
-      allElementsButtons[index].style.backgroundColor = '';
-    }
-  }
-};

@@ -14,6 +14,16 @@ Live preview: https://parcel-mario-many-couriers.herokuapp.com/
 - Run `npm install` after cloning to download all dependencies
 - Use `npm start` to build application and run server
 - Run postgress server with data from database.sql
+- create in main folder file .env. In that file set:
+    - LOCAL_SERVER_PORT=3001
+    - DB_NAME=p2g
+    - DB_USERNAME=yourusername
+    - DB_PASSWORD=yourpassowrd
+    - DB_HOST=localhost
+    - PARCELMONKEY_APIVERSION=3.3
+    - free registration on parcelmonkey.co.uk to get userId and token 
+    - PARCELMONKEY_USERID=userid_form_website_parcelmonkey
+    - PARCELMONKEY_TOKEN=token_form_website_parcelmonkey
 
 ## Inspiration
 
@@ -21,10 +31,11 @@ When I was running my company, I sent parcels to various countries around the wo
 
 ## What technologies it uses?
 
-- (will have) HTML5 - BEM class names
-- (will have) CSS3 (SCSS)
-- Java Script
-- React - use as much as is possible only Vanilla Java Script
+- HTML5 - BEM class names
+- CSS3 (SCSS)
+- JavaScript
+- React (with hooks) - use as much as is possible only Vanilla JavaScript
+- Redux
 - Node
 - Express
 - Database postgress
@@ -32,10 +43,8 @@ When I was running my company, I sent parcels to various countries around the wo
 
 ## Few boring stuff how this application works
 
-1. Application "ask" server for fetch data.
-2. Server ask company couriers.
-3. After received data back, insert that data into postgress database.
-4. Then application "ask" data from database.
-5. When receive data from single courier company, I push to this.state that data and then componentDidUpdate cath that change so is starting create object with that data and sort by price by default.
+1. Application send to server instruction to get data form company couriers.
+2. After received data back, insert that data into postgress database.
+3. When all data are in database, application receive that data and magic is starting.
 
 I know, that I made a lot of faults but I don't affraid to do them so if you have any suggestion please leave me a feedback.

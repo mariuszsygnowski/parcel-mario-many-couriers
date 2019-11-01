@@ -2,8 +2,30 @@ import React, {useState, useEffect} from 'react';
 import arrow from '../../../images/arrow-right.svg';
 import ItemsCarousel from 'react-items-carousel';
 import importedStyles from '../../../styles/base/_colours.scss';
+
 export const Days = props => {
-  const [activeItemIndex, setactiveItemIndex] = useState(0);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [numberOfCards, setNumberOfCards] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    if (width < 650) {
+      setNumberOfCards(1);
+    } else if (width >= 650 && width < 1050) {
+      setNumberOfCards(2);
+    } else if (width >= 1050) {
+      setNumberOfCards(3);
+    }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [width]);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+
   const getElements = i => {
     const allElementsDays = document.getElementsByClassName('results__wrapper__days');
     for (let index = 0; index < allElementsDays.length; index++) {
@@ -14,39 +36,25 @@ export const Days = props => {
       }
     }
   };
+
   const changeActiveItem = activeItemIndex => {
-    setactiveItemIndex(activeItemIndex);
+    setActiveItemIndex(activeItemIndex);
     props.responseFromAllDays(Object.values(props.quotes)[activeItemIndex]);
     getElements(activeItemIndex);
   };
+
   const handleClick = i => {
     getElements(i);
     changeActiveItem(i);
+    props.setNewSortingOrDays();
   };
-  const [numberOfCards, setNumberOfCards] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth);
+
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    if (width < 650) {
-      setNumberOfCards(1);
-    } else if (width >= 650 && width < 1050) {
-      setNumberOfCards(2);
-    } else if (width >= 1050) {
-      setNumberOfCards(3);
-    }
-  }, [width]);
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    props.responseFromAllDays(Object.values(props.quotes)[0]);
-    changeActiveItem(0);
+    changeActiveItem(activeItemIndex);
     const allElementsDays = document.getElementsByClassName('results__wrapper__days');
-    allElementsDays[0].style.backgroundColor = importedStyles.buttonColor;
-    // allElementsDaysHover[0].style.backgroundColor =
-    //   importedStyles.buttonColorHover;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.quotes]);
+    allElementsDays[activeItemIndex].style.backgroundColor = importedStyles.buttonColor;
+  }, [props]);
+
   return (
     <ItemsCarousel
       numberOfCards={numberOfCards}

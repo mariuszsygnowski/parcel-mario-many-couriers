@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 
 const InputForm = props => {
-  // useEffect(() => {
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // });
-  const [inputValue, setinputValue] = useState(props.val);
+  const [inputValue, setInputValue] = useState(props.val);
 
   const handleChange = e => {
     props.setValue(e);
-    setinputValue(e);
+    setInputValue(e);
   };
 
   useEffect(() => {
-    if (props.labelName === "from" || props.labelName === "to") {
-      setinputValue("");
+    if (props.labelName === 'from' || props.labelName === 'to') {
+      setInputValue('');
     }
   }, [props.labelName]);
 
