@@ -1,9 +1,6 @@
 import React from 'react';
 
 const ServiceName = props => {
-  const raiseInvoiceClicked = url => {
-    window.open('https://' + url, '_blank');
-  };
   return (
     <div className={props.className}>
       <div className={`${props.className}__label`}>
@@ -15,12 +12,10 @@ const ServiceName = props => {
       <div className={`${props.className}__buttons`}>
         {props.res_result_data.entries.map(res => {
           return (
-            <button
-              onClick={() => raiseInvoiceClicked(res.company_name)}
-              className={`${props.className}__buttons__button`}
-              key={res.id}
-            >
-              {res.company_name} from: £{res.price.toFixed(2)}
+            <button className={`${props.className}__buttons__button`} key={res.id}>
+              <a id='myLink' href={'https://' + res.company_name} target='_blank'>
+                {res.company_name} from: £{res.price.toFixed(2)}
+              </a>
             </button>
           );
         })}
