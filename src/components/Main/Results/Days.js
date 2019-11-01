@@ -46,10 +46,11 @@ export const Days = props => {
   const handleClick = i => {
     getElements(i);
     changeActiveItem(i);
-    props.setNewSortingOrDays();
-    const allElementsDays = document.getElementsByClassName('results__wrapper__days');
-    allElementsDays[i].style.backgroundColor = importedStyles.buttonColor;
   };
+
+  useEffect(() => {
+    props.setNewSortingOrDays();
+  }, [activeItemIndex]);
 
   useEffect(() => {
     changeActiveItem(activeItemIndex);
