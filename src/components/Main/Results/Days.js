@@ -39,7 +39,6 @@ export const Days = props => {
     setWidth(window.innerWidth);
   };
   useEffect(() => {
-    console.log(`props.quotes:`, props.quotes);
     props.responseFromAllDays(Object.values(props.quotes)[0]);
     changeActiveItem(0);
     const allElementsDays = document.getElementsByClassName('results__wrapper__days');

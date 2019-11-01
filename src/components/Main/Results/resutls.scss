@@ -53,10 +53,11 @@ $font-size: 1.2rem;
                 grid-template-columns: repeat(4, 1fr);
                 justify-items: center;
                 align-items: center;
+                grid-gap: 0.1rem;
 
                 &__button {
                     @include eachCarousel();
-                    width: 90%;
+                    width: 100%;
                     padding: 0.5rem;
 
                     &:hover {

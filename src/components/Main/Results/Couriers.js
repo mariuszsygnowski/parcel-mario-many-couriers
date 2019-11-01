@@ -49,10 +49,6 @@ export const Couriers = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.dataFromCurrentSelectedDeliveryTime]);
 
-  useEffect(() => {
-    console.log(`props.dataFromCurrentSelectedDeliveryTime:`, props.dataFromCurrentSelectedDeliveryTime);
-  }, [props]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return (
     <ItemsCarousel

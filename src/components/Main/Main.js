@@ -85,7 +85,6 @@ const Main = ({
         if (unsorted_data_with_all_couriers) {
           const sorted_data_with_all_couriers = Sorting(initial_state_main.quotes, unsorted_data_with_all_couriers);
           if (sorted_data_with_all_couriers) {
-            console.log(`sorted_data_with_all_couriers:`, sorted_data_with_all_couriers);
             setNewQuotes(sorted_data_with_all_couriers);
             if (how_many_responses === courier_names.length - 1) {
               setTimeout(() => {
