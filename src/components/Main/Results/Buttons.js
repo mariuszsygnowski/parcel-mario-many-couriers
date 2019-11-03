@@ -6,23 +6,23 @@ import ServiceName from '../ServiceName';
 export const Buttons = props => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [numberOfCards, setNumberOfCards] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    if (width < 650) {
-      setNumberOfCards(1);
-    } else if (width >= 650 && width < 1150) {
-      setNumberOfCards(2);
-    } else if (width >= 1150) {
-      setNumberOfCards(3);
-    }
+    handleResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [width]);
+  }, []);
+
   const handleResize = () => {
-    setWidth(window.innerWidth);
+    if (window.innerWidth < 650) {
+      setNumberOfCards(1);
+    } else if (window.innerWidth >= 650 && window.innerWidth < 1150) {
+      setNumberOfCards(2);
+    } else if (window.innerWidth >= 1150) {
+      setNumberOfCards(3);
+    }
   };
 
   const changeActiveItem = activeItemIndex => {

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import cx from 'classnames';
 import importedStyles from '../../../styles/base/_colours.scss';
 
-const getElementsButtons = i => {
+const setSelectedButton = i => {
   const allElementsButtons = document.getElementsByClassName('results__wrapper__sortingButtons__buttons__button');
   for (let index = 0; index < allElementsButtons.length; index++) {
     if (index === i) {
@@ -51,13 +51,13 @@ export const SortingButtons = props => {
   };
 
   const handleClickSortingButton = (i, item) => {
-    props.setNewSortingOrDays();
+    props.handleNewSorting();
     props.sortByValue(item);
-    getElementsButtons(i);
+    setSelectedButton(i);
   };
 
   useEffect(() => {
-    getElementsButtons(0);
+    setSelectedButton(0);
   }, []);
 
   return (
