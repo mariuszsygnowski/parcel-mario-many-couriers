@@ -3,7 +3,6 @@
 ## What the project does?
 
 Trivago compares hotel prices from other search engines, this application compares parcel prices from other search engines. At the moment, searching from 3 companies: parcel2go.com, parcelmonkey.co.uk and www.p4d.co.uk. From the first two, receives data trough the API, from www.p4d.co.uk receives data by scanning the website and searching for data (scraping).
-At this moment, the parcel dimensions is permanently entered and this is: 10kg, 10cm height, 10cm width and 10cm length and country from and destination is UK.
 
 ## Technical notes
 
