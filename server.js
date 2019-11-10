@@ -48,8 +48,7 @@ app.post('/api/p4d', (req, res) => {
   if (country_from !== 'GB') {
     locale = 'import';
   }
-
-  const url = `https://www.p4d.co.uk/go/${locale}/${country_from}/${country_to}/${weight},${width},${height},${length}`;
+  const url = `https://www.p4d.co.uk/go/${locale}/${country_from}---MAIN/${country_to}---MAIN/${weight},${width},${height},${length}?fromPostcode=${postcode_from}`;
   superagent
     .get(url)
     .query()
@@ -91,11 +90,22 @@ app.post('/api/p4d', (req, res) => {
 
       $('#newquote-list li form  .newquote-topbox .newquote-delivery-time b').each(function(i, el) {
         const deliveryTimeP4D = $(this).text();
+
         const deliveryTime = normalizerNames.deliveryTime(deliveryTimeP4D, 'p4d.co.uk');
         outputArray[i] = Object.assign({}, outputArray[i], {
           deliveryTime,
           url
         });
+      });
+
+      $('#newdropoff-list li .newdropoff-title').each(function(i, e) {
+        const deliveryTimeP4D = $(this).text();
+        const service_nameArray = deliveryTimeP4D.split('\n');
+        service_nameArray.forEach((name, i) => {
+          //.trim() remove white spaces
+          service_nameArray[i] = name.trim();
+        });
+        console.log(`deliveryTimeP4D:`, service_nameArray[1]);
       });
       res.json(outputArray);
     });
