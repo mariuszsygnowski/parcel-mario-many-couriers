@@ -14,7 +14,7 @@ const ServiceName = props => {
           console.log(`res.url:`, res.url);
           return (
             <button className={`${props.className}__buttons__button`} key={res.id}>
-              <a id='myLink' href={res.url} target='_blank'>
+              <a id='myLink' href={res.url} target='_blank' rel='noopener noreferrer'>
                 {res.company_name}: £{res.price.toFixed(2)}
               </a>
             </button>

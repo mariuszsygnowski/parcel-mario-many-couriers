@@ -111,8 +111,10 @@ $font-size: 1.2rem;
                     background-color: $buttonColor;
                     
                     font-weight: 500;
+                    padding: 0 0.3rem;
+                    margin: 0;
                     border: 0;
-                    width: max-content;
+                    width: min-content;
 
                     a {
                         color: $boxBackgroundColor;
