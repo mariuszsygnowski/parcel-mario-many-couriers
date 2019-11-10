@@ -13,7 +13,7 @@ const InputForm = props => {
     if (props.labelName === 'from' || props.labelName === 'to') {
       return;
     } else {
-      e === '' ? setInputValue(props.val) : setInputValue(e);
+      e === '' ? setInputValue(0) : setInputValue(props.val);
     }
   };
 
