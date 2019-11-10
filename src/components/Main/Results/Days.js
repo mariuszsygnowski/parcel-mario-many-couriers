@@ -82,7 +82,7 @@ export const Days = props => {
         return (
           <div key={key} className={`results__wrapper__days`} onClick={() => handleClick(i)}>
             <div className={`results__wrapper__days__title `}>
-              {deliveryTime}({item.length})
+              {deliveryTime} ({item.length})
             </div>
           </div>
         );

@@ -4,6 +4,7 @@ $selectedBox: #705353;
 $buttonColor: #EED369;
 $buttonColorHover: #dd9c23;
 :export {
+    boxBackgroundColor: $boxBackgroundColor;
     selectedBox: $selectedBox;
     buttonColor: $buttonColor;
     buttonColorHover: $buttonColorHover;

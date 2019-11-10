@@ -7,6 +7,7 @@ CREATE TABLE results (
     courier_delivery_time VARCHAR(20) NOT NULL,
     service_name VARCHAR(60) NOT NULL,
     price NUMERIC(6,2) NOT NULL,
+    url VARCHAR(180) NOT NULL,
     time VARCHAR(25) NOT NULL
 );
-INSERT INTO results VALUES (DEFAULT, 1, 'parcelmonkey.co.uk', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24, '20/04/2019, 12:16:38')
+INSERT INTO results VALUES (DEFAULT, 1, 'parcelmonkey.co.uk', 'UPS', 'one_day', 'TNT UK Saturday Express', 30.24, 'http://www.p4d.co.uk/go/domestic/GB/GB/1,10,10,10', '20/04/2019, 12:16:38')

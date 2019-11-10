@@ -2,7 +2,7 @@
 @import "../../styles/base/_boxes.scss";
 $padding: 0.5rem;
 $gridGap: 0.6rem;
-$fontSize: 1.3rem;
+$fontSize: 1.7rem;
 @mixin buttonValues {
     border-radius: $borderRadius;
     background-color: $buttonColor;
@@ -27,7 +27,7 @@ $fontSize: 1.3rem;
     }
     &__countryFromAndTo-selectCountry {
         display: grid;
-        grid-template-columns: 4rem minmax($padding, 1fr) auto;
+        grid-template-columns: 5rem minmax($padding, 1fr) auto;
         grid-gap: $gridGap/5;
         &__label {
             justify-self: right;
@@ -73,21 +73,25 @@ $fontSize: 1.3rem;
             border-radius: 0px;
             // padding: 1rem;
         }
+        input::placeholder {
+            text-align: center;
+            font-size: $fontSize * 0.8;
+        }
     }
     &__values {
         display: grid;
         grid-template-columns: minmax(min-content, 1fr) max-content;
         grid-gap: 0.5rem;
         label {
-            font-size: $fontSize;
-            justify-self: right;
-            // align-self: center;
+            display: flex;
+            font-size: $fontSize * 1.1;
+            align-items: center;
             padding-right: $gridGap;
-            height: 2rem;
+            height: 3rem;
         }
         input {
-            height: 2rem;
-            font-size: $fontSize;
+            height: 3rem;
+            font-size: $fontSize * 1.1;
             text-align: center;
             outline: none;
             border: none;
@@ -95,20 +99,27 @@ $fontSize: 1.3rem;
             padding-left: $gridGap;
             width: auto;
         }
+        input::placeholder {
+            text-align: center;
+            font-size: $fontSize * 0.7;
+        }
         p {
-            height: 2rem;
+            height: 3rem;
             display: grid;
             text-align: center;
             align-items: center;
             background-color: rgb(129, 120, 120);
             padding: 0 0.5rem;
-            font-size: 0.9rem;
+            font-size: $fontSize * 0.8;
         }
         &__button {
             justify-self: center;
             align-self: center;
             // min-height: 2.2rem;
             // width: min-content;
+            font-size: 1.4rem;
+            // height: 3rem;
+
             border: 0;
             @include buttonValues
         }
@@ -125,13 +136,13 @@ $fontSize: 1.3rem;
         }
         &__dimensions-inputForm {
             display: grid;
-            grid-template-columns: minmax(0.1rem, 1fr) minmax($padding, 5rem) 2.2rem;
+            grid-template-columns: minmax(0.1rem, 1fr) minmax($padding, 7rem) 3rem;
         }
     }
     &__button-quote {
         font-size: $fontSize;
         border: none;
-        height: 2.2rem;
+        height: 3rem;
         @include buttonValues
     }
     &__button-quote:focus {

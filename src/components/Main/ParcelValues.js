@@ -28,7 +28,7 @@ const ParcelValues = props => {
       setValue: value => props.setWeight(Number(value)),
       val: props.parcel_weight,
       inputType: 'number',
-      placeholder: 'Weight in kg',
+      placeholder: '',
       labelName: 'Weight',
       units: 'kg'
     },
@@ -37,7 +37,7 @@ const ParcelValues = props => {
       setValue: value => props.setWidth(Number(value)),
       val: props.parcel_width,
       inputType: 'number',
-      placeholder: 'Width in cm',
+      placeholder: '',
       labelName: 'Width',
       units: 'cm'
     },
@@ -46,7 +46,7 @@ const ParcelValues = props => {
       setValue: value => props.setHeight(Number(value)),
       val: props.parcel_height,
       inputType: 'number',
-      placeholder: 'Height in cm',
+      placeholder: '',
       labelName: 'Height',
       units: 'cm'
     },
@@ -55,7 +55,7 @@ const ParcelValues = props => {
       setValue: value => props.setLength(Number(value)),
       val: props.parcel_length,
       inputType: 'number',
-      placeholder: 'Length in cm',
+      placeholder: '',
       labelName: 'Length',
       units: 'cm'
     }

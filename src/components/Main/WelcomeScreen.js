@@ -4,11 +4,16 @@ import './welcomeScreen.scss';
 const WelcomeScreen = () => {
   return (
     <div className='welcomeScreen'>
-      <p className='welcomeScreen__logo'>
-        <span>par</span>
-        <span>cel</span>&nbsp;<span>mar</span>
-        <span>io</span>
-      </p>
+      <div className='welcomeScreen__logo'>
+        <p className='welcomeScreen__logo__first'>
+          <span>par</span>
+          <span>cel</span>
+        </p>
+        <p className='welcomeScreen__logo__second'>
+          <span>mar</span>
+          <span>io</span>
+        </p>
+      </div>
       <p className='welcomeScreen__motto'>Find your best courier and compare prices from different websites</p>
     </div>
   );

@@ -1,18 +1,25 @@
 import React, {useState, useEffect} from 'react';
 
 const InputForm = props => {
-  const [inputValue, setInputValue] = useState(props.val);
+  const initialInputVal = props.labelName === 'from' || props.labelName === 'to' ? '' : props.val;
+  const [inputValue, setInputValue] = useState(initialInputVal);
 
   const handleChange = e => {
     props.setValue(e);
     setInputValue(e);
   };
 
-  useEffect(() => {
+  const handleClick = e => {
+    setInputValue('');
+  };
+
+  const handleFocusLeave = e => {
     if (props.labelName === 'from' || props.labelName === 'to') {
-      setInputValue('');
+      return;
+    } else {
+      e === '' ? setInputValue(props.val) : setInputValue(e);
     }
-  }, [props.labelName]);
+  };
 
   return (
     <div className={props.className}>
@@ -20,8 +27,10 @@ const InputForm = props => {
       <input
         type={props.inputType}
         value={inputValue}
-        onChange={event => handleChange(event.target.value)}
+        onChange={e => handleChange(e.target.value)}
         placeholder={props.placeholder}
+        onClick={handleClick}
+        onBlur={e => handleFocusLeave(e.target.value)}
       />
       <p>{props.units}</p>
     </div>

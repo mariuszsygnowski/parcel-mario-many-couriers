@@ -1,30 +1,46 @@
 @import url('https://fonts.googleapis.com/css?family=Catamaran:900&display=swap');
-$font-size: 2.9rem;
+$font-size: 5.9rem;
 $motto-padding-right-and-left: 2.7rem;
 .welcomeScreen {
     padding-top: 6rem;
     padding-bottom: 1rem;
     &__logo {
         text-align: center;
-        font-size: $font-size;
-        span {
-            background-color: white;
-            font-size: $font-size;
-            font-weight: 900;
-            font-family: 'Catamaran', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            letter-spacing: -1px;
+        // font-size: $font-size;
+        background-color: white;
+        font-weight: 900;
+        font-family: 'Catamaran', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        letter-spacing: -1px;
+        display: grid;
+        grid-template-columns: repeat(1, minmax(200px , 1fr));
+        // width: min-content;
+        // margin: 0;
+
+        &__first {
+            display: flex;
+            justify-content: center;
+            span:nth-child(1) {
+                font-size: $font-size;
+                color: rgb(127, 55, 175);
+            }
+    
+            span:nth-child(2) {
+                font-size: $font-size;
+                color: rgb(255, 83, 4);
+            }
         }
-        span:nth-child(1) {
-            color: rgb(127, 55, 175);
-        }
-        span:nth-child(2) {
-            color: rgb(255, 83, 4);
-        }
-        span:nth-child(3) {
-            color: rgb(10, 126, 19);
-        }
-        span:nth-child(4) {
-            color: rgb(44, 102, 226)
+
+        &__second {
+            display: flex;
+            justify-content: center;
+            span:nth-child(1) {
+                font-size: $font-size;
+                color: rgb(10, 126, 19);
+            }
+            span:nth-child(2) {
+                font-size: $font-size;
+                color: rgb(44, 102, 226)
+            }
         }
     }
     &__motto {
@@ -33,4 +49,22 @@ $motto-padding-right-and-left: 2.7rem;
         font-family: Arial, Helvetica, Sans, Sans-Serif, Sans Serif;
         font-size: 1.2rem;
     }
+}
+
+@media (min-width: 430px) {
+    .welcomeScreen {
+        &__logo {
+            grid-template-columns: repeat(2, minmax(200px , 1fr));
+            grid-gap: 2rem;
+            &__first {
+                display: flex;
+                justify-content: flex-end;
+            }
+            &__second {
+                display: flex;
+                justify-content: flex-start;
+            }
+        }
+    }
+
 }

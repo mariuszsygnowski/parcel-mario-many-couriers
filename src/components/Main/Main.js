@@ -33,7 +33,6 @@ const Main = ({
     if (data_from_all_couriers.length === courier_names.length) {
       setResults(data_from_all_couriers);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data_from_all_couriers]);
 
@@ -53,26 +52,22 @@ const Main = ({
   };
 
   const setResults = async data_from_all_couriers => {
-    const res_data_from_all_couriers = await data_from_all_couriers.map(async data => {
-      return await setNewData(data, uniqueApiKey);
+    data_from_all_couriers.forEach(async data => {
+      await setNewData(data, uniqueApiKey);
     });
-    const all_responses_from_data_from_all_couriers = await Promise.all(res_data_from_all_couriers);
-
-    if (all_responses_from_data_from_all_couriers) {
-      const unsorted_data_with_all_couriers = await get_data_from_database_with_all_couriers(uniqueApiKey);
-      const sorted_data_with_all_couriers = Sorting(initial_state_main.quotes, unsorted_data_with_all_couriers);
-      if (sorted_data_with_all_couriers) {
-        setNewQuotes(sorted_data_with_all_couriers);
-        if (how_many_responses === courier_names.length - 1) {
-          setTimeout(() => {
-            setModal(false);
-          }, 500);
-        }
-        //if received any respond then changeResultsToOffOrOn will change
-        if (unsorted_data_with_all_couriers.length !== 0) {
-          setDidReceivedNewData(true);
-          setTimeout(() => {}, 2000);
-        }
+    const unsorted_data_with_all_couriers = await get_data_from_database_with_all_couriers(uniqueApiKey);
+    const sorted_data_with_all_couriers = Sorting(initial_state_main.quotes, unsorted_data_with_all_couriers);
+    if (sorted_data_with_all_couriers) {
+      setNewQuotes(sorted_data_with_all_couriers);
+      if (how_many_responses === courier_names.length - 1) {
+        setTimeout(() => {
+          setModal(false);
+        }, 500);
+      }
+      //if received any respond then changeResultsToOffOrOn will change
+      if (unsorted_data_with_all_couriers.length !== 0) {
+        setDidReceivedNewData(true);
+        setTimeout(() => {}, 2000);
       }
     }
   };
@@ -187,7 +182,8 @@ const getDataFromDatabase = async (data, unique_search_id) => {
         courier_delivery_time: deliveryTime,
         service_name: resSingleCourier.service_name,
         price: resSingleCourier.price,
-        currentTime: currentTime
+        currentTime: currentTime,
+        url: resSingleCourier.url
       }),
       headers: {
         'Content-Type': 'application/json'

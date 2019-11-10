@@ -11,7 +11,7 @@ const Sorting = (quote, singleResult) => {
   let output = {};
 
   singleResult.forEach(resBodyResult => {
-    if (resBodyResult.courier_delivery_time === "one_day") {
+    if (resBodyResult.courier_delivery_time === 'one_day') {
       //looking if courier name exist in array this.state.quotes.one_day
 
       const dataOneDay = thisStateQuotesOne_day.find(e => {
@@ -21,23 +21,17 @@ const Sorting = (quote, singleResult) => {
       //if exist then I just add new data
       if (dataOneDay) {
         dataOneDay.data.forEach(resDataOneDaydata => {
-          const objectDataOneDay_data = dataOneDay.data.find(
-            res_dataOneDay_find => {
-              return (
-                res_dataOneDay_find.service_name === resBodyResult.service_name
-              );
-            }
-          );
+          const objectDataOneDay_data = dataOneDay.data.find(res_dataOneDay_find => {
+            return res_dataOneDay_find.service_name === resBodyResult.service_name;
+          });
 
           if (objectDataOneDay_data) {
-            if (
-              resDataOneDaydata.service_name ===
-              objectDataOneDay_data.service_name
-            ) {
+            if (resDataOneDaydata.service_name === objectDataOneDay_data.service_name) {
               resDataOneDaydata.entries.push({
                 id: resBodyResult.id,
                 company_name: resBodyResult.company_name,
-                price: resBodyResult.price
+                price: resBodyResult.price,
+                url: resBodyResult.url
               });
             }
           } else {
@@ -48,7 +42,8 @@ const Sorting = (quote, singleResult) => {
                 {
                   id: resBodyResult.id,
                   company_name: resBodyResult.company_name,
-                  price: resBodyResult.price
+                  price: resBodyResult.price,
+                  url: resBodyResult.url
                 }
               ]
             });
@@ -57,7 +52,7 @@ const Sorting = (quote, singleResult) => {
       } else {
         //if not then I create object plus add first entry into data
         thisStateQuotesOne_day.push({
-          delivery_time: "One day couriers",
+          delivery_time: 'One day couriers',
           min_price_in_courier: resBodyResult.price,
           courier: resBodyResult.courier_name,
 
@@ -69,7 +64,8 @@ const Sorting = (quote, singleResult) => {
                 {
                   id: resBodyResult.id,
                   company_name: resBodyResult.company_name,
-                  price: resBodyResult.price
+                  price: resBodyResult.price,
+                  url: resBodyResult.url
                 }
               ]
             }
@@ -82,7 +78,7 @@ const Sorting = (quote, singleResult) => {
       //and itarate over this array, but when I pass into function respond
       //I got an error, I tried to do new Function but still there is some issues
       //later I will do something more universal
-      resBodyResult.courier_delivery_time === "two_days"
+      resBodyResult.courier_delivery_time === 'two_days'
     ) {
       const dataTwoDays = thisStateQuotesTwo_days.find(e => {
         return e.courier === resBodyResult.courier_name;
@@ -91,23 +87,17 @@ const Sorting = (quote, singleResult) => {
       //if exist then I just add new data
       if (dataTwoDays) {
         dataTwoDays.data.forEach(resDataTwoDaysdata => {
-          const objectdataTwoDays_data = dataTwoDays.data.find(
-            res_dataTwoDays_find => {
-              return (
-                res_dataTwoDays_find.service_name === resBodyResult.service_name
-              );
-            }
-          );
+          const objectdataTwoDays_data = dataTwoDays.data.find(res_dataTwoDays_find => {
+            return res_dataTwoDays_find.service_name === resBodyResult.service_name;
+          });
 
           if (objectdataTwoDays_data) {
-            if (
-              resDataTwoDaysdata.service_name ===
-              objectdataTwoDays_data.service_name
-            ) {
+            if (resDataTwoDaysdata.service_name === objectdataTwoDays_data.service_name) {
               resDataTwoDaysdata.entries.push({
                 id: resBodyResult.id,
                 company_name: resBodyResult.company_name,
-                price: resBodyResult.price
+                price: resBodyResult.price,
+                url: resBodyResult.url
               });
             }
           } else {
@@ -118,7 +108,8 @@ const Sorting = (quote, singleResult) => {
                 {
                   id: resBodyResult.id,
                   company_name: resBodyResult.company_name,
-                  price: resBodyResult.price
+                  price: resBodyResult.price,
+                  url: resBodyResult.url
                 }
               ]
             });
@@ -127,7 +118,7 @@ const Sorting = (quote, singleResult) => {
       } else {
         //if not then I create object plus add first entry into data
         thisStateQuotesTwo_days.push({
-          delivery_time: "Two days couriers",
+          delivery_time: 'Two days couriers',
           min_price_in_courier: resBodyResult.price,
           courier: resBodyResult.courier_name,
           data: [
@@ -138,14 +129,15 @@ const Sorting = (quote, singleResult) => {
                 {
                   id: resBodyResult.id,
                   company_name: resBodyResult.company_name,
-                  price: resBodyResult.price
+                  price: resBodyResult.price,
+                  url: resBodyResult.url
                 }
               ]
             }
           ]
         });
       }
-    } else if (resBodyResult.courier_delivery_time === "over_two_days") {
+    } else if (resBodyResult.courier_delivery_time === 'over_two_days') {
       {
         const dataOverTwoDays = thisStateQuotesOver_two_days.find(e => {
           return e.courier === resBodyResult.courier_name;
@@ -154,24 +146,17 @@ const Sorting = (quote, singleResult) => {
         //if exist then I just add new data
         if (dataOverTwoDays) {
           dataOverTwoDays.data.forEach(resDataOverTwoDaysdata => {
-            const objectdataOverTwoDays_data = dataOverTwoDays.data.find(
-              res_dataOverTwoDays_find => {
-                return (
-                  res_dataOverTwoDays_find.service_name ===
-                  resBodyResult.service_name
-                );
-              }
-            );
+            const objectdataOverTwoDays_data = dataOverTwoDays.data.find(res_dataOverTwoDays_find => {
+              return res_dataOverTwoDays_find.service_name === resBodyResult.service_name;
+            });
 
             if (objectdataOverTwoDays_data) {
-              if (
-                resDataOverTwoDaysdata.service_name ===
-                objectdataOverTwoDays_data.service_name
-              ) {
+              if (resDataOverTwoDaysdata.service_name === objectdataOverTwoDays_data.service_name) {
                 resDataOverTwoDaysdata.entries.push({
                   id: resBodyResult.id,
                   company_name: resBodyResult.company_name,
-                  price: resBodyResult.price
+                  price: resBodyResult.price,
+                  url: resBodyResult.url
                 });
               }
             } else {
@@ -182,7 +167,8 @@ const Sorting = (quote, singleResult) => {
                   {
                     id: resBodyResult.id,
                     company_name: resBodyResult.company_name,
-                    price: resBodyResult.price
+                    price: resBodyResult.price,
+                    url: resBodyResult.url
                   }
                 ]
               });
@@ -191,7 +177,7 @@ const Sorting = (quote, singleResult) => {
         } else {
           //if not then I create object plus add first entry into data
           thisStateQuotesOver_two_days.push({
-            delivery_time: "More than two days couriers",
+            delivery_time: 'More than two days couriers',
             min_price_in_courier: resBodyResult.price,
             courier: resBodyResult.courier_name,
             data: [
@@ -202,7 +188,8 @@ const Sorting = (quote, singleResult) => {
                   {
                     id: resBodyResult.id,
                     company_name: resBodyResult.company_name,
-                    price: resBodyResult.price
+                    price: resBodyResult.price,
+                    url: resBodyResult.url
                   }
                 ]
               }

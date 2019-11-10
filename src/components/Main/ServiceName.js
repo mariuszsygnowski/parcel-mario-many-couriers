@@ -13,8 +13,8 @@ const ServiceName = props => {
         {props.res_result_data.entries.map(res => {
           return (
             <button className={`${props.className}__buttons__button`} key={res.id}>
-              <a id='myLink' href={'https://' + res.company_name} target='_blank'>
-                {res.company_name} from: £{res.price.toFixed(2)}
+              <a id='myLink' href={res.url} target='_blank'>
+                {res.company_name}: £{res.price.toFixed(2)}
               </a>
             </button>
           );
