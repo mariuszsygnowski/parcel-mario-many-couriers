@@ -9,10 +9,6 @@ const InputForm = props => {
     setInputValue(e);
   };
 
-  const handleClick = e => {
-    setInputValue('');
-  };
-
   const handleFocusLeave = e => {
     if (props.labelName === 'from' || props.labelName === 'to') {
       return;
@@ -29,7 +25,6 @@ const InputForm = props => {
         value={inputValue}
         onChange={e => handleChange(e.target.value)}
         placeholder={props.placeholder}
-        onClick={handleClick}
         onBlur={e => handleFocusLeave(e.target.value)}
       />
       <p>{props.units}</p>
