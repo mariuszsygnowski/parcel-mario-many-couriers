@@ -11,6 +11,7 @@ const ServiceName = props => {
       </div>
       <div className={`${props.className}__buttons`}>
         {props.res_result_data.entries.map(res => {
+          console.log(`res.url:`, res.url);
           return (
             <button className={`${props.className}__buttons__button`} key={res.id}>
               <a id='myLink' href={res.url} target='_blank'>

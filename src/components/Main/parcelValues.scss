@@ -19,25 +19,25 @@ $fontSize: 1.7rem;
     border-radius: $borderRadius;
     &__countries {
         display: grid;
-        grid-gap: $gridGap/2;
+        grid-gap: $gridGap;
     }
     &__countryFromAndTo {
         display: grid;
-        grid-template-columns: 6fr 4fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: $gridGap/3;
     }
     &__countryFromAndTo-selectCountry {
         display: grid;
-        grid-template-columns: 5rem minmax($padding, 1fr) auto;
-        grid-gap: $gridGap/5;
+        grid-template-columns: 5rem minmax($padding, 1fr);
         &__label {
             justify-self: right;
             align-self: center;
             font-size: $fontSize;
             padding-right: $padding;
         }
-        select {
+        &__select {
             font-size: $fontSize;
-            align-self: center;
+            text-align-last:center;
             border-radius: 0px;
             padding-right: 0.75rem;
             cursor: pointer;
@@ -49,10 +49,10 @@ $fontSize: 1.7rem;
             /* Positions background arrow image */
             background-image: url('../../images/icons8-sort-24.png');
             background-repeat: no-repeat;
-            background-size: 0.8rem 1.2rem;
+            background-size: 1.8rem 2.2rem;
             background-position: right;
-            border-top: inset $padding+0.8rem transparent;
-            border-bottom: inset $padding+0.8rem transparent;
+            border-top: inset $padding+1.8rem transparent;
+            border-bottom: inset $padding+1.8rem transparent;
             border-right: inset 0 transparent;
             border-left: inset 0 transparent;
             padding-left: $padding;
@@ -68,6 +68,7 @@ $fontSize: 1.7rem;
         input {
             font-size: $fontSize;
             padding-left: $padding;
+            margin-left: 5rem;
             outline: none;
             border: none;
             border-radius: 0px;
@@ -75,7 +76,7 @@ $fontSize: 1.7rem;
         }
         input::placeholder {
             text-align: center;
-            font-size: $fontSize * 0.8;
+            font-size: $fontSize;
         }
     }
     &__values {

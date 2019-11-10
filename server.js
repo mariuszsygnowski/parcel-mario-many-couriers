@@ -13,6 +13,7 @@ const port = process.env.PORT || process.env.LOCAL_SERVER_PORT;
 
 const normalizerNames = require('./serverFiles/normalizer-names.js');
 const isoCodes = require('./serverFiles/isoCodes.js');
+const create_UUID = require('./serverFiles/create_UUID.js');
 
 const db = pgp({
   host: process.env.DB_HOST,
@@ -109,6 +110,7 @@ app.post('/api/p2g', (req, res) => {
   const new_country_from = isoCodes.iso3ToIso2(country_from);
   const new_country_to = isoCodes.iso3ToIso2(country_to);
 
+  // console.log(`create_UUID():`, create_UUID.create_UUID());
   // https://www.parcel2go.com/quotes?col=219&dest=219&cp=RM191ZY&dp=EC1R3DD&mdd=0&p=1~1|10|10|10&quotetype=Default
   // https://www.parcel2go.com/order/parcel/myhermes-parcelshop-next-day?cp=rm191zy&dp=ec1r3dd&quoteslug=myhermes-parcelshop-next-day&basketitemid=b37ffcd3-2ec0-4c15-9e96-188af899f8ac&redir=1
   const url = `https://www.parcel2go.com/quotes?col=219&dest=219&cp=${postcode_from}&dp=${postcode_to}&mdd=0&p=1~${weight}|${width}|${height}|${length}&quotetype=Default`;
@@ -173,7 +175,6 @@ app.post('/api/p2g', (req, res) => {
                 });
               });
               res.json(outputArray);
-              // console.log(body);
             } else {
               res.json({error: 'no body after respond'});
             }
@@ -181,8 +182,96 @@ app.post('/api/p2g', (req, res) => {
           .catch(error => {
             res.json({error: error.message});
           });
-      } else {
-        res.json({error: 'no body after respond'});
+
+        //   fetch('https://www.parcel2go.com/api/orders', {
+        //     body: JSON.stringify({
+        //       Items: [
+        //         {
+        //           Id: '4246ef16-b8ff-4bfc-b69a-a32e580ed599',
+        //           CollectionDate: '2019-11-11T18:05:19.8547896+00:00',
+        //           Parcels: [
+        //             {
+        //               Id: '00000000-0000-0000-0000-000000000000',
+        //               Height: 10,
+        //               Length: 10,
+        //               EstimatedValue: 100,
+        //               Weight: 10,
+        //               Width: 10,
+        //               DeliveryAddress: {
+        //                 ContactName: 'Test',
+        //                 Email: 'test@test.com',
+        //                 Property: '11',
+        //                 Street: 'Saville St',
+        //                 Town: 'Malton',
+        //                 County: 'North Yorkshire',
+        //                 Postcode: 'YO17 7LL',
+        //                 CountryIsoCode: 'GBR',
+        //                 CountryId: 0
+        //               },
+        //               ContentsSummary: 'Slippers'
+        //             }
+        //           ],
+        //           Service: 'hermes-uk-economy',
+        //           CollectionAddress: {
+        //             ContactName: 'Gary Wilson',
+        //             Organisation: '',
+        //             Email: 'g.wilson@parcel2go.com',
+        //             Phone: '077777777777',
+        //             Property: '1',
+        //             Street: 'Raleigh Street',
+        //             Locality: '',
+        //             Town: 'Scarborough',
+        //             County: 'North Yorkshire',
+        //             Postcode: 'yo12 7jz',
+        //             CountryIsoCode: 'GBR',
+        //             CountryId: 0,
+        //             SpecialInstructions: ''
+        //           }
+        //         }
+        //       ],
+        //       CustomerDetails: {
+        //         Email: 'g.wilson@parcel2go.com',
+        //         Forename: 'Gary',
+        //         Surname: 'Wilson'
+        //       }
+        //     }),
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Accept: '*/*',
+        //       'User-Agent': 'insomnia/5.14.6',
+        //       Authorization: `Bearer ${body.access_token}`
+        //     },
+        //     method: 'POST'
+        //   })
+        //     .then(response => response.json())
+        //     .then(body => {
+        //       if (body) {
+        //         let outputArray = [];
+        //         body.Quotes.forEach(item => {
+        //           const courier_name = normalizerNames.courierName(item.Service.CourierName, 'parcel2go.com');
+        //           const service_name = normalizerNames.serviceName(item.Service.Name, 'parcel2go.com');
+        //           const deliveryTime = normalizerNames.deliveryTime(item.Service.Classification, 'parcel2go.com');
+
+        //           outputArray.push({
+        //             company_name: 'parcel2go.com',
+        //             courier_name: courier_name,
+        //             service_name: service_name,
+        //             price: item.TotalPrice,
+        //             deliveryTime: deliveryTime,
+        //             url: url
+        //           });
+        //         });
+        //         res.json(outputArray);
+        //         // console.log(body);
+        //       } else {
+        //         res.json({error: 'no body after respond'});
+        //       }
+        //     })
+        //     .catch(error => {
+        //       res.json({error: error.message});
+        //     });
+        // } else {
+        //   res.json({error: 'no body after respond'});
       }
     })
     .catch(error => {
