@@ -48,20 +48,43 @@ $motto-padding-right-and-left: 2.7rem;
     }
 }
 
-@media (min-width: 430px) {
+@media (min-width: 350px) {
     .welcomeScreen {
         &__logo {
-            grid-template-columns: repeat(2, minmax(200px , 1fr));
-            grid-gap: 2rem;
+            grid-template-columns: repeat(2, minmax(100px , 1fr));
             &__first {
                 display: flex;
                 justify-content: flex-end;
+                padding-right: 0.5rem;
             }
             &__second {
                 display: flex;
                 justify-content: flex-start;
+                padding-left: 0.5rem;
             }
         }
     }
-
+}
+@media (min-width: 550px) {
+    .welcomeScreen {
+        &__logo {
+            &__first {
+                span:nth-child(1) {
+                    font-size: $font-size * 1.3;
+                }
+        
+                span:nth-child(2) {
+                    font-size: $font-size * 1.3;
+                }
+            }
+            &__second {
+                span:nth-child(1) {
+                    font-size: $font-size * 1.3;
+                }
+                span:nth-child(2) {
+                    font-size: $font-size * 1.3;
+                }
+            }
+        }
+    }
 }
