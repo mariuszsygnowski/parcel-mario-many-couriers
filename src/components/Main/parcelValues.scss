@@ -23,7 +23,7 @@ $fontSize: 1.7rem;
     }
     &__countryFromAndTo {
         display: grid;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 0.5fr fr;
         grid-gap: $gridGap/3;
     }
     &__countryFromAndTo-selectCountry {
@@ -51,8 +51,8 @@ $fontSize: 1.7rem;
             background-repeat: no-repeat;
             background-size: 1.8rem 2.2rem;
             background-position: right;
-            border-top: inset $padding+1.8rem transparent;
-            border-bottom: inset $padding+1.8rem transparent;
+            border-top: inset $padding+0.8rem transparent;
+            border-bottom: inset $padding+0.8rem transparent;
             border-right: inset 0 transparent;
             border-left: inset 0 transparent;
             padding-left: $padding;
@@ -67,11 +67,13 @@ $fontSize: 1.7rem;
         }
         input {
             font-size: $fontSize;
-            padding-left: $padding;
+            padding: 1rem 0;
             margin-left: 5rem;
+            text-align: center;
             outline: none;
             border: none;
             border-radius: 0px;
+
             // padding: 1rem;
         }
         input::placeholder {

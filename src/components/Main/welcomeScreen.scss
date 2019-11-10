@@ -1,20 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Catamaran:900&display=swap');
-$font-size: 5.9rem;
+$font-size: 4.9rem;
 $motto-padding-right-and-left: 2.7rem;
 .welcomeScreen {
     padding-top: 6rem;
     padding-bottom: 1rem;
     &__logo {
         text-align: center;
-        // font-size: $font-size;
         background-color: white;
         font-weight: 900;
         font-family: 'Catamaran', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         letter-spacing: -1px;
         display: grid;
-        grid-template-columns: repeat(1, minmax(200px , 1fr));
-        // width: min-content;
-        // margin: 0;
+        grid-template-columns: minmax(200px , 1fr);
 
         &__first {
             display: flex;
